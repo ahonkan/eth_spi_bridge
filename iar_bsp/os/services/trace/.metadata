@@ -1,0 +1,5 @@
+package("trace") {
+    parent "nu.os.svcs"
+    description "This package implements Nucleus Trace Services"
+    enable true
+}

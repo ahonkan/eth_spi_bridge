@@ -1,0 +1,53 @@
+component("spi") { 
+    parent "nu.os.conn"
+    version "1.2.0"
+    description "This component implements the Nucleus SPI component."
+    enable true
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+
+    runlevel 5
+    
+   option("err_check_enable") {
+      default true
+      enregister false
+      description "Enable error checking in SPI generic layer"
+   }
+   
+   option("polling_mode_enable") {
+      default false
+      enregister false
+      description "Nucleus SPI runs in interrupt mode by default. User can switch to polling mode by setting this configuration option to true"
+   }
+   
+   option("user_buff_enable") {
+      default false
+      enregister false
+      description "This option allows the user to enable/disable support for internal buffering performed in the interrupt driven mode."
+   }
+
+    option("queue_size") {
+      default 16
+      enregister true
+      description "Number of elements in Request Queue"
+    }
+
+    option("buffer_size") {
+      default 16
+      enregister true
+      description "Size of buffer in bytes"
+    }
+    
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

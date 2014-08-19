@@ -1,0 +1,14 @@
+component("stm32_usart") {
+    parent      "nu.bsp.drvr.serial"
+    version     "1.0.0"
+    description "This component implements the STM32 USART serial driver"
+    enable      true
+
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+    requires("nu.os.drvr.serial")
+                
+    library("nucleus.lib") {
+        sources { Dir.glob("*.c") }
+    }
+}

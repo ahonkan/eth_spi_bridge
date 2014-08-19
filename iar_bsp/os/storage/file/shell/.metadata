@@ -1,0 +1,20 @@
+component("shell") { 
+    parent      "nu.os.stor.file"
+    description "This component adds support for file system shell commands"
+    enable      false
+    runlevel    14
+
+    requires("nu.os.stor.file.vfs")
+    requires("nu.os.svcs.shell")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+    
+    option("default_drv") {
+        default     "A:\\\\"
+        description "Default drive used when no parameters specified with various file system commands.  Default is A:\\"
+    }
+}

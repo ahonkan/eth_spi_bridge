@@ -1,0 +1,1578 @@
+#
+# BSP Platform file is used to specify software components to instantiate
+# and the set the external, ie "user visible" interface parameters.  
+# In addition, system level and other major operating parameters are defined
+# here.  The assumption is that these parameters would not change during 
+# normal code operation
+# 
+
+platform("iar_stm32f429ii_sk") {
+    version "1.0.0"
+
+    include "nu.os"
+    include "nu.samples"
+    
+    include "nu.bsp.iar_stm32f429ii_sk"
+    include "nu.bsp.arch"
+    include "toolsets.iar_stm32f429ii_sk"
+    include "toolsets.csgnu_arm"
+
+    architecture "armv7_m"
+
+    # The STM DMA hardware consists of 2 banks of 8 streams for total
+    # of 16 streams. Each stream is dedicated to a set of 8 selectable 
+    # peripherals.
+    # To map the existing Nucleus dma driver code to the STM hardware, 
+    # we have to re-define the Nucleus "device" as a STM DMA stream
+    # and within each device/stream, there are 8 channels which access
+    # specific peripherals.  
+    # Currently, the concept of users is not fully fleshed out in
+    # the target implementation.  It most likely is a way to have 
+    # multiple "users" or threads receiving/reading data.  
+    # Transmitting data can only be done by one thread at a time.
+
+    option "nu.os.drvr.dma.max_devices" =>  16
+    option "nu.os.drvr.dma.max_channels" =>  8
+    option "nu.os.drvr.dma.max_channel_users" =>  3
+
+    # Override for arch
+    option "nu.os.arch.armv7_m.com.max_vector"    => 106
+
+    # Over-ride the number of interrupt priority bits to reflect the number implemented on the processor used in this BSP
+    option "nu.os.arch.armv7_m.com.num_pri_bits"  => 4
+
+    # Override values for kernel (default to run from on-chip memory / ROM)
+    option "nu.os.kern.plus.core.rom_to_ram_copy" => true
+    option "nu.os.kern.plus.core.rom_support"     => true
+
+   
+    hardware {
+
+        # I need to add an option to select HSI or HSE for the 
+        # device application.        
+        device("cpu0") {
+            description     "CPU device 0"
+            enable          true
+            driver          "nu.bsp.drvr.cpu.stm32f2x"
+            runlevel        2
+            setup_entry     true
+
+            option("ext_clock") {
+                    default     8000000
+                    description "HSE- External clock frequency"
+                }
+
+            option("core_clock") {
+                    default     180000000
+                    description "PLL CPU core clock frequency"
+                }
+        } 
+        # device("cpu0")
+
+###############################################################################
+#
+# DMA Stream 
+#
+# Note: the dma_dev_id is necessary for this implementation, however ideally
+# the dma device instantiation should create the dma object and in the code,
+# the dma channel should be specified as it is a low-level interface to
+# the associated peripheral
+#
+# Set the DMA run levels lower than the periperals associated with them to 
+# allow the DMA structures to be initalized
+#
+
+        device("dma0") {
+            description     "STM32F DMA driver"
+            enable          false
+            driver          "nu.bsp.drvr.dma"
+            runlevel        10
+            setup_entry     true
+            cleanup_entry   true
+            
+            group("tgt_settings") {
+                enregister     true
+
+                option("dma_dev_id") {
+                    default     11
+                    values      [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                    description "This id number corresponds to the desired dma data stream.  
+                                 DMA device 0-7 correspond to streams 0-7 for DMA1 in STM hardware.  
+                                 DMA device 8-15 correspond to streams 0-7 for DMA2.  
+                                 Consult Reference Manual pg 304-305 for the DMA stream definitions."
+                }
+
+                option("dma_intr_priority") {
+                    default     0x1007
+                    description "Priority for SPI dma interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state - ON"
+                }                
+            }
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default      150000000
+                    description  "Reference Frequency"
+                }
+
+                option("ref_park") {
+                    default      107400
+                    description  "Reference Park Value"
+                }
+
+                option("ref_resume") {
+                    default      115097
+                    description  "Reference Resume Value"
+                }
+
+                option("ref_duration") {
+                    default      0xFFFFFFFF
+                    description  "Reference Duration"
+                }
+            }
+        }
+
+        device("dma1") {
+            description     "STM32F DMA driver"
+            enable          false
+            driver          "nu.bsp.drvr.dma"
+            runlevel        10
+            setup_entry     true
+            cleanup_entry   true
+            
+            group("tgt_settings") {
+                enregister     true
+
+                option("dma_dev_id") {
+                    default     10
+                    values      [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                    description "This id number corresponds to the desired dma data stream.  
+                                 DMA device 0-7 correspond to streams 0-7 for DMA1 in STM hardware.  
+                                 DMA device 8-15 correspond to streams 0-7 for DMA2.  
+                                 Consult Reference Manual pg 304-305 for the DMA stream definitions."
+                }
+
+                option("dma_intr_priority") {
+                    default     0x1007
+                    description "Priority for SPI dma interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state - ON"
+                }                
+            }
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default      150000000
+                    description  "Reference Frequency"
+                }
+
+                option("ref_park") {
+                    default      107400
+                    description  "Reference Park Value"
+                }
+
+                option("ref_resume") {
+                    default      115097
+                    description  "Reference Resume Value"
+                }
+
+                option("ref_duration") {
+                    default      0xFFFFFFFF
+                    description  "Reference Duration"
+                }
+            }
+        }
+
+
+
+        device("dma2") {
+            description     "STM32F DMA driver"
+            enable          false
+            driver          "nu.bsp.drvr.dma"
+            runlevel        10
+            setup_entry     true
+            cleanup_entry   true
+            
+            group("tgt_settings") {
+                enregister     true
+
+                option("dma_dev_id") {
+                    default     4
+                    values      [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                    description "This id number corresponds to the desired dma data stream.  
+                                 DMA device 0-7 correspond to streams 0-7 for DMA1 in STM hardware.  
+                                 DMA device 8-15 correspond to streams 0-7 for DMA2.  
+                                 Consult Reference Manual pg 304-305 for the DMA stream definitions."
+                }
+
+                option("dma_intr_priority") {
+                    default     0x1007
+                    description "Priority for SPI dma interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state - ON"
+                }                
+            }
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default      150000000
+                    description  "Reference Frequency"
+                }
+
+                option("ref_park") {
+                    default      107400
+                    description  "Reference Park Value"
+                }
+
+                option("ref_resume") {
+                    default      115097
+                    description  "Reference Resume Value"
+                }
+
+                option("ref_duration") {
+                    default      0xFFFFFFFF
+                    description  "Reference Duration"
+                }
+            }
+        }
+
+
+
+        device("dma3") {
+            description     "STM32F DMA driver"
+            enable          false
+            driver          "nu.bsp.drvr.dma"
+            runlevel        10
+            setup_entry     true
+            cleanup_entry   true
+            
+            group("tgt_settings") {
+                enregister     true
+
+                option("dma_dev_id") {
+                    default     3
+                    values      [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                    description "This id number corresponds to the desired dma data stream.  
+                                 DMA device 0-7 correspond to streams 0-7 for DMA1 in STM hardware.  
+                                 DMA device 8-15 correspond to streams 0-7 for DMA2.  
+                                 Consult Reference Manual pg 304-305 for the DMA stream definitions."
+                }
+
+                option("dma_intr_priority") {
+                    default     0x1007
+                    description "Priority for SPI dma interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state - ON"
+                }                
+            }
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default      150000000
+                    description  "Reference Frequency"
+                }
+
+                option("ref_park") {
+                    default      107400
+                    description  "Reference Park Value"
+                }
+
+                option("ref_resume") {
+                    default      115097
+                    description  "Reference Resume Value"
+                }
+
+                option("ref_duration") {
+                    default      0xFFFFFFFF
+                    description  "Reference Duration"
+                }
+            }
+        }
+
+
+
+        device("dma4") {
+            description     "STM32F DMA driver"
+            enable          false
+            driver          "nu.bsp.drvr.dma"
+            runlevel        10
+            setup_entry     true
+            cleanup_entry   true
+            
+            group("tgt_settings") {
+                enregister     true
+
+                option("dma_dev_id") {
+                    default     13
+                    values      [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                    description "This id number corresponds to the desired dma data stream.  
+                                 DMA device 0-7 correspond to streams 0-7 for DMA1 in STM hardware.  
+                                 DMA device 8-15 correspond to streams 0-7 for DMA2.  
+                                 Consult Reference Manual pg 304-305 for the DMA stream definitions."
+                }
+
+                option("dma_intr_priority") {
+                    default     0x1007
+                    description "Priority for SPI dma interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state - ON"
+                }                
+            }
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default      150000000
+                    description  "Reference Frequency"
+                }
+
+                option("ref_park") {
+                    default      107400
+                    description  "Reference Park Value"
+                }
+
+                option("ref_resume") {
+                    default      115097
+                    description  "Reference Resume Value"
+                }
+
+                option("ref_duration") {
+                    default      0xFFFFFFFF
+                    description  "Reference Duration"
+                }
+            }
+        }
+
+
+
+        device("dma5") {
+            description     "STM32F DMA driver"
+            enable          false
+            driver          "nu.bsp.drvr.dma"
+            runlevel        10
+            setup_entry     true
+            cleanup_entry   true
+            
+            group("tgt_settings") {
+                enregister     true
+
+                option("dma_dev_id") {
+                    default     14
+                    values      [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                    description "This id number corresponds to the desired dma data stream.  
+                                 DMA device 0-7 correspond to streams 0-7 for DMA1 in STM hardware.  
+                                 DMA device 8-15 correspond to streams 0-7 for DMA2.  
+                                 Consult Reference Manual pg 304-305 for the DMA stream definitions."
+                }
+
+                option("dma_intr_priority") {
+                    default     0x1007
+                    description "Priority for SPI dma interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state - ON"
+                }                
+            }
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default      150000000
+                    description  "Reference Frequency"
+                }
+
+                option("ref_park") {
+                    default      107400
+                    description  "Reference Park Value"
+                }
+
+                option("ref_resume") {
+                    default      115097
+                    description  "Reference Resume Value"
+                }
+
+                option("ref_duration") {
+                    default      0xFFFFFFFF
+                    description  "Reference Duration"
+                }
+            }
+        }
+
+###############################################################################
+#
+
+
+        device("serial0") {
+            description     "STM32 USART device"
+            enable          false
+            driver          "nu.bsp.drvr.serial.stm32_usart"
+            runlevel        11
+            setup_entry     true
+
+            # Target Settings
+            group("tgt_settings") {
+                enregister      true
+                description     "Target settings"
+
+                option("ser_dev") {
+                    default     1
+                    values      [1,2,3,4,5,6,7,8]
+                    description "Physical serial device associated with this interface."
+                }
+
+                option("tx_intr_priority") {
+                    default     0x1007
+                    description "Priority for USART1 interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("rx_intr_priority") {
+                    default     0x1007
+                    description "Priority for UART1 interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state for USART - ON"
+                }
+            }
+
+            # Device Settings
+            group("dev_settings") {
+                enregister   true
+                description  "Default device configuration"
+                binary_build_editable
+
+                option("baud_rate") {
+                    default  115200
+                }
+
+                option("data_bits") {
+                    default  8
+                }
+
+                option("stop_bits") {
+                    default  1
+                }
+
+                option("parity") {
+                    default  0
+                }
+
+                option("tx_mode") {
+                    default  0
+                }
+
+                option("rx_mode") {
+                    default  0
+                }
+
+                option("flow_ctrl") {
+                    default  0
+                }
+            }
+
+            # Serial MW settings
+            group("mw_settings") {
+                enregister   true
+                description  "Serial MW settings"
+                binary_build_editable
+
+                option("buffer_size") {
+                    default  100
+                }
+            }
+
+            # Other settings
+            option("stdio") {
+                enregister   true
+                default      1
+                description  "This marks the device to be used for STD I/O. This option is optional."
+            }
+
+            option("uii_dev") {
+                enregister   true
+                default      1
+                description  "This marks the device to be a UII Power Device"
+            }
+
+            group("mpl_settings") {
+                enregister   true
+                description  "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default  120000000
+                }
+
+                option("ref_park") {
+                    default  1000000
+                }
+
+                option("ref_resume") {
+                    default  1000000
+                }
+
+                option("ref_duration") {
+                    default  0xFFFFFFFF
+                }
+            }
+        }       
+        # device("serial0")
+
+
+        device("serial1") {
+            description     "STM32 USART device"
+            enable          false
+            driver          "nu.bsp.drvr.serial.stm32_usart"
+            runlevel        11
+            setup_entry     true
+
+            # Target Settings
+            group("tgt_settings") {
+                enregister      true
+                description     "Target settings"
+
+                option("ser_dev") {
+                    default     3
+                    values      [1,2,3,4,5,6,7,8]
+                    description "Physical serial device associated with this interface."
+                }
+
+                option("tx_intr_priority") {
+                    default     0x1007
+                    description "Priority for USART1 interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("rx_intr_priority") {
+                    default     0x1007
+                    description "Priority for UART1 interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state for USART - ON"
+                }
+            }
+
+            # Device Settings
+            group("dev_settings") {
+                enregister   true
+                description  "Default device configuration"
+                binary_build_editable
+
+                option("baud_rate") {
+                    default  115200
+                }
+
+                option("data_bits") {
+                    default  8
+                }
+
+                option("stop_bits") {
+                    default  1
+                }
+
+                option("parity") {
+                    default  0
+                }
+
+                option("tx_mode") {
+                    default  0
+                }
+
+                option("rx_mode") {
+                    default  0
+                }
+
+                option("flow_ctrl") {
+                    default  0
+                }
+            }
+
+            # Serial MW settings
+            group("mw_settings") {
+                enregister   true
+                description  "Serial MW settings"
+                binary_build_editable
+
+                option("buffer_size") {
+                    default  100
+                }
+            }
+
+            # Other settings
+            option("stdio") {
+                enregister   true
+                default      0
+                description  "This marks the device to be used for STD I/O. This option is optional."
+            }
+
+            option("uii_dev") {
+                enregister   true
+                default      1
+                description  "This marks the device to be a UII Power Device"
+            }
+
+            group("mpl_settings") {
+                enregister   true
+                description  "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default  120000000
+                }
+
+                option("ref_park") {
+                    default  1000000
+                }
+
+                option("ref_resume") {
+                    default  1000000
+                }
+
+                option("ref_duration") {
+                    default  0xFFFFFFFF
+                }
+            }
+        }       
+        # device("serial1")
+
+###############################################################################
+#
+# GPIO Initialization for LEDs, Debugging and switches
+#
+
+        device("gpio") {
+            description     "GPIO Initialization"
+            enable          true
+            driver          "nu.bsp.drvr.gpio"
+            runlevel        11
+            setup_entry     true
+            cleanup_entry   false
+        }
+
+###############################################################################
+#
+# SPI device setting structure copied from the STM-provided hal
+# header file for the spi device.  Use only lwspi for now.
+#
+
+        device("spi0") {
+            description     "STM32 SPI device 1 (count from 1)"
+            enable          false
+            driver          "nu.bsp.drvr.lwspi.stm32"
+            runlevel        11
+            setup_entry     true
+            cleanup_entry   true
+
+
+            group("tgt_settings") {
+                description "SPI device target specific settings"
+                enregister  true
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state for SPI device"
+                }
+
+                option("spi_dev") {
+                    default     1
+                    values      [1,2,3,4,5,6]
+                    description "Physical spi device associated with this interface."
+                }
+
+                option("intr_priority") {
+                    default     0x1007
+                    description "Priority for SPI device interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("trans_delay") {
+                    default     0
+                    description "Delay between two data unit transfers(in micro second)."
+                    # This delay can be configured according to the slave's requirement.
+                }
+
+                option("cs_delay") {
+                    default     0
+                    description "Delay between chip select deassert and assert(in micro second)."
+                    # This delay can be configured according to the slave's requirement.
+                }
+
+                option("dma_enable") {
+                    default     0
+                    values      [0,1]
+                    description "This places the dma device specifid by the *_dev_id under spi control."
+                }
+
+                option("tx_dma_dev_id") {
+                    default     11
+                    values      [4,5,7,9,11,12,13,14]
+                    description "This dma device ID should match the DMA stream associated with the 
+                                 SPI peripheral and should be the same as the id used to create the 
+                                 dma device.  The streams are defined on pgs 304-305 of users
+                                 manual.  "
+                }
+
+                option("rx_dma_dev_id") {
+                    default     10
+                    values      [0,2,3,8,10,11,13,14]
+                    description "This dma device ID should match the DMA stream associated with the 
+                                 SPI peripheral and should be the same as the id used to create the 
+                                 dma device.  The streams are defined on pgs 304-305 of users
+                                 manual.  "
+                }
+
+            } # "tgt_settings"
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                  default 80000000
+                }
+
+                option("ref_park") {
+                  default 24920
+                }
+
+                option("ref_resume") {
+                  default 101964
+                }
+
+                option("ref_duration") {
+                  default 0xFFFFFFFF
+                }
+            }
+
+            group("labels") {
+                enregister true
+
+                option("spi_label") {
+                    default guid(0x2d, 0x1a, 0x38, 0x9b,
+                                 0xd1, 0xc1, 0x47, 0x31,
+                                 0x80, 0xad, 0xda, 0x5c,
+                                 0xa7, 0x6e, 0x03, 0x51)
+                    description "GUID for SPI 0"
+                }
+            } # "labels"
+
+        }
+        # device("spi0")
+
+
+        device("spi1") {
+            description     "STM32 SPI device 2 (count from 1)"
+            enable          false
+            driver          "nu.bsp.drvr.lwspi.stm32"
+            runlevel        11
+            setup_entry     true
+            cleanup_entry   true
+
+
+            group("tgt_settings") {
+                description "SPI device target specific settings"
+                enregister  true
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state for SPI device"
+                }
+
+                option("spi_dev") {
+                    default     2
+                    values      [1,2,3,4,5,6]
+                    description "Physical spi device associated with this interface."
+                }
+
+                option("intr_priority") {
+                    default     0x1007
+                    description "Priority for SPI device interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("trans_delay") {
+                    default     0
+                    description "Delay between two data unit transfers(in micro second)."
+                    # This delay can be configured according to the slave's requirement.
+                }
+
+                option("cs_delay") {
+                    default     0
+                    description "Delay between chip select deassert and assert(in micro second)."
+                    # This delay can be configured according to the slave's requirement.
+                }
+
+                option("dma_enable") {
+                    default     0
+                    values      [0,1]
+                    description "This places the dma device specifid by the *_dev_id under spi control."
+                }
+
+                option("tx_dma_dev_id") {
+                    default     4
+                    values      [4,5,7,9,11,12,13,14]
+                    description "This dma device ID should match the DMA stream associated with the 
+                                 SPI peripheral and should be the same as the id used to create the 
+                                 dma device.  The streams are defined on pgs 304-305 of users
+                                 manual.  "
+                }
+
+                option("rx_dma_dev_id") {
+                    default     3
+                    values      [0,2,3,8,10,11,13,14]
+                    description "This dma device ID should match the DMA stream associated with the 
+                                 SPI peripheral and should be the same as the id used to create the 
+                                 dma device.  The streams are defined on pgs 304-305 of users
+                                 manual.  "
+                }
+
+            } # "tgt_settings"
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                  default 80000000
+                }
+
+                option("ref_park") {
+                  default 24920
+                }
+
+                option("ref_resume") {
+                  default 101964
+                }
+
+                option("ref_duration") {
+                  default 0xFFFFFFFF
+                }
+            }
+
+            group("labels") {
+                enregister true
+
+                option("spi_label") {
+                    default guid(0x86,0x93,0x13,0xb9,
+                                 0x64,0xa7,0x45,0x58,
+                                 0x95,0x2f,0xfc,0xc5,
+                                 0x75,0x4b,0xcf,0xa6)
+                    description "GUID for SPI 1"
+                }
+            } # "labels"
+
+        }
+        # device("spi1")
+
+        device("spi4") {
+            description     "STM32 SPI device 5 (count from 1)"
+            enable          false
+            driver          "nu.bsp.drvr.lwspi.stm32"
+            runlevel        11
+            setup_entry     true
+            cleanup_entry   true
+
+
+            group("tgt_settings") {
+                description "SPI device target specific settings"
+                enregister  true
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state for SPI device"
+                }
+
+                option("spi_dev") {
+                    default     5
+                    values      [1,2,3,4,5,6]
+                    description "Physical spi device associated with this interface."
+                }
+
+                option("intr_priority") {
+                    default     0x1007
+                    description "Priority for SPI device interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("trans_delay") {
+                    default     0
+                    description "Delay between two data unit transfers(in micro second)."
+                    # This delay can be configured according to the slave's requirement.
+                }
+
+                option("cs_delay") {
+                    default     0
+                    description "Delay between chip select deassert and assert(in micro second)."
+                    # This delay can be configured according to the slave's requirement.
+                }
+
+                option("dma_enable") {
+                    default     0
+                    values      [0,1]
+                    description "This places the dma device specifid by the *_dev_id under spi control."
+                }
+
+                option("tx_dma_dev_id") {
+                    default     14
+                    values      [4,5,7,9,11,12,13,14]
+                    description "This dma device ID should match the DMA stream associated with the 
+                                 SPI peripheral and should be the same as the id used to create the 
+                                 dma device.  The streams are defined on pgs 304-305 of users
+                                 manual.  "
+                }
+
+                option("rx_dma_dev_id") {
+                    default     13
+                    values      [0,2,3,8,10,11,13,14]
+                    description "This dma device ID should match the DMA stream associated with the 
+                                 SPI peripheral and should be the same as the id used to create the 
+                                 dma device.  The streams are defined on pgs 304-305 of users
+                                 manual.  "
+                }
+
+            } # "tgt_settings"
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                  default 80000000
+                }
+
+                option("ref_park") {
+                  default 24920
+                }
+
+                option("ref_resume") {
+                  default 101964
+                }
+
+                option("ref_duration") {
+                  default 0xFFFFFFFF
+                }
+            }
+
+            group("labels") {
+                enregister true
+
+                option("spi_label") {
+                    default guid(0x87,0x44,0xa8,0x60,
+                                 0xc7,0xa5,0x4d,0x1b,
+                                 0xb3,0x1e,0x82,0x8a,
+                                 0x35,0xe8,0xe6,0x2b)
+                    description "GUID for SPI 4"
+                }
+            } # "labels"
+
+        }
+        # device("spi4")
+
+###############################################################################
+        
+        device("ramdisk0") {
+            description     "Ram Disk device 0"
+            enable          false
+            driver          "nu.os.drvr.fat_rd"
+            runlevel        6
+            setup_entry     false
+
+            group("tgt_settings") {
+                enregister     true
+                description    "Target settings"
+
+                option("def_pwr_state") {
+                    default         255
+                    values          [0,1,255]
+                    description     "Default power state - ON"
+                }
+
+                option("dev_name") {
+                    default      "rda"
+                    description  "Device, name"
+                }
+            }
+
+            group("mw_settings") {
+                enregister     true
+                description    "rda mount configuration"
+
+                option("pt") {
+                    default      "A"
+                    description  "Drive letter to associate with the device"
+                }
+
+                option("fs") {
+                    default      "FAT"
+                    description  "String describing the file system type"
+                }
+
+                option("auto_fmt") {
+                    default      true
+                    description  "Formats the device if the file system is not present"
+                }
+            }
+        }
+        # device("ramdisk0")
+        
+###############################################################################
+#
+#
+#
+
+        device("i2c0") {
+            description     "STM32 I2C device 0"
+            enable          false
+            driver          "nu.bsp.drvr.i2c.stm32"
+            runlevel        10
+            setup_entry     true
+            cleanup_entry   true
+
+            group("mw_settings") {
+                description "I2C middleware settings"
+                # enregister true
+                enable      true
+
+                option("baud") {
+                    # default baud rate in kbs
+                    default     100
+                    description "Baud rate in kbs"
+                }
+            }
+
+            group("tgt_settings") {
+                description "STM32 I2C target specific settings"
+                enregister  true
+
+                option("def_pwr_state") {
+                    default     1
+                    values      [0,1,255]
+                    description "Default power state for STM32 I2C - ON"
+                }
+
+                option("i2c_dev") {
+                    default     1
+                    values      [1,2,3]
+                    description "Physical spi device associated with this interface."
+                }
+
+                option("priority") {
+                    default     6
+                    description "Priority for STM32 I2C interrupt"
+                }
+
+            }
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default    179712000
+                }
+
+                option("ref_park") {
+                    default    24920
+                }
+
+                option("ref_resume") {
+                    default    101964
+                }
+
+                option("ref_duration") {
+                    default    0xFFFFFFFF
+                }
+            }
+        }
+        # device("i2c0")
+        
+
+        device("i2c1") {
+            description     "STM32 I2C device 1"
+            enable          false
+            driver          "nu.bsp.drvr.i2c.stm32"
+            runlevel        10
+            setup_entry     true
+            cleanup_entry   true
+
+            group("mw_settings") {
+                description "I2C middleware settings"
+                # enregister true
+                enable      true
+
+                option("baud") {
+                    # default baud rate in kbs
+                    default     400
+                    description "Baud rate in kbs"
+                }
+            }
+
+            group("tgt_settings") {
+                description "STM32 I2C target specific settings"
+                enregister  true
+
+                option("def_pwr_state") {
+                    default     1
+                    values      [0,1,255]
+                    description "Default power state for STM32 I2C - ON"
+                }
+
+                option("i2c_dev") {
+                    default     2
+                    values      [1,2,3]
+                    description "Physical spi device associated with this interface."
+                }
+
+                option("priority") {
+                    default     6
+                    description "Priority for STM32 I2C interrupt"
+                }
+
+            }
+
+            group("mpl_settings") {
+                enregister     true
+                description    "Default device MPL Settings"
+
+                option("ref_freq") {
+                    default    179712000
+                }
+
+                option("ref_park") {
+                    default    24920
+                }
+
+                option("ref_resume") {
+                    default    101964
+                }
+
+                option("ref_duration") {
+                    default    0xFFFFFFFF
+                }
+            }
+        }
+        # device("i2c1")
+       
+
+###############################################################################
+#
+# Network Interfaces
+#
+        device("ethernet0") {
+            description     "ETH MAC device 0"
+            enable          false
+            driver          "nu.bsp.drvr.enet.stm32_emac"
+            runlevel        11
+            setup_entry     true
+
+            group("mw_settings") {
+                enregister true
+                description "Ethernet device settings"
+                binary_build_editable
+
+                option("eth_enable_ipv4") {
+                    description "Enable IPv4 for this interface."
+                    default true
+                }
+
+                option("eth_enable_ipv4_dhcp") {
+                    description "Enable IPv4 DHCP for this interface."
+                    default false
+                }
+
+                option("eth_ipv4_address") {
+                    description "Static IPv4 address for this interface"
+                    default "192.168.000.002"
+                }
+
+                option("eth_ipv4_netmask") {
+                    description "IPv4 netmask for this interface"
+                    default "255.255.255.0"
+                }
+
+                option("eth_ipv4_gateway") {
+                    description "IPv4 Default Gateway Server for this interface"
+                    default "192.168.000.010"
+                }
+
+                option("eth_enable_ipv6") {
+                    description "Enable IPv6 for this interface."
+                    default false
+                }
+
+                option("eth_enable_ipv6_dhcp") {
+                    description "Enable IPv6 DHCP for this interface."
+                    default false
+                }
+                
+                option("eth_ipv6_address") {
+                    description "Global IPv6 address for this interface."
+                    default "0000:0000:0000:0000:0000:0000:0000:0000"
+                }
+
+                option("eth_ipv6_prefix_length") {
+                    description "Prefix-length for global IPv6 address of this interface. (1..128)"
+                    default 128
+                }
+
+            }
+
+            group("labels") {
+                enregister true
+                enable true
+
+                option("eth0_label") {
+                    default guid(0xc7, 0x2f, 0xc6, 0xb3,
+                                 0x4f, 0x40, 0x46, 0xea,
+                                 0xae, 0xdc, 0xef, 0x38,
+                                 0x4d, 0x86, 0x24, 0x41)
+                    description "GUID for EMAC"
+                }
+            }
+
+            group("tgt_settings") {
+                description "EMAC target specific settings"
+                enregister true
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state for EMAC - ON"
+                }
+
+                option("dev_name") {
+                    default "eth0"
+                    description "Default name for STM32 EMAC"
+                }
+
+                option("base") {
+                    default     0x40028000
+                    description "Base address for this EMAC device"
+                }
+
+                option("vector") {
+                    default     62
+                    description "Vector id for EMAC interrupt - ESAL_AR_ETH_INT_VECTOR_ID"
+                }
+
+                option("priority") {
+                    default     0x1007
+                    description "Priority for ETH_MAC interrupt - (ESAL_AR_INT_IRQ_ROUTED | 7)
+                                 ESAL_AR_INT_IRQ_ROUTED - is defined as 0x00001000"
+                }
+
+                option("trigger_type") {
+                    default     3
+                    description "Trigger type for EMAC interrupt - ESAL_TRIG_LEVEL_LOW"
+                }
+
+                option("number") {
+                    default     1
+                    description "EMAC device number - Only 1"
+                }
+
+                option("mode") {
+                    default     0x02
+                    description "MII - STM32 EMAC (RMII = 0x01)"
+                }
+
+                option("phy_vector") {
+                    default     -1
+                    description "No IRQ"
+                }
+
+                option("ref_clock") {
+                    default     "MACCLK"
+                    description "Name of the reference clock - used with power services to get reference clock frequency"
+                }
+            }
+        }
+        # device("ethernet0") 
+
+
+        # Set the run level for the ifspi to be higher than the spi devices to allow spi to be 
+        # initialized first.
+        #
+        device("ifspi0") {
+            description     "SPI-based physical layer interface for networking, device 0.  
+                             The eth prefix is kept because this interface was based on the 
+                             ethernet interface."
+            enable          false
+            driver          "nu.bsp.drvr.ifspi"
+            runlevel        12
+            setup_entry     false
+
+            group("mw_settings") {
+                enregister true
+                description "IF SPI settings for network stack"
+                binary_build_editable
+
+                option("eth_enable_ipv4") {
+                    description "Enable IPv4 for this interface."
+                    default true
+                }
+
+                option("eth_enable_ipv4_dhcp") {
+                    description "Enable IPv4 DHCP for this interface."
+                    default false
+                }
+
+                option("eth_ipv4_address") {
+                    description "Static IPv4 address for this interface"
+                    default "192.168.002.002"
+                }
+
+                option("eth_ipv4_netmask") {
+                    description "IPv4 netmask for this interface"
+                    default "255.255.255.0"
+                }
+
+                option("eth_ipv4_gateway") {
+                    description "IPv4 Default Gateway Server for this interface"
+                    default "192.168.000.002"
+                }
+
+                option("eth_enable_ipv6") {
+                    description "Enable IPv6 for this interface."
+                    default false
+                }
+
+                option("eth_enable_ipv6_dhcp") {
+                    description "Enable IPv6 DHCP for this interface."
+                    default false
+                }
+                
+                option("eth_ipv6_address") {
+                    description "Global IPv6 address for this interface."
+                    default "0000:0000:0000:0000:0000:0000:0000:0000"
+                }
+
+                option("eth_ipv6_prefix_length") {
+                    description "Prefix-length for global IPv6 address of this interface. (1..128)"
+                    default 128
+                }
+
+            }
+
+            group("labels") {
+                enregister true
+                enable true
+
+                option("ifspi0_label") {
+                    default guid(
+                                 0xe3, 0x01, 0x34, 0x14,
+                                 0xbf, 0x76, 0x42, 0x3e,
+                                 0xa6, 0x0b, 0xf1, 0x38,
+                                 0x03, 0x6c, 0x85, 0xae)
+                    description "GUID for IF SPI"
+                }
+            }
+
+            group("tgt_settings") {
+                description "IF SPI target specific settings"
+                enregister true
+
+                option("spi_dev_name") {
+                    default "spi4"
+                    description "Name of the spi bus to use for transactions"
+                }
+
+                option("spi_dev_ctrl") {
+                    default     0
+                    values      [0,1]
+                    description "SPI device set up as Slave (0) or Master (1).
+                                 For the SPI link, one side has to be master,
+                                 the other side a slave."
+                }
+
+                option("spi_baud_rate") {
+                    default     22000000
+                    description "SPI baud rate."
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state for IF SPI - ON"
+                }
+
+                option("dev_name") {
+                    default "ifspi0"
+                    description "Default name for STM32 IF SPI interface"
+                }
+
+            }
+        }
+        # device("ifspi0") 
+
+        # Set the run level for the ifspi to be higher than the spi devices to allow spi to be 
+        # initialized first.
+        #
+        device("ifspi1") {
+            description     "SPI-based physical layer interface for networking, device 0.  
+                             The eth prefix is kept because this interface was based on the 
+                             ethernet interface."
+            enable          false
+            driver          "nu.bsp.drvr.ifspi"
+            runlevel        12
+            setup_entry     false
+
+            group("mw_settings") {
+                enregister true
+                description "IF SPI settings for network stack"
+                binary_build_editable
+
+                option("eth_enable_ipv4") {
+                    description "Enable IPv4 for this interface."
+                    default true
+                }
+
+                option("eth_enable_ipv4_dhcp") {
+                    description "Enable IPv4 DHCP for this interface."
+                    default false
+                }
+
+                option("eth_ipv4_address") {
+                    description "Static IPv4 address for this interface"
+                    default "192.168.002.003"
+                }
+
+                option("eth_ipv4_netmask") {
+                    description "IPv4 netmask for this interface"
+                    default "255.255.255.0"
+                }
+
+                option("eth_ipv4_gateway") {
+                    description "IPv4 Default Gateway Server for this interface"
+                    default "192.168.000.002"
+                }
+
+                option("eth_enable_ipv6") {
+                    description "Enable IPv6 for this interface."
+                    default false
+                }
+
+                option("eth_enable_ipv6_dhcp") {
+                    description "Enable IPv6 DHCP for this interface."
+                    default false
+                }
+                
+                option("eth_ipv6_address") {
+                    description "Global IPv6 address for this interface."
+                    default "0000:0000:0000:0000:0000:0000:0000:0000"
+                }
+
+                option("eth_ipv6_prefix_length") {
+                    description "Prefix-length for global IPv6 address of this interface. (1..128)"
+                    default 128
+                }
+
+            }
+
+            group("labels") {
+                enregister true
+                enable true
+
+                option("ifspi1_label") {
+                    default guid( 0x8c,0xc4,0x2a,0xc5,
+                                  0x1c,0xab,0x4b,0x89,
+                                  0x88,0xa1,0xea,0xfb,
+                                  0xcb,0x20,0x0d,0x86)
+                    description "GUID for IF SPI"
+                }
+            }
+
+            group("tgt_settings") {
+                description "IF SPI target specific settings"
+                enregister true
+
+                option("spi_dev_name") {
+                    default "spi1"
+                    description "Name of the spi bus to use for transactions"
+                }
+
+                option("spi_dev_ctrl") {
+                    default     1
+                    values      [0,1]
+                    description "SPI device set up as Slave (0) or Master (1).
+                                 For the SPI link, one side has to be master,
+                                 the other side a slave."
+                }
+
+                option("spi_baud_rate") {
+                    default     22000000
+                    description "SPI baud rate."
+                }
+
+                option("def_pwr_state") {
+                    default     255
+                    values      [0,1,255]
+                    description "Default power state for IF SPI - ON"
+                }
+
+                option("dev_name") {
+                    default "ifspi1"
+                    description "Default name for STM32 IF SPI interface"
+                }
+
+            }
+        }
+        # device("ifspi1") 
+
+    }
+}

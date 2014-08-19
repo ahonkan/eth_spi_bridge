@@ -1,0 +1,17 @@
+component("hibernate") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus Hibernate driver."
+    enable false
+
+    requires("nu.os.svcs.pwr")
+    
+    library("nucleus.lib"){
+        sources { Dir.glob("src/*.c") }
+    }
+   
+    option("level_count"){        
+        default 1
+        description  "Number of hibernate levels defined in the system, this value is often over-ridden in the BSP via the .platform file."
+    }
+}

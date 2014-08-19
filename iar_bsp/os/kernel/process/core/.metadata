@@ -1,0 +1,67 @@
+component("core") {
+    parent "nu.os.kern.process"
+    description "This component implements the Nucleus Processes core components."
+    enable false
+
+    requires("nu.os.kern.process.linkload")
+
+    # Currently only ARM is supported by Nucleus Processes
+    requires("nu.os.arch.arm.process.core")
+
+    option("export_symbols"){
+        default     true
+        description "Exports API symbols for use by loaded processes."
+    }
+
+    option("max_processes"){
+        default     64
+        values      2..256
+        description "The maximum number of processes that are allowed in the system.  Updating this value has implications on the amount of memory required for translation tables."
+    }
+
+    option("max_name_length"){
+        default     64
+        values      1..1024
+        description "The maximum length (in characters) that a process name may be.  Updating this value has implications for the amount of memory required per process."
+    }
+
+    option("heap_size"){
+        default     65536
+        values      0..16777216
+        description "Size of the heap created for processes.  This value will be used unless a separate value is passed via NU_Load"
+    }
+
+    option("stack_size"){
+        default     4096
+        values      512..65536
+        description "Size of the stack utilized by the process root thread to execute the main and deinit functions"
+    }
+
+    option("min_user_task_priority"){
+        default     16
+        values      0..255
+        description "Minimum task priority value (lower = higher priority) allowed for user process tasks.  Default is 16"
+    }
+
+    option("sup_user_mode"){
+        default     true
+        description "Determines if supervisor / user mode switching is enabled within the system.  Default is true."
+    }
+
+    option("dev_support"){
+        default     true
+        description "Setting to true will enable integration with the IDE to facilitate process development.  This includes enabling code to notify the IDE of process loading and unloading.  Setting to false will remove IDE integration code and give better performance.  Default is true."
+    }
+
+    option("page_size") {
+        default     4096
+        hidden      true
+        description "Hardware page size.  This can be over-ridden by the platform, if needed.  Default is 4096."
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

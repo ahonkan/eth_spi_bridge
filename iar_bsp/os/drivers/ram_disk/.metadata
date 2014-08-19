@@ -1,0 +1,33 @@
+component("fat_rd") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus FAT RAM disk driver."
+    enable true
+   #Requirements for Nucleus FILE Ramdisk
+   #Default requirments for most middleware products
+   requires("nu.os.kern.plus.core")
+   requires("nu.os.kern.devmgr")
+   requires("nu.os.svcs.registry")
+ 
+   #Requirements that are specific to Nucleus FILE's Ramdisk driver
+   requires("nu.os.stor.file.vfs")
+   requires("nu.os.stor.file.fs.fat")
+
+    option("num_ramdisk_pages"){
+        default 20
+        description "Number of Ram Disk pages.  Must be at least 1."
+    }
+ 
+    option("hibernate_dev") {
+        enregister  true
+        default     true
+        description "This marks the component to be hibernate aware"
+        hidden      true
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

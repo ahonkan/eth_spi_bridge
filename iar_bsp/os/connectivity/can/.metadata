@@ -1,0 +1,45 @@
+component("can") {
+   parent "nu.os.conn"
+   version "1.0.0"
+   description "This component implements the Nucleus CAN bus component."
+   enable true
+   runlevel 5
+
+   requires("nu.os.kern.devmgr")
+   
+   library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+
+    option("default_baud_rate") {
+      default 1000
+      enregister false
+      description "Default baud rate for CAN"
+   }
+
+    option("optimize_for_speed") {
+      default false
+      enregister false
+      description "Enable optimization for speed improvement in CAN"
+   }
+
+    option("optimize_for_size") {
+      default true
+      enregister false
+      description "Enable optimization for footprint improvement in CAN"
+   }
+
+    # operating_mode has 4 values:
+    # 1 - Loopback
+    # 2 - Normal Hardware
+    # 3 - Normal Hardware with Loopback
+    # 4 - Normal Hardware Listen only
+   option("operating_mode") {
+      default 2
+      values  [1,2,3,4]
+      description "Selects one of the different operating mode for CAN."
+   }
+
+}

@@ -1,0 +1,21 @@
+component("keyboard") { 
+   parent "nu.os.conn.usb.host.hid"
+   version "2.7.0"
+   description "This component implements the host USB Keyboard user component."
+   enable true
+   runlevel 8
+   requires("nu.os.conn.usb.host.hid.class")
+   
+   library("nucleus.lib") {
+      sources {
+         Dir.glob("**/*.c")
+      }
+   }
+   
+   option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+}

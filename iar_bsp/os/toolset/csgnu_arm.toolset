@@ -1,0 +1,151 @@
+component("csgnu_arm") {
+   parent "toolsets"
+   version "4.7.2"
+   description "This component holds the generic options for the Sourcery CodeBench for ARM toolset."
+
+   option("CROSS") {
+      default "arm-none-eabi-"
+      hidden true
+   }
+
+   option("CC") {
+      default "$(CROSS)gcc"
+      hidden true
+   }
+
+   option("CFLAGS") {
+      default "-Wall -ffunction-sections -fdata-sections"
+   }
+
+   option("PROC_CFLAGS") {
+      default "-Wall -ffunction-sections -fdata-sections -fPIC -DNU_PROCESS"
+   }
+
+   option("compile") {
+      default "$(CC) $(patsubst %, -isystem %, $(SYSTEM_INCLUDE_PATH)) $(patsubst %, -I%, $(INCLUDE_PATH)) -I. -Wp,-MD,$(2:.o=.d.tmp) -c $(CFLAGS) $(ARCH_CFLAGS) $(CFLAGS_$(1)) $(1) -o $(2)"
+      hidden true
+   }
+
+   option("proc_compile") {
+      default "$(CC) $(patsubst %, -I%, $(INCLUDE_PATH)) -I. -Wp,-MD,$(2:.po=.pd.tmp) -c $(PROC_CFLAGS) $(ARCH_CFLAGS) $(CFLAGS_$(1)) $(1) -o $(2)"
+      hidden true
+   }
+   
+   option("CXX") {
+      default "$(CROSS)g++"
+      hidden true
+   }
+
+   option("CXXFLAGS") {
+      default "-Wall -fno-enforce-eh-specs"
+   }
+
+   option("PROC_CXXFLAGS") {
+      default "-Wall -fno-enforce-eh-specs -fPIC -DNU_PROCESS"
+   }
+
+   option("compilecxx") {
+      default "$(CXX) $(patsubst %, -isystem %, $(SYSTEM_INCLUDE_PATH)) $(patsubst %, -I%, $(INCLUDE_PATH)) -I. -Wp,-MD,$(2:.o=.d.tmp) -c $(CXXFLAGS) $(ARCH_CXXFLAGS) $(CXXFLAGS_$(1)) $(1) -o $(2)"
+      hidden true
+   }
+
+   option("proc_compilecxx") {
+      default "$(CXX) $(patsubst %, -I%, $(INCLUDE_PATH)) -I. -Wp,-MD,$(2:.po=.pd.tmp) -c $(PROC_CXXFLAGS) $(ARCH_CXXFLAGS) $(CXXFLAGS_$(1)) $(1) -o $(2)"
+      hidden true
+   }
+   
+   option("AS") {
+      default "$(CROSS)as"
+      hidden true
+   }
+
+   option("ASFLAGS") {
+      default ""
+   }
+
+   option("PROC_ASFLAGS") {
+      default ""
+   }
+
+   option("assemble") {
+      default "$(AS) $(patsubst %, -I%, $(INCLUDE_PATH)) -I. --MD $(2:.o=.d.tmp) $(ASFLAGS) $(ARCH_ASFLAGS) $(ASFLAGS_$(1)) $(1) -o $(2)"
+      hidden true
+   }
+
+   option("cppassemble") {
+      default "$(CC) $(patsubst %, -I%, $(INCLUDE_PATH)) -I. -Wp,-MD,$(2:.o=.d.tmp) $(addprefix -Wa$(comma),$(ASFLAGS)) $(addprefix -Wa$(comma),$(ARCH_ASFLAGS)) $(addprefix -Wa$(comma),$(ASFLAGS_$(1))) -c -x assembler-with-cpp $(1) -o $(2)"
+      hidden true
+   }
+
+   option("proc_assemble") {
+      default "$(AS) $(patsubst %, -I%, $(INCLUDE_PATH)) -I. --MD $(2:.po=.pd.tmp) $(ASFLAGS) $(ARCH_ASFLAGS) $(ASFLAGS_$(1)) $(1) -o $(2)"
+      hidden true
+   }
+
+   option("proc_cppassemble") {
+      default "$(CC) $(patsubst %, -I%, $(INCLUDE_PATH)) -I. -Wp,-MD,$(2:.po=.pd.tmp) $(addprefix -Wa$(comma),$(ASFLAGS)) $(addprefix -Wa$(comma),$(ARCH_ASFLAGS)) $(addprefix -Wa$(comma),$(ASFLAGS_$(1))) -c $(1) -o $(2)"
+      hidden true
+   }
+   
+   option("LD") {
+      default "$(CROSS)gcc"
+      hidden true
+   }
+
+   option("LDFLAGS") {
+      default "-nostartfiles -Wl,--gc-sections -Wl,--wrap=malloc -Wl,--wrap=calloc -Wl,--wrap=realloc -Wl,--wrap=free -Wl,--defsym -Wl,PAGE_SIZE=$(PAGE_SIZE)"
+   }
+
+   option("PROC_LDFLAGS") {
+      default "-nostdlib -nostartfiles -Wl,--gc-sections -Wl,-pie -Wl,--warn-unresolved-symbols -Wl,--no-demangle -Wl,--nmagic -Wl,--defsym -Wl,PAGE_SIZE=$(PAGE_SIZE) -Wl,--defsym -Wl,NUCLEUS_VERSION=$(NUCLEUS_VERSION)"
+   }
+
+   option("PROC_LDSCRIPT") { 
+      default "$(SYSTEM_HOME)/os/toolset/csgnu_arm.process.ld"
+   }
+
+   option("link") {
+      default "$(LD) -Wl,-Map=$(basename $(1)).map -o $(1) $(LDFLAGS) $(ARCH_LDFLAGS) $(LDFLAGS_$(notdir $(1))) -T$(LDSCRIPT_$(notdir $(1))) -Wl,--start-group $(2) -lc -lm -lstdc++ -Wl,--end-group"
+      hidden true
+   }
+
+   option("proc_link") {
+      default "$(CROSS)nuproclink $(LD) $(basename $(1)).out $(basename $(1)).map -Wl,-Map=$(basename $(1)).map -o $(basename $(1)).out $(PROC_LDFLAGS) $(ARCH_PROC_LDFLAGS) $(LDFLAGS_$(notdir $(1))) -T$(PROC_LDSCRIPT) -Wl,--start-group @$(2) @$(3) -lstdc++ -lgcc -Wl,--end-group"
+      hidden true
+   }
+
+   option("AR") {
+      default "$(CROSS)ar"
+      hidden true
+   }
+
+   option("ARFLAGS") {
+      default ""
+   }
+
+   option("archive") {
+      default "$(AR) $(ARFLAGS) $(ARCH_ARFLAGS) -rc $(1) $(2)"
+      hidden true
+   }
+
+   option("POSTLD") {
+      default "$(CROSS)objcopy"
+      hidden true
+   }
+
+   option("PROC_POSTLD") {
+      default "$(CROSS)strip"
+      hidden true
+   }
+
+   option("postlink") {
+      default "$(POSTLD) -O binary $(1) $(basename $(1)).bin"
+      hidden true
+   }
+
+   option("proc_postlink") {
+      default "$(PROC_POSTLD) -g --strip-unneeded -R .interp -R .dynamic -R .comment $(basename $(1)).out -o $(1)"
+      hidden true
+   }
+}
+

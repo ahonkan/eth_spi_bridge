@@ -1,0 +1,13 @@
+INFORMATION
+===========
+
+It was written specifically for the "webserv" product and therefore has
+webserv-specific features such as file compress and security. The newer
+version of "filecon" which we created for meant for general purpose use
+and so we stipped out most of the compression and security related GUI
+elements. The code related to these features is still present in the
+source files.
+
+This version of "filecon" takes a different approach to memory-files.
+Along with the file data, it also generates code which can be used to
+write the files to an actual file system (possibly the FILE ramdisk).

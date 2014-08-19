@@ -1,0 +1,40 @@
+component("fat") {
+    parent "nu.os.stor.file.fs"
+    version "3.4.0"
+    description "This component implements the Nucleus FILE FAT filesystem library."
+    enable true
+
+    option("max_drvs") {
+        default 10
+        description "The maximum number of FAT formatted devices that may be mounted concurrently."
+    }
+    
+    option("num_block_buffers") {
+        default 20
+        description "Blocks in the buffer pool. Uses 532 bytes per block. Impacts performance during directory traversals."
+    }
+    
+    option("default_cache_size") {
+        values 2..4294967295
+        default 32
+        description "The FAT cache reduces the number of disk accesses to read data from the file allocation table. Uses 514  + (size >> 3) bytes per entry."
+    }
+    
+    #Requirements for Nucleus FILE
+    #Default requirments for most middleware products
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+    requires("nu.os.svcs.registry")
+
+    #Requirements that are specific to Nucleus FILE
+    requires("nu.os.stor.file.vfs")
+
+    library("nucleus.lib") {
+        sources { 
+        	cflags "csgnu_arm" => "-Wno-strict-aliasing"
+        	cflags "tensilica" => "-Wno-strict-aliasing"
+        	cflags "csgnu_ppc" => "-Wno-strict-aliasing"
+            Dir.glob("src/*.c")
+        }
+    }
+}

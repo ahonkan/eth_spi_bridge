@@ -1,0 +1,4 @@
+package("net") { 
+    parent "nu.os"
+    enable true
+}

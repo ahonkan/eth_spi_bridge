@@ -1,0 +1,61 @@
+component("i2c") { 
+   parent "nu.os.conn"
+   version "1.2.0"
+   description "This component implements the Nucleus I2C component."
+   enable true
+   runlevel 5
+
+   requires("nu.os.kern.devmgr")
+   
+   option("err_check_enable") {
+      default true
+      enregister false
+      description "Enable error checking in I2C generic layer"
+   }
+   
+   option("fine_control_api_enable") {
+      default false
+      enregister false
+      description "User can enable I2C fine control APIs using this configuration option"
+   }
+   
+   option("polling_mode_enable") {
+      default false
+      enregister false
+      description "Nucleus I2C runs in interrupt mode by default. User can switch to polling mode by setting this configuration option to true"
+   }
+   
+    option("max_devs_supported"){
+        description "The maximum number of devices supported by the i2c driver middleware (default is 2)"
+        default 2
+        values 1..6
+    }
+
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+    
+    option("node_type") {
+      default 0
+      description "Set this option to 1 to be able to run I2C in slave mode. Set it to 0 for I2C operation in master mode. "
+    }
+    
+    option("allow_reserved_addresses") {
+        default     false
+        enregister  false
+        description "In case of 7 bit addressing scheme for I2C slave address, Two groups of eight addresses (0000 XXX and 1111 XXX) 
+                    are reserved. However, If it is known that the reserved address is never going to be used for its intended purpose, 
+                    a reserved address can be used for a slave address.
+                    True  -> Reserved addresses can be used.
+                    False -> Reserved addresses can not be used. "
+    }
+
+   library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

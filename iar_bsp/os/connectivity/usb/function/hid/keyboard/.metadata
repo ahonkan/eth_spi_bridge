@@ -1,0 +1,18 @@
+component("kbd") {
+    parent "nu.os.conn.usb.func.hid"
+    version "1.0.0"
+    description "This component implements the USB Function HID Keyboard component."
+    enable true
+    runlevel 8
+
+    requires("nu.os.conn.usb.func.hid.class")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+
+}
+
+

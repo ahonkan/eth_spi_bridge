@@ -1,0 +1,46 @@
+component("shell") { 
+    parent      "nu.os.svcs"
+    description "This component implements the Shell service"     
+    enable      false
+      
+    runlevel    13
+
+    requires("nu.os.drvr.serial")  
+    
+    option("additional_stack_size") {
+            default     2048 
+            description "Size (in bytes) of the additional space added to the task stack on which registered commands will run.  (Default value is 2048)"
+    }
+
+    option("columns") {
+            default     80
+            description "The number of columns in the console (in characters).  (Default value is 80)"         
+    }
+
+    option("rows") {
+            default     24
+            description "The number of rows in the console.  (Default value is 24)"
+    }
+
+    option("serial_enabled") {
+            default     true
+            description "Enable a default shell that uses Serial I/O (serial port identified for standard I/O). (Default value is true)"            
+    }
+
+    option("prompt") {
+        default     "SHELL:\\\\>"
+        description "Shell command line prompt.  Default is SHELL:\\>"
+    }
+    
+    option("name_len") {
+        default     16
+        values      4..32
+        description "Maximum number of characters allowed for a shell session name.  Default is 16 characters."
+    }
+    
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

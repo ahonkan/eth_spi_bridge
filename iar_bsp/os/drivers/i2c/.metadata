@@ -1,0 +1,14 @@
+component("i2c") { 
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus I2C driver."
+    enable true
+
+    requires("nu.os.conn.i2c")
+
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") 
+        }
+    }
+}

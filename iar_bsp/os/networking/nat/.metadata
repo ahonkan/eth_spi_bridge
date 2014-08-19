@@ -1,0 +1,19 @@
+component("nat") { 
+    parent "nu.os.net"
+    version "1.4.0"
+    description "This component implements the NAT protocol."
+    enable true
+
+    requires("nu.os.net.stack")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+#
+# Compile time options
+#
+
+}

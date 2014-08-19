@@ -1,0 +1,83 @@
+##----------------------------------------------------------------------------##
+# Copyright 2010 Mentor Graphics Corporation                                   #
+#    All Rights Reserved.                                                      #
+##----------------------------------------------------------------------------##
+
+# Calls Fuse to generate the sub-Makefiles.
+#
+# $(1) - the target platform name.
+# $(2) - the toolset name.
+# $(3) - optional parameter for configuration file
+# $(4) - options transforms
+
+define fuse
+@$(SHELL) tools/bin/fuse/bin/fuse -D platform=$(PLATFORM) -D toolset=$(TOOLSET) -D config=$(canonical-config) -D clone=$(PLATFORM_CLONE) -D autoincludepath=$(AUTOINCLUDEPATH) -D cdtconfig=$(CDTCONFIG) -D userconfig=$(USER_CONFIG) -p $(1) -t $(2) $(3) -n $(4)
+endef
+
+##
+## Basic Variable Commands 
+##
+
+# Create a directory and needed parent directories.
+#
+# $(1) - the directory to create.
+MKDIR = mkdir -p $(1)
+
+# Recursively remove a directory.
+#
+# $(1) - the directory to remove.
+RMDIR = rm -r -f $(1)
+
+# Remove a file.
+#
+# $(1) - the file to delete.
+RM = rm -f $(1)
+
+# Copy a file.
+#
+# $(1) - the source file.
+# $(2) - the target file.
+CP = cp $(1) $(2)
+
+# The character used to seperate commands.
+SEP = ;
+
+# Print a string.
+#
+# $(1) - the string to print.
+define print
+echo '$(1)'
+endef
+
+# Print a string to a file.
+#
+# $(1) - the string to print.
+	# $(2) - the file to print to.
+define print-to-file
+echo $(1) > $(2)
+endef
+
+# Concatenate multiple files together.
+#
+# $(1) - a whitespace seperated list of files to cat.
+# $(2) - the file to store the concatenation to.
+CAT = cat $(1) > $(2)
+
+# Copy a director
+#
+# &(1) - Source directory
+# &(2) - Destination directory
+CPDIR = cp -r $(1) $(2)/
+
+define create_dir
+ mkdir $(1)
+endef
+
+# Copies directories ignoring folder/file
+# &(1) - Source directory
+# &(2) - Destination directory
+# &(3) - Exlude
+
+define copy_dir_ignore
+find . -depth | grep -v "$3" | grep -v "ghk" | cpio -pdm $(2)/
+endef

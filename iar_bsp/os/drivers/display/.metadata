@@ -1,0 +1,105 @@
+component("display") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus display driver."
+    enable true
+
+    active_artifact "library"
+
+    requires("nu.os.ui.grafixrs")
+
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("*.c") + Dir.glob("src/*.c") 
+        }
+    }
+
+    process("grafixrs.load") {
+        sources {
+            Dir.glob("*.c") + Dir.glob("src/*.c")
+        }
+    }
+
+    #
+    # Compile time options
+    #
+
+    option("screen_width") {
+        default      240
+        description  "Screen width in pixels"
+    }
+    option("screen_height") {
+        default      320
+        description  "Screen height in pixels"
+    }
+    option("bits_per_pixel") {
+        default      24
+        description  "Bits per pixel"
+    }
+    option("hw_color_fmt") {
+        default         0x00080000
+        description    "Color formats supported by hardware.
+                        BPP24_BGR_888 is selected.
+                        The value is bitwise OR of masks specified
+                        below."
+                        # BPP1_GRAYSCALE          0x00000001
+                        # BPP2_GRAYSCALE          0x00000002
+                        # BPP4_GRAYSCALE          0x00000004
+                        # BPP8_GRAYSCALE          0x00000008
+                        # BPP15_RGB_555           0x00000010
+                        # BPP15_BGR_555           0x00000020
+                        # BPP16_RGB_565           0x00000040
+                        # BPP16_BGR_565           0x00000080
+                        # BPP16_ARGB_1555         0x00000100
+                        # BPP16_ABGR_1555         0x00000200
+                        # BPP16_RGBA_5551         0x00000400
+                        # BPP16_BGRA_5551         0x00000800
+                        # BPP16_ARGB_4444         0x00001000
+                        # BPP16_ABGR_4444         0x00002000
+                        # BPP16_RGBA_4444         0x00004000
+                        # BPP16_BGRA_4444         0x00008000
+                        # BPP18_RGB_666           0x00010000
+                        # BPP18_BGR_666           0x00020000
+                        # BPP24_RGB_888           0x00040000
+                        # BPP24_BGR_888           0x00080000
+                        # BPP32_ARGB_8888         0x00100000
+                        # BPP32_ABGR_8888         0x00200000
+                        # BPP32_RGBA_8888         0x00400000
+                        # BPP32_BGRA_8888         0x00800000
+                        # BPP12_RGB_444           0x01000000
+                        # BPP12_BGR_444           0x02000000
+    }
+    option("sw_color_fmt") {
+        default      0x00080000
+        description  "Selected color format (BPP24_BGR_888)."
+    }
+    option("pre_proc_hook") {
+        default      false
+        description  "Specifies whether preprocess hook is required or not"
+    }
+    option("post_proc_hook") {
+        default      false
+        description  "Specifies whether postprocess hook is required or not"
+    }
+    option("smart_lcd") {
+        default      false
+        description  "Specifies whether we have the smart lcd or not"
+    }
+    option("hw_alpha") {
+        default      false
+        description  "Specifies whether alpha is supported in hardware"
+    }
+    option("no_region_clip") {
+        default      true
+        description  "Specifies whether region clipping is tobe performed or not"
+    }                      
+    option("no_blit_support"){
+        default      false
+        description  "Specifies whether Blit support is available"    
+    }
+    option("max_devs_supported"){
+        description "The maximum number of devices supported by the display driver middleware (default is 1)"
+        default 1
+        values [1,2,3,4]
+    }
+}

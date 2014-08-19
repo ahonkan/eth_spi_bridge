@@ -1,0 +1,81 @@
+##----------------------------------------------------------------------------##
+# Copyright 2010 Mentor Graphics Corporation                                   #
+#    All Rights Reserved.                                                      #
+##----------------------------------------------------------------------------##
+
+##
+## Generated Dependency Management
+##
+
+# Fixes up the depedency files to include the dependency file itself
+# in the rule target.  This way the dependency files will be rebuilt
+# when header files change.
+#
+# NOTE: The dependency file that is being fixed up is deleted if it gets
+#       fixed up successfully.
+#
+# $(1) - the dependency file to fixup.
+# $(2) - the output filename for the fixed dependency file.
+
+ifeq ($(TOOLSET),rvct)
+define fixup-deps
+sed -e "s,[\],/,g" -e "s,\(.*$(notdir $(basename $(2)))\)\.o[ :]*,\1\.o:,g" -e "s, ,\\ ,g" -e "s,\(.*$(notdir $(basename $(2)))\)\.o[ :]*,$(2:.d=.o) $(2) : ,g" $(1) > $(2) \
+&& $(call RM,$(1))
+endef
+else
+define fixup-deps
+sed -e "s,\(.*$(notdir $(basename $(2)))\)\.o[ :]*,$(2:.d=.o) $(2) : ,g" $(1) > $(2) \
+&& $(call RM,$(1))
+endef
+endif
+
+ifeq ($(TOOLSET),rvct)
+define fixup-deps-proc
+sed -e "s,\\,/,g" -e "s,\(.*$(notdir $(basename $(2)))\)\.po[ :]*,\1\.po:,g" -e "s, ,\\ ,g" -e "s,\(.*$(notdir $(basename $(2)))\)\.po[ :]*,$(2:.pd=.po) $(2) : ,g" $(1) > $(2) \
+&& $(call RM,$(1))
+endef
+else
+define fixup-deps-proc
+sed -e "s,\(.*$(notdir $(basename $(2)))\)\.po[ :]*,$(2:.pd=.po) $(2) : ,g" $(1) > $(2) \
+&& $(call RM,$(1))
+endef
+endif
+
+##
+## Archive Creation and Updating
+##
+
+# The "step" for updating archives.  Objects will be added to the archive
+# in multiples of the step.  For example, with the object list 
+# "a.o b.o c.o d.o e.o" and a step of two, the sequence of actions to create 
+# the library would be:
+#   create(lib, a.0 b.o)
+#   update(lib, c.o d.o)
+#   update(lib, e.o)
+step-s := 150
+
+# Always one past 'step-s'.  This is a hack due to the fact that 'make' does
+# note directly support arithmetic.
+step-n := 151
+
+# Creates an archive from a list of objects.
+# $(1) - the archive to create.
+# $(2) - the list of objects to archive.
+define update-archive
+$(Q)$(call archive,$(1),$(wordlist 1,$(step-s),$(2)))
+$(Q)$(call update-archive-in-steps,$(1),$(wordlist $(step-n),$(words $(2)),$(2)))
+endef
+
+# Updates an archive using the globally defined step.
+# $(1) - the archive to create.
+# $(2) - the list of objects to archive.
+define update-archive-in-steps
+$(Q)$(if $(2),$(call update-archive,$(1),$(2)))
+endef
+
+# Inlude host platform specific stuff.
+ifeq ($(OS),Windows_NT)
+include tools/scripts/make/Makefile.win32
+else
+include tools/scripts/make/Makefile.unix
+endif

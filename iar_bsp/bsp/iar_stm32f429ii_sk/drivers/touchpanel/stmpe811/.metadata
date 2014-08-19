@@ -1,0 +1,12 @@
+component("stmpe811") {
+   parent "nu.bsp.drvr.touchpanel"
+   version "1.0.0"
+
+   description "This component implements the touch panel driver for STMPE811."
+
+   enable true
+
+   library("nucleus.lib") {
+      sources { Dir.glob("*.c") }
+   }
+}

@@ -1,0 +1,10 @@
+component("stm32f2x") {
+    parent      "nu.bsp.drvr.cpu"
+    version     "1.0.0"
+    description "This component implements the CPU driver for the STM3220x processors."
+    enable      true
+  
+    library("nucleus.lib") {
+        sources { Dir.glob("*.c") }
+    }
+}

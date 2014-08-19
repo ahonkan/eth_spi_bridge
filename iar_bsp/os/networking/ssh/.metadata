@@ -1,0 +1,4 @@
+package("ssh") { 
+    parent "nu.os.net"
+    enable false
+}

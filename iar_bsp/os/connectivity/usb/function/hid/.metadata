@@ -1,0 +1,4 @@
+package("hid") { 
+    parent "nu.os.conn.usb.func"
+    enable true
+}

@@ -1,0 +1,23 @@
+component("iar_stm32f429ii_sk") {
+    parent      "nu.bsp"
+    version     "1.0.0"
+    platform    ["iar_stm32f429ii_sk"]
+    description "This component implements the support for the IAR STM32F429II-SK Platform"
+    enable      true
+    runlevel    2
+    
+    includepath ["bsp/iar_stm32f429ii_sk/include",
+                 "bsp/iar_stm32f429ii_sk/include/bsp",
+                 "bsp/iar_stm32f429ii_sk/include/bsp/arch/plat-stm32",
+                 "bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/STM32F4xx/Include",
+                 "bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/Include",
+                 "bsp/iar_stm32f429ii_sk/include/bsp/stm_devices"]
+ 
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("*.c") + Dir.glob("devices/*.c") 
+        } 
+    }
+    
+
+}

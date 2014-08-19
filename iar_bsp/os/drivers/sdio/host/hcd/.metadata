@@ -1,0 +1,14 @@
+component("hcd") {
+    parent "nu.os.drvr.sdio.host"
+    version "1.0.0"
+    description "This component implements the generic Nucleus SDIO File Function driver."
+    enable true
+    requires("nu.os.kern.devmgr")
+    requires("nu.os.conn.sdio")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

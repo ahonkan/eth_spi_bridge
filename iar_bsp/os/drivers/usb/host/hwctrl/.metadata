@@ -1,0 +1,22 @@
+component("hwctrl") {
+    parent "nu.os.drvr.usb.host"
+    version "1.0.0"
+    description "This component implements generic Nucleus USB Host Controller Driver to be used with custom controller drivers."
+    enable true
+
+    option("cached_pool_size"){
+        default 4096
+        description "Cached memory pool size for USB hardware controller (default is 4096 bytes)"
+    }
+
+    option("uncached_pool_size"){
+        default 4096
+        description "Uncached memory pool size for USB hardware controller (default is 4096 bytes)"
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

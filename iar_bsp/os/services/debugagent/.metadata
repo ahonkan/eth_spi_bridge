@@ -1,0 +1,33 @@
+component("dbg") {
+    parent "nu.os.svcs"
+    description "This component implements the Debug Agent service"
+    enable false       
+    
+    runlevel 15
+
+    option("com_port_type") {
+            default 0
+            description "Select communications for the Debug Agent: TCP=0, and Serial=1.  (Default value is 0)"            
+    }
+
+    option("net_port_number") {
+            default 2159
+            description "Network com port number(TCP) for the Debug Agent. (Default value is 2159)"
+    }
+
+    option("breakpoint_max") {
+            default 128
+            description "Maximum number of breakpoints for the Debug Agent. (Default value is 128)"           
+    }
+
+    option("context_max") {
+            default 512
+            description "Maximum number of threads for the Debug Agent. (Default value is 512)"           
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

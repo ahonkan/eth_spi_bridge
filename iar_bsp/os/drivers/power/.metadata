@@ -1,0 +1,15 @@
+component("pwr_intrf") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus Power Interface for Power-Aware device drivers."
+    enable true
+    
+    #Requirements for Nucleus Power Interface for Drivers
+    requires("nu.os.svcs.pwr.core")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

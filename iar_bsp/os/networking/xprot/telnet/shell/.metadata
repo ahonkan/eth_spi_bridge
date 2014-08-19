@@ -1,0 +1,16 @@
+component("shell") { 
+    parent      "nu.os.net.prot.telnet"
+    description "This component implements the Nucleus Telnet Server Command Shell"
+    enable      false
+    runlevel    14
+
+    requires("nu.os.net.stack")
+    requires("nu.os.net.prot.telnet.server")
+    requires("nu.os.svcs.shell")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

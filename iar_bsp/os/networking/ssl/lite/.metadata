@@ -1,0 +1,306 @@
+component("lite") { 
+    parent      "nu.os.net.ssl"
+    version     "2.4.6"
+    description "This component contains the cyassl stack which is well suited for memory constrained devices, etc"
+    enable      false
+
+    requires("nu.os.net.stack")
+
+    includepath ["os/networking/ssl/lite"]
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("ctaocrypt/src/*.c") +
+            Dir.glob("src/*.c") +
+            Dir.glob("*.c")
+        }
+    }
+   
+    option("no_cyassl_client") {
+        default false
+        enregister false
+        description "removes calls specific to the client and is for a server-only builds. You should only use this if you want to remove a few calls for the sake of size."
+    }
+    
+    option("no_cyassl_server") {
+        default false
+        enregister false
+        description "likewise removes calls specific to the server side."
+    }
+    
+    option("no_des3") {
+        default false
+        enregister false
+        description "removes the use of DES3 encryptions. DES3 is built-in by default because some older servers still use it and it's required by SSL 3.0."
+    }
+    
+    option("no_dh") {
+        default false
+        enregister false
+        description "removes the use of DH encryptions."
+    }
+    
+    option("no_aes") {
+        default false
+        enregister false
+        description "removes the use of AES encryptions."
+    }
+    
+    option("no_error_strings") {
+        default false
+        enregister false
+        description "disables error strings. Error strings are located in src/internal.c for CyaSSL or ctaocrypt/src/asn.c for CTaoCrypt."
+    }
+    
+    option("no_hmac") {
+        default false
+        enregister false
+        description "removes HMAC from the build."
+    }
+    
+    option("no_md4") {
+        default false
+        enregister false
+        description "removes MD4 from the build, MD4 is broken and shouldn't be used."
+    }
+    
+    option("no_sha256") {
+        default false
+        enregister false
+        description "removes SHA-256 from the build."
+    }
+    
+    option("no_psk") {
+        default false
+        enregister false
+        description "turns off the use of the pre-shared key extension. It is built-in by default."
+    }
+    
+    option("no_pwdbased") {
+        default false
+        enregister false
+        description "disables password-based key derivation functions such as PBKDF1, PDKDF2, and PBKDF from PCKS#12."
+    }
+    
+    option("no_rc4") {
+        default false
+        enregister false
+        description "removes the use of the ARC4 steam cipher from the build. ARC4 is built-in by default because it is still popular and widely used."
+    }
+    
+    option("no_rabbit") {
+        default false
+        enregister false
+        description "remove stream cipher extensions from the build."
+    }
+    
+    option("no_hc128") {
+        default false
+        enregister false
+        description "remove stream cipher extensions from the build."
+    }
+    
+    option("no_session_cache") {
+        default false
+        enregister false
+        description "can be defined when a session cache is not needed. This should reduce memory use by nearly 3 kB."
+    }
+    
+    option("no_tls") {
+        default false
+        enregister false
+        description "turns off TLS which isn't recommended."
+    }
+    
+    option("small_session_cache") {
+        default false
+        enregister false
+        description "can be defined to limit the size of the SSL session cache used by CyaSSL. This will reduce the default session cache from 33 sessions to 6 sessions and save approximately 2.5 kB."
+    }
+    
+    option("cyassl_cert_gen") {
+        default false
+        enregister false
+        description "turns on CyaSSL’s certificate generation functionality."
+    }
+    
+    option("cyassl_der_load") {
+        default false
+        enregister false
+        description "allows loading DER-formatted CA certs into the CyaSSL context (CYASSL_CTX) using the function CyaSSL_CTX_der_load_verify_locations()."
+    }
+    
+    option("cyassl_dtls") {
+        default false
+        enregister false
+        description "turns on the use of DTLS, or datagram TLS. This isn't widely supported or used so it is off by default."
+    }
+
+    option("cyassl_key_gen") {
+        default false
+        enregister false
+        description "turns on CyaSSLs RSA key generation functionality."
+    }
+
+    option("cyassl_ripemd") {
+        default false
+        enregister false
+        description "enables RIPEMD-160 support."
+    }
+
+    option("cyassl_sha384") {
+        default false
+        enregister false
+        description "enables SHA-384 support."
+    }
+
+    option("cyassl_sha512") {
+        default false
+        enregister false
+        description "enables SHA-512 support."
+    }
+
+    option("debug_cyassl") {
+        default false
+        enregister false
+        description "builds in the ability to debug."
+    }
+
+    option("have_aesccm") {
+        default false
+        enregister false
+        description "enables AES-CCM support."
+    }
+
+    option("have_aesgcm") {
+        default false
+        enregister false
+        description "enables AES-GCM support."
+    }
+
+    option("have_camellia") {
+        default false
+        enregister false
+        description "enables Camellia support."
+    }
+
+    option("have_crl") {
+        default false
+        enregister false
+        description "enables Certificate Revocation List (CRL) support."
+    }
+
+    option("have_ecc") {
+        default false
+        enregister false
+        description "enables Elliptical Curve Cryptography (ECC) support."
+    }
+
+    option("have_ocsp") {
+        default false
+        enregister false
+        description "enables Online Certificate Status Protocol (OCSP) support."
+    }
+
+    option("ocsp_override") {
+        default false
+        enregister false
+        description "option in OCSP for setting the override URL instead of using the URL in the certificate."
+    }
+    
+    option("ocsp_override_url") {
+        default "http://www.override.url"
+        enregister false
+        description "if ocsp_override is true, this is the url that will be used instead of the certificate."
+    } 
+
+    option("openssl_extra") {
+        default false
+        enregister false
+        description "builds even more OpenSSL compatibility into the library, and enables the CyaSSL OpenSSL compatibility layer to ease porting CyaSSL into existing applications which had been designed to work with OpenSSL. It is off by default."
+    }
+
+    option("cyassl_callbacks") {
+        default false
+        enregister false
+        description "is an extension that allows debugging callbacks through the use of signals in an environment without a debugger, it is off by default. It can also be used to set up a timer with blocking sockets."
+    }
+
+    option("cyassl_user_io") {
+        default false
+        enregister false
+        description "allows the user to remove automatic setting of the default I/O functions EmbedSend() and EmbedReceive()."
+    }
+
+    option("no_filesystem") {
+        default true
+        enregister false
+        description "is used if stdio isn't available to load certificates and key files. This enables the use of buffer extensions to be used instead of the file ones."
+    }
+
+    option("no_inline") {
+        default false
+        enregister false
+        description "disables the automatic inlining of small, heavily used functions. Turning this on will slow down CyaSSL and actually make it bigger since these are small functions, usually much smaller than function call setup/return. You’ll also need to add ctaocrypt/src/misc.c to the list of compiled files if you’re not using autoconf."
+    }
+
+    option("no_dev_random") {
+        default false
+        enregister false
+        description "disables the use of the default /dev/random random number generator. If defined, the user needs to write an OS-specific GenerateSeed() function (found in ctaocrypt/src/random.c)."
+    }
+
+    option("no_main_driver") {
+        default false
+        enregister false
+        description "is used in the normal build environment to determine whether a test application is called on its own or through the testsuite driver application. You'll only need to use it with the test files: test.c, client.c, server.c, echoclient.c, echoserver.c, and testsuite.c"
+    }
+
+    option("no_writev") {
+        default true
+        enregister false
+        description "disables simulation of writev() semantics."
+    }
+
+    option("single_threaded") {
+        default false
+        enregister false
+        description "is a switch that turns off the use of mutexes. CyaSSL currently only uses one for the session cache. If your use of CyaSSL is always single threaded you can turn this on."
+    }
+
+    option("use_cert_buffers_1024") {
+        default false
+        enregister false
+        description "enables 1024-bit test certificate and key buffers located in <cyassl_root>/cyassl/certs_test.h. Helpful when testing on and porting to embedded systems with no filesystem."
+    }
+
+    option("use_cert_buffers_2048") {
+        default false
+        enregister false
+        description "enables 1024-bit test certificate and key buffers located in <cyassl_root>/cyassl/certs_test.h. Helpful when testing on and porting to embedded systems with no filesystem."
+    }
+
+    option("tfm_timing_resistant") {
+        default false
+        enregister false
+        description "can be defined when using fast math (USE_FAST_MATH) on systems with a small stack size. This will get rid of the large static arrays."
+    }
+
+    option("cyassl_small_stack") {
+        default true
+        enregister false
+        description "can be used for devices which have a small stack size. This increases the use of dynamic memory in ctaocrypt/src/integer.c, but can lead to slower performance."
+    }
+
+    option("use_fast_math") {
+        default false
+        enregister false
+        description "switches the big integer library to a faster one that uses assembly if possible. fastmath will speed up public key operations like RSA, DH, and DSA. The big integer library is generally the most portable and generally easiest to get going with, but the negatives to the normal big integer library are that it is slower and it uses a lot of dynamic memory. Because the stack memory usage can be larger when using fastmath, we recommend defining TFM_TIMING_RESISTANT as well when using this option."
+    }
+    
+    option("cyassl_stm32f2") {
+        default false
+        enregister false
+        description "can be defined when building for STM32F2. This define also enables STM32F2 hardware crypto and hardware RNG support in CyaSSL."
+    }
+}

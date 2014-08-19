@@ -1,0 +1,43 @@
+component("sd") {
+    parent "nu.os.drvr.sdio.func"
+    version "1.0.0"
+    description "This component implements the generic Nucleus SDIO File Function driver."
+    enable true
+
+    requires("nu.os.kern.devmgr")
+    requires("nu.os.conn.sdio")
+
+    group("tgt_settings") {
+        enregister     true
+        description    "Target settings"
+
+        option("def_pwr_state") {
+            default 255
+            description  "Default power state"
+        }
+    }
+
+    runlevel 5
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+    option("man_cmd12_13") {
+        default false
+        description  "Configuration to issue CMD12 and CMD13 exclusively after data transfer"
+    }
+    option("multi_block") {
+        default false
+        description  "Configuration for multi block data transfer support"
+    }
+    
+    option("hibernate_dev") {
+        enregister  true
+        default     true
+        description "This marks the component to be hibernate aware"
+        hidden      true
+    }
+}

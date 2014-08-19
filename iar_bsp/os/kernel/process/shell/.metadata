@@ -1,0 +1,15 @@
+component("shell") {
+    parent      "nu.os.kern.process"
+    description "This component adds support for Nucleus Process shell commands"
+    enable      false
+    runlevel    15
+
+    requires("nu.os.svcs.shell")
+    requires("nu.os.kern.process.core")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

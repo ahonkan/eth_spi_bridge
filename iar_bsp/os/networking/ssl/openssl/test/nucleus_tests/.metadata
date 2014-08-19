@@ -1,0 +1,45 @@
+component("openssl_unit_tests") {
+    parent      "nu.os.net.ssl.openssl"
+    version     "2.0.0"
+    description "This component implements unit tests that come with OpenSSL."
+    enable      false
+
+    includepath ["os/networking/ssl/openssl"]
+
+    executable("openssl_unit_tests.out") {
+        sources {
+            cflags "rvct" => "--diag_suppress=warning"
+            Dir.glob("*.c") +
+            Dir.glob("../../crypto/bf/bftest.c") +
+            Dir.glob("../../crypto/bn/bntest.c") +
+            Dir.glob("../../crypto/cast/casttest.c") +
+            Dir.glob("../../crypto/des/destest.c") +
+            Dir.glob("../../crypto/dh/dhtest.c") +
+            Dir.glob("../../crypto/dsa/dsatest.c") +
+            Dir.glob("../../crypto/ecdh/ecdhtest.c") +
+            Dir.glob("../../crypto/ecdsa/ecdsatest.c") +
+            Dir.glob("../../crypto/ec/ectest.c") +
+            Dir.glob("../../crypto/engine/enginetest.c") +
+            Dir.glob("../../crypto/evp/evp_test.c") +
+            Dir.glob("../../crypto/hmac/hmactest.c") +
+            Dir.glob("../../crypto/md4/md4test.c") +
+            Dir.glob("../../crypto/md5/md5test.c") +
+            Dir.glob("../../crypto/mdc2/mdc2test.c") +
+            Dir.glob("../../crypto/rand/randtest.c") +
+            Dir.glob("../../crypto/rc2/rc2test.c") +
+            Dir.glob("../../crypto/arc4/arc4test.c") +
+            Dir.glob("../../crypto/ripemd/rmdtest.c") +
+            Dir.glob("../../crypto/rsa/rsa_test.c") +
+            Dir.glob("../../crypto/sha/sha1test.c") +
+            Dir.glob("../../crypto/sha/sha256t.c") +
+            Dir.glob("../../crypto/sha/sha512t.c") +
+            Dir.glob("../../crypto/sha/shatest.c") +
+            Dir.glob("../../crypto/whrlpool/wp_test.c") +
+            Dir.glob("../../ssl/ssltest.c")
+        }
+        libraries { ["nucleus.lib"] }
+    }
+
+    requires("nu.os.net.ssl.openssl.crypto")
+    requires("nu.os.net.ssl.openssl.ssl")
+}

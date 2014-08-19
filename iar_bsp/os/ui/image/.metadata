@@ -1,0 +1,20 @@
+component("image") { 
+   parent "nu.os.ui"
+   version "1.4.0"
+   description "This component implements the Nucleus Image component."
+   enable true
+
+   library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => ""
+            cflags "tensilica" => ""
+            cflags "rvct" => "--min_array_alignment=4"
+            Dir.glob("src/*.c")
+        }
+    }
+
+    option("img_included") {
+        default         false
+        description     "If you have Nucleus FILE and want image support then set this define to true. "
+    }
+}

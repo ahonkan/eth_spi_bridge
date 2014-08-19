@@ -1,0 +1,28 @@
+component("stm32_emac") {
+    parent      "nu.bsp.drvr.enet"
+    version     "1.0.0"
+    enable      true
+    description "This component implements the ETH MAC ethernet driver for STM3220F processors"
+
+    requires("nu.os.drvr.eth")
+
+    library("nucleus.lib") {
+        sources { Dir.glob("*.c") }
+    }
+
+   option("max_bufs") {
+      default 100
+      enregister false
+      description "Maximum number of buffers available for sending and receiving data packets.  
+                   This value will be overridden with values from the network stack if stack is enabled.  "
+   }
+
+   option("buf_size") {
+      default 128
+      enregister false
+      description "Size of buffers used by stack to send and receive data packets.  
+                   This size might need to change to accommodate different DMA controllers.
+                   This value will be overridden with values from the network stack if stack is enabled.  "
+   }
+
+}

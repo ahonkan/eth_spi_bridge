@@ -1,0 +1,55 @@
+component("com") {
+    parent      "nu.os.arch.armv7_m"
+    version     "1.0.0"
+    description "This component implements the common ARMv7_M architecture functionality"
+    enable      true
+    
+    architecture "armv7_m"
+    mandatory 
+
+    # Option for the system stack size
+    option("system_stack_size"){        
+        default 2048
+        description "Define the system stack size (default is 2048)"
+    }
+
+    # Option for FPU support (0=no FPU, 1=VFPv4)
+    option("fpu_support"){
+        default     0
+        values      [0,1,2]
+        description "Define the FPU support enabled in the ARM architecture.  This basically adds support to save/restore FPU context for tasks / HISRs (0 = off, 1 = VFPv4).  The default is 0 (no FPU support)."
+    }
+
+    option("reset_sp") {
+        default         0x20000800
+        description     "Reset stack pointer address used for low-level initialization.  
+                         This value should work for most processors, but can be overridden if needed."
+        hidden          true
+    }
+
+    option("max_vector") {
+        default         255
+        values          17..255
+        description     "Maximum interrupt vector number in vector table.  This value is used to define the size of the
+                         vector table and the default value (255) will ensure all platforms are supported.
+                         To save memory, this value can be reduced based on the processor implementation."
+        hidden           true
+    }    
+
+    option("num_pri_bits") {
+        default         3
+        values          [1,2,3,4,5,6,7,8]
+        description     "Number of bits used for interrupt priority.  This value should be over-ridden in a
+                         BSP platform file if the processor has more or less priority bits than the default (3)."
+        hidden          true
+    }
+
+    includepath "os/include/arch/armv7-m"
+
+    library("nucleus.lib") {
+        sources {
+            cflags "rvct" => "--c99 --gnu"
+            Dir.glob("*.c")
+        }
+    }
+}

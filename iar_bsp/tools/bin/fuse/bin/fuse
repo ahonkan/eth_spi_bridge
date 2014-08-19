@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Define the home location for Fuse.
+FUSE_HOME=`dirname "$0"`/../lib
+
+# Setup the Java class path.
+CLASSPATH=$FUSE_HOME/fuse.jar:$FUSE_HOME/commons-cli.jar:$FUSE_HOME/xerces.jar:$FUSE_HOME/jruby-complete-1.4.0.jar
+
+# Invoke Fuse.
+java -cp $CLASSPATH com.mentor.nucleus.fuse.core.runners.CLIRunner $@

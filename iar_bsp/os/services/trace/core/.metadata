@@ -1,0 +1,96 @@
+component("core") {
+    parent "nu.os.svcs.trace"
+    description "This component implements the Nucleus Trace core API's."
+    enable false
+
+    library("nucleus.lib") {
+        sources { 
+            cflags "csgnu_arm" => "-Wno-strict-aliasing"        
+            cflags "csgnu_ppc" => "-Wno-strict-aliasing"        
+            Dir.glob("**/*.c") 
+        }
+    }
+
+    runlevel  15
+
+    option("trace_buffer_size"){
+        default      0x400000
+        values       0x4000...0x10000000
+        description "Specify trace buffer size to be used here (default is 4MB)."
+    }
+
+    option("trace_support"){
+        default      true
+        description "Enables or disables kernel instrumentation for tracing kernel and Middleware run-time."
+    }
+
+    option("kernel_default_trace_mask"){
+        default 0xFFFFFFFF
+        description "Specify the default trace mask to be used"
+    }
+
+    option("trace_kernel_boot_time"){
+        default      true
+        description "Enables or disables tracing of kernel run-time during the kernel boot process."
+    }
+
+    option("net_trace_support"){
+        default      true
+        description "Enables or disables instrumentation for tracing networking run-time."
+    }
+
+    option("storage_trace_support"){
+        default      true
+        description "Enables or disables instrumentation for tracing storage run-time."
+    }
+
+    option("pms_trace_support"){
+        default      true
+        description "Enables or disables instrumentation for tracing power management services run-time."
+    }
+
+    option("pc_hotspot_support"){
+        default      false
+        description "Enables or disables run-time PC sampling hot spot analysis."
+    }
+
+    option("max_trace_pkt_size"){
+        default      512
+        values       512..4096
+        description "Defines the maximum trace packet size."
+    }
+
+    option("overwrite_old_data"){
+        default      true
+        description "Setting this option to true overwrites old trace data in case of buffer overflow situation. If false trace data logging will stop when buffer is full."
+    }
+
+    option("comms_task_priority"){
+        default      255
+        values       0...255
+        description "Trace communications task priority."
+    }
+
+    option("data_tx_period"){
+        default      10
+        values       1...2000
+        description "Trace packets will be transmitted to host once every x number of os ticks defined here."
+    }
+    
+    option("comms_flush_default_priority"){
+        default      0
+        values       0...255
+        description "This is the default priority a caller would be raised to when a call to NU_Trace_Comms_Flush is made from the application."
+    }
+
+    option("track_trace_overhead"){
+        default      false
+        description "Enables or disables trace latency timing test."
+    }
+
+    option("export_symbols"){
+        default     true 
+        description "Exports API symbols for use by loaded modules."
+    }
+
+}

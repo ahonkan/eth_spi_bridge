@@ -1,0 +1,463 @@
+         PPP-LCP-MIB DEFINITIONS ::= BEGIN
+
+          IMPORTS
+               Counter
+                    FROM RFC1155-SMI
+               ifIndex, transmission
+                    FROM RFC1213-MIB
+               OBJECT-TYPE
+                    FROM RFC-1212;
+
+               --  PPP MIB
+
+               ppp  OBJECT IDENTIFIER ::= { transmission 23 }
+
+               pppLcp OBJECT IDENTIFIER ::= { ppp 1 }
+
+               -- The individual groups within the PPP-LCP-MIB
+
+               pppLink      OBJECT IDENTIFIER ::= { pppLcp 1 }
+               pppLqr       OBJECT IDENTIFIER ::= { pppLcp 2 }
+               pppTests     OBJECT IDENTIFIER ::= { pppLcp 3 }
+
+          -- 4.1.  PPP Link Group
+
+          --
+          -- The PPP Link Group. Implementation of this
+          -- group is mandatory for all PPP entities.
+          --
+
+          -- The following object reflect the values of the option
+          -- parameters used in the PPP Link Control Protocol
+          --   pppLinkStatusLocalMRU
+          --   pppLinkStatusRemoteMRU
+          --   pppLinkStatusLocalToPeerACCMap
+          --   pppLinkStatusPeerToLocalACCMap
+          --   pppLinkStatusLocalToRemoteProtocolCompression
+          --   pppLinkStatusRemoteToLocalProtocolCompression
+          --   pppLinkStatusLocalToRemoteACCompression
+          --   pppLinkStatusRemoteToLocalACCompression
+          --   pppLinkStatusTransmitFcsSize
+          --   pppLinkStatusReceiveFcsSize
+          --
+          -- These values are not available until after the PPP Option
+          -- negotiation has completed, which is indicated by the link
+          -- reaching the open state (i.e., ifOperStatus is set to
+          -- up).
+          --
+          -- Therefore, when ifOperStatus is not up
+          -- the contents of these objects is undefined. The value
+          -- returned when accessing the objects is an implementation
+          -- dependent issue.
+
+          pppLinkStatusTable   OBJECT-TYPE
+               SYNTAX    SEQUENCE OF PppLinkStatusEntry
+               ACCESS    not-accessible
+               STATUS    mandatory
+               DESCRIPTION
+                         "A table containing PPP-link specific variables
+                         for this PPP implementation."
+               ::= { pppLink 1 }
+
+          pppLinkStatusEntry   OBJECT-TYPE
+               SYNTAX    PppLinkStatusEntry
+               ACCESS    not-accessible
+               STATUS    mandatory
+               DESCRIPTION
+                         "Management information about a particular PPP
+                         Link."
+               INDEX     { ifIndex }
+               ::= { pppLinkStatusTable 1 }
+
+          PppLinkStatusEntry ::= SEQUENCE {
+               pppLinkStatusPhysicalIndex
+                    INTEGER,
+               pppLinkStatusBadAddresses
+                    Counter,
+               pppLinkStatusBadControls
+                    Counter,
+               pppLinkStatusPacketTooLongs
+                    Counter,
+               pppLinkStatusBadFCSs
+                    Counter,
+               pppLinkStatusLocalMRU
+                    INTEGER,
+               pppLinkStatusRemoteMRU
+                    INTEGER,
+               pppLinkStatusLocalToPeerACCMap
+                    OCTET STRING,
+               pppLinkStatusPeerToLocalACCMap
+                    OCTET STRING,
+               pppLinkStatusLocalToRemoteProtocolCompression
+                    INTEGER,
+               pppLinkStatusRemoteToLocalProtocolCompression
+                    INTEGER,
+               pppLinkStatusLocalToRemoteACCompression
+                    INTEGER,
+               pppLinkStatusRemoteToLocalACCompression
+                    INTEGER,
+               pppLinkStatusTransmitFcsSize
+                    INTEGER,
+               pppLinkStatusReceiveFcsSize
+                    INTEGER
+               }
+          pppLinkStatusPhysicalIndex   OBJECT-TYPE
+               SYNTAX    INTEGER(0..2147483647)
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The value of ifIndex that identifies the
+                         lower-level interface over which this PPP Link
+                         is operating. This interface would usually be
+                         an HDLC or RS-232 type of interface. If there
+                         is no lower-layer interface element, or there
+                         is no ifEntry for the element, or the element
+                         can not be identified, then the value of this
+                         object is 0.  For example, suppose that PPP is
+                         operating over a serial port. This would use
+                         two entries in the ifTable. The PPP could be
+                         running over `interface' number 123 and the
+                         serial port could be running over `interface'
+                         number 987.  Therefore, ifSpecific.123 would
+                         contain the OBJECT IDENTIFIER ppp
+                         pppLinkStatusPhysicalIndex.123 would contain
+                         987, and ifSpecific.987 would contain the
+                         OBJECT IDENTIFIER for the serial-port's media-
+                         specific MIB."
+               ::= { pppLinkStatusEntry 1 }
+
+          pppLinkStatusBadAddresses   OBJECT-TYPE
+               SYNTAX    Counter
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The number of packets received with an
+                         incorrect Address Field. This counter is a
+                         component of the ifInErrors variable that is
+                         associated with the interface that represents
+                         this PPP Link."
+               REFERENCE
+                         "Section 3.1, Address Field, of RFC1331."
+               ::= { pppLinkStatusEntry 2 }
+
+          pppLinkStatusBadControls   OBJECT-TYPE
+               SYNTAX    Counter
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The number of packets received on this link
+                         with an incorrect Control Field. This counter
+                         is a component of the ifInErrors variable that
+                         is associated with the interface that
+                         represents this PPP Link."
+               REFERENCE
+                         "Section 3.1, Control Field, of RFC1331."
+
+               ::= { pppLinkStatusEntry 3 }
+
+          pppLinkStatusPacketTooLongs   OBJECT-TYPE
+               SYNTAX    Counter
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The number of received packets that have been
+                         discarded because their length exceeded the
+                         MRU. This counter is a component of the
+                         ifInErrors variable that is associated with the
+                         interface that represents this PPP Link. NOTE,
+                         packets which are longer than the MRU but which
+                         are successfully received and processed are NOT
+                         included in this count."
+               ::= { pppLinkStatusEntry 4 }
+
+          pppLinkStatusBadFCSs   OBJECT-TYPE
+               SYNTAX    Counter
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The number of received packets that have been
+                         discarded due to having an incorrect FCS. This
+                         counter is a component of the ifInErrors
+                         variable that is associated with the interface
+                         that represents this PPP Link."
+               ::= { pppLinkStatusEntry 5 }
+
+          pppLinkStatusLocalMRU   OBJECT-TYPE
+               SYNTAX    INTEGER(1..2147483648)
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The current value of the MRU for the local PPP
+                         Entity. This value is the MRU that the remote
+                         entity is using when sending packets to the
+                         local PPP entity. The value of this object is
+                         meaningful only when the link has reached the
+                         open state (ifOperStatus is up)."
+               ::= { pppLinkStatusEntry 6 }
+
+          pppLinkStatusRemoteMRU   OBJECT-TYPE
+               SYNTAX    INTEGER(1..2147483648)
+
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The current value of the MRU for the remote
+                         PPP Entity. This value is the MRU that the
+                         local entity is using when sending packets to
+                         the remote PPP entity. The value of this object
+                         is meaningful only when the link has reached
+                         the open state (ifOperStatus is up)."
+               ::= { pppLinkStatusEntry 7 }
+
+          pppLinkStatusLocalToPeerACCMap   OBJECT-TYPE
+               SYNTAX    OCTET STRING (SIZE (4))
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The current value of the ACC Map used for
+                         sending packets from the local PPP entity to
+                         the remote PPP entity. The value of this object
+                         is meaningful only when the link has reached
+                         the open state (ifOperStatus is up)."
+               ::= { pppLinkStatusEntry 8 }
+
+          pppLinkStatusPeerToLocalACCMap   OBJECT-TYPE
+               SYNTAX    OCTET STRING (SIZE (4))
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The ACC Map used by the remote PPP entity when
+                         transmitting packets to the local PPP entity.
+                         The value of this object is meaningful only
+                         when the link has reached the open state
+                         (ifOperStatus is up)."
+               ::= { pppLinkStatusEntry 9 }
+
+          pppLinkStatusLocalToRemoteProtocolCompression
+               OBJECT-TYPE
+               SYNTAX    INTEGER {
+                         enabled(1),
+                         disabled(2)
+                    }
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "Indicates whether the local PPP entity will
+                         use Protocol Compression when transmitting
+                         packets to the remote PPP entity. The value of
+                         this object is meaningful only when the link
+                         has reached the open state (ifOperStatus is
+                         up)."
+               ::= { pppLinkStatusEntry 10 }
+
+          pppLinkStatusRemoteToLocalProtocolCompression
+               OBJECT-TYPE
+               SYNTAX    INTEGER {
+                         enabled(1),
+                         disabled(2)
+                    }
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "Indicates whether the remote PPP entity will
+                         use Protocol Compression when transmitting
+                         packets to the local PPP entity. The value of
+                         this object is meaningful only when the link
+                         has reached the open state (ifOperStatus is
+                         up)."
+               ::= { pppLinkStatusEntry 11 }
+
+          pppLinkStatusLocalToRemoteACCompression   OBJECT-TYPE
+               SYNTAX    INTEGER {
+                         enabled(1),
+                         disabled(2)
+                    }
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "Indicates whether the local PPP entity will
+                         use Address and Control Compression when
+                         transmitting packets to the remote PPP entity.
+                         The value of this object is meaningful only
+                         when the link has reached the open state
+                         (ifOperStatus is up)."
+               ::= { pppLinkStatusEntry 12 }
+
+          pppLinkStatusRemoteToLocalACCompression   OBJECT-TYPE
+               SYNTAX    INTEGER {
+                         enabled(1),
+                         disabled(2)
+                    }
+
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "Indicates whether the remote PPP entity will
+                         use Address and Control Compression when
+                         transmitting packets to the local PPP entity.
+                         The value of this object is meaningful only
+                         when the link has reached the open state
+                         (ifOperStatus is up)."
+               ::= { pppLinkStatusEntry 13 }
+
+          pppLinkStatusTransmitFcsSize   OBJECT-TYPE
+               SYNTAX    INTEGER (0..128)
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The size of the Frame Check Sequence (FCS) in
+                         bits that the local node will generate when
+                         sending packets to the remote node. The value
+                         of this object is meaningful only when the link
+                         has reached the open state (ifOperStatus is
+                         up)."
+               ::= { pppLinkStatusEntry 14 }
+
+          pppLinkStatusReceiveFcsSize   OBJECT-TYPE
+               SYNTAX    INTEGER (0..128)
+               ACCESS    read-only
+               STATUS    mandatory
+               DESCRIPTION
+                         "The size of the Frame Check Sequence (FCS) in
+                         bits that the remote node will generate when
+                         sending packets to the local node. The value of
+                         this object is meaningful only when the link
+                         has reached the open state (ifOperStatus is
+                         up)."
+               ::= { pppLinkStatusEntry 15 }
+
+          pppLinkConfigTable   OBJECT-TYPE
+               SYNTAX    SEQUENCE OF PppLinkConfigEntry
+               ACCESS    not-accessible
+               STATUS    mandatory
+               DESCRIPTION
+                         "A table containing the LCP configuration
+                         parameters for this PPP Link. These variables
+                         represent the initial configuration of the PPP
+                         Link. The actual values of the parameters may
+                         be changed when the link is brought up via the
+                         LCP options negotiation mechanism."
+               ::= { pppLink 2 }
+
+          pppLinkConfigEntry   OBJECT-TYPE
+               SYNTAX    PppLinkConfigEntry
+               ACCESS    not-accessible
+               STATUS    mandatory
+               DESCRIPTION
+                         "Configuration information about a particular
+                         PPP Link."
+               INDEX     { ifIndex }
+               ::= { pppLinkConfigTable 1 }
+
+          PppLinkConfigEntry ::= SEQUENCE {
+               pppLinkConfigInitialMRU
+                    INTEGER,
+               pppLinkConfigReceiveACCMap
+                    OCTET STRING,
+               pppLinkConfigTransmitACCMap
+                    OCTET STRING,
+               pppLinkConfigMagicNumber
+                    INTEGER,
+               pppLinkConfigFcsSize
+                    INTEGER
+               }
+
+          pppLinkConfigInitialMRU   OBJECT-TYPE
+               SYNTAX    INTEGER(0..2147483647)
+               ACCESS    read-write
+               STATUS    mandatory
+               DESCRIPTION
+                         "The initial Maximum Receive Unit (MRU) that
+                         the local PPP entity will advertise to the
+                         remote entity. If the value of this variable is
+                         0 then the local PPP entity will not advertise
+                         any MRU to the remote entity and the default
+                         MRU will be assumed. Changing this object will
+                         have effect when the link is next restarted."
+               REFERENCE
+                         "Section 7.2, Maximum Receive Unit of RFC1331."
+               DEFVAL    { 1500 }
+               ::= { pppLinkConfigEntry 1 }
+
+          pppLinkConfigReceiveACCMap   OBJECT-TYPE
+               SYNTAX    OCTET STRING (SIZE (4))
+               ACCESS    read-write
+               STATUS    mandatory
+               DESCRIPTION
+                         "The Asynchronous-Control-Character-Map (ACC)
+                         that the local PPP entity requires for use on
+                         its receive side. In effect, this is the ACC
+                         Map that is required in order to ensure that
+                         the local modem will successfully receive all
+                         characters. The actual ACC map used on the
+                         receive side of the link will be a combination
+                         of the local node's pppLinkConfigReceiveACCMap
+                         and the remote node's
+                         pppLinkConfigTransmitACCMap. Changing this
+                         object will have effect when the link is next
+                         restarted."
+               REFERENCE
+                         "Section 7.3, page 4, Async-Control-Character-
+                         Map of RFC1331."
+               DEFVAL    { 'ffffffff'h }
+               ::= { pppLinkConfigEntry 2 }
+
+          pppLinkConfigTransmitACCMap   OBJECT-TYPE
+               SYNTAX    OCTET STRING (SIZE (4))
+               ACCESS    read-write
+               STATUS    mandatory
+               DESCRIPTION
+                         "The Asynchronous-Control-Character-Map (ACC)
+                         that the local PPP entity requires for use on
+                         its transmit side. In effect, this is the ACC
+                         Map that is required in order to ensure that
+                         all characters can be successfully transmitted
+                         through the local modem.  The actual ACC map
+                         used on the transmit side of the link will be a
+                         combination of the local node's
+                         pppLinkConfigTransmitACCMap and the remote
+                         node's pppLinkConfigReceiveACCMap. Changing
+                         this object will have effect when the link is
+                         next restarted."
+               REFERENCE
+                         "Section 7.3, page 4, Async-Control-Character-
+                         Map of RFC1331."
+               DEFVAL    { 'ffffffff'h }
+               ::= { pppLinkConfigEntry 3 }
+
+          pppLinkConfigMagicNumber   OBJECT-TYPE
+               SYNTAX    INTEGER {false (1), true (2)}
+               ACCESS    read-write
+               STATUS    mandatory
+               DESCRIPTION
+                         "If true(2) then the local node will attempt to
+                         perform Magic Number negotiation with the
+                         remote node. If false(1) then this negotiation
+                         is not performed. In any event, the local node
+                         will comply with any magic number negotiations
+                         attempted by the remote node, per the PPP
+                         specification. Changing this object will have
+                         effect when the link is next restarted."
+               REFERENCE
+                         "Section 7.6, Magic Number, of RFC1331."
+               DEFVAL    { false }
+               ::= { pppLinkConfigEntry 4 }
+
+          pppLinkConfigFcsSize   OBJECT-TYPE
+               SYNTAX    INTEGER (0..128)
+               ACCESS    read-write
+               STATUS    mandatory
+               DESCRIPTION
+                         "The size of the FCS, in bits, the local node
+                         will attempt to negotiate for use with the
+                         remote node. Regardless of the value of this
+                         object, the local node will comply with any FCS
+                         size negotiations initiated by the remote node,
+                         per the PPP specification. Changing this object
+                         will have effect when the link is next
+                         restarted."
+               DEFVAL    { 16 }
+               ::= { pppLinkConfigEntry 5 }
+
+          END
+

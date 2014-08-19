@@ -1,0 +1,32 @@
+component("ehci") {
+    parent "nu.os.drvr.usb.host"
+    version "1.2.0"
+    description "This component implements the Nucleus USB EHCI Host Driver"
+    enable true
+
+    requires("nu.os.conn.usb.host.stack")
+
+    option("atmel_td_fix") {
+       default false
+       enregister false
+       description "This fix clears the TD bit forcefully during check retire transfer calls and needed by some ATMEL platforms"
+    }
+
+    option("ti_td_fix") {
+       default false
+       enregister false
+       description "This fix waits for the TD bit to be cleared during check retire transfer calls and needed by the TI platforms"
+    }
+
+    option("doorbell_bit_fix") {
+       default false
+       enregister false
+       description "This fix ignores the async doorbell bit wait"
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

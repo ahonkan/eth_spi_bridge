@@ -1,0 +1,15 @@
+component("csgnu") {
+    parent      "nu.os.arch.armv7_m"
+    version     "1.0.0"
+    toolset     "csgnu_arm"
+    architecture "armv7_m"
+    description "This component implements the support for the CS GNU Toolset on the ARM Architecture"
+    enable      true
+    mandatory
+    includepath ["os/include/arch/armv7-m/tool-csgnu_arm",
+                 "os/arch/armv7-m/tool-csgnu_arm"]
+  
+    library("nucleus.lib") {
+        sources { Dir.glob("*.{c,s,S}") }
+    }
+}

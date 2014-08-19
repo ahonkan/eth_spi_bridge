@@ -1,0 +1,15 @@
+component("shell") { 
+    parent      "nu.os.net.prot.tftp"
+    description "This component adds support for TFTP shell commands"
+    enable      false
+    runlevel    14
+
+    requires("nu.os.net.prot.tftp.server")
+    requires("nu.os.svcs.shell")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

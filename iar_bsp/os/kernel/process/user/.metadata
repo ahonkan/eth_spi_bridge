@@ -1,0 +1,25 @@
+component("user") {
+    parent      "nu.os.kern.process"
+    description "This component implements run-time linking and loading support for the Nucleus Light Weight Process kernel extension."
+    enable      false
+
+    requires("nu.os.kern.process.core")
+
+    option("atexit_max_funcs"){
+        default     32
+        values      1..100
+        description "The maximum number of functions that a process can register via atexit() at runtime."
+    }
+
+    option("cxx_support"){
+        default     true
+        description "When set to true enables C++ language support in the run-time user library linked with processes.  When set to false C++ language support is removed to improve performance (e.g. no attempt to call C++ static object constructors, etc.) and reduce library size.  The default value is true."
+    }
+
+    library("nucleus_user.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wall -ffunction-sections -fdata-sections -fPIC -DNU_PROCESS"
+            Dir.glob("*.c")
+        }
+    }
+}

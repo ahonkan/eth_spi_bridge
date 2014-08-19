@@ -1,0 +1,4 @@
+package("os") {
+    parent "nu"
+    enable true
+}

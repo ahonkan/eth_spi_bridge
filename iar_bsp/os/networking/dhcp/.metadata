@@ -1,0 +1,4 @@
+package("dhcp") { 
+    parent "nu.os.net"
+    enable true
+}

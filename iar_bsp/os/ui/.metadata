@@ -1,0 +1,4 @@
+package("ui") { 
+    parent "nu.os"
+    enable true
+}

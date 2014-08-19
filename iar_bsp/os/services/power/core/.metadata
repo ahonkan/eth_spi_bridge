@@ -1,0 +1,114 @@
+component("core") {
+    parent "nu.os.svcs.pwr"
+    description "This component implements the Nucleus Power Management Core Services."
+    enable true
+    runlevel 4
+   
+    requires("nu.os.kern.eqm")
+    requires("nu.os.drvr.pwr_intrf")
+    requires("nu.os.kern.devmgr")    
+    
+#
+# Compile time options
+#
+    option("enable_dvfs"){        
+        default true
+        description "Enable / Disable Dynamic Voltage and Frequency Scaling (DVFS). REQUIRES CPU driver"
+    }
+
+    option("enable_peripheral"){            
+        default true
+        description "Enable / Disable peripheral state services to control peripheral power states."
+    }
+
+    option("enable_idle"){        
+        default true
+        description "Enable / Disable CPU idle scheduling. REQUIRES CPU driver"
+    }
+
+    option("enable_cpu_usage"){        
+        default false
+        description "Enable / Disable CPU usage and utilization services. REQUIRES CPU driver"
+    }
+
+    option("enable_selfrefresh"){        
+        default false
+        description "Enable / Disable SDRAM self refresh mode. REQUIRES CPU driver"
+    }
+
+    option("enable_system"){                
+        default true
+        description "Enable / Disable system state services. REQUIRES peripheral state services"
+    }
+    
+    option("enable_watchdog"){          
+        default true
+        description "Enable / Disable watchdog component"
+    }
+    
+    option("enable_hibernate"){          
+        default false
+        description "Enable / Disable hibernate component. REQUIRES DVFS services"
+    }
+    
+    option("hibernate_dev") {
+        default     true
+        description "This marks the component to be hibernate aware"
+        enregister  true
+        hidden      true
+    }
+    
+    option("initial_op"){          
+        default 255
+        description "This is the OP that will be set once DVFS services has completed initialization, a value of 255 will use the highest available OP"
+    }
+
+#
+# Custom properties used at configuration time overriding BSP settings.
+#
+    option("set_def_dev_power_state_off") {
+        default false
+        description "When set to true each device's default power state is turned off during configuration overriding BSP settings."
+    }
+
+#
+# Run time options.  These are the defaults.  The interface platform file should specify/override these.
+#
+    option("nvm_available") {
+        default false
+        description "This indicates that a non-volatile memory driver is available"
+    }
+
+   # The following are "hidden" options - these will not show up in the generated HTML files, generated config files or UI config tool and are only
+   # meant to be over-ridden (at this time) by Nucleus experts.  The consequences of setting this options incorrectly are not all known and what values
+   # are optimal are not currently known.  All testing is done with the default values, so these are the only "known" values to work.
+   option("set_op_stack_size") {
+        description "Size, in bytes, of the Set OP Task stack. This value can have dire affects if set too low (stack over-flow)
+                     and will waste memory (RAM) if set too high. (default 1024)"
+        default      1024
+        values       256..2048
+        hidden       true
+   }
+
+   option("init_task_stack_size") {
+        description "Size, in bytes, of the Power Management Init Task stack. This value can have dire effects if set too low (stack over-flow)
+                     and will waste memory (RAM) if set too high. (default 1024)"
+        default      1024
+        values       256..4096
+        hidden       true
+   }
+   
+   option("hibernate_resume_task_stack_size") {
+        description "Size, in bytes, of the stack used during a hibernate shutdown resume operation.  This value can have dire effects if 
+                     set too low (stack over-flow) and will waste memory (RAM) if set too high. (default 1024)"
+        default      1024
+        values       256..3072
+        hidden       true
+   }
+     
+   library("nucleus.lib") {
+        sources { 
+            Dir.glob("**/*.c") 
+        }
+    }   
+}

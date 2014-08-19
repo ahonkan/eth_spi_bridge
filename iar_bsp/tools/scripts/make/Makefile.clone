@@ -1,0 +1,80 @@
+##----------------------------------------------------------------------------##
+# Copyright 2010 Mentor Graphics Corporation                                   #
+#    All Rights Reserved.                                                      #
+##----------------------------------------------------------------------------##
+
+include tools/scripts/make/Makefile.vars
+include tools/scripts/make/Makefile.commands
+
+# With each invocation of fuse we write the contents of either the concatenated
+# system configuration files or the specified user config.
+user-config-fname := $(CONFIGURATION_DIR)/$(canonical-config).config
+
+# This canned sequence is used to configure the build tree.  
+# First we delete any libraries to ensure that objects which where configured
+# out of the build do not stay in any libraries.  Then Fuse is called
+# to do the actual configuration.  Finally, a configuration file is generated
+# in the 'output' folder which contains the concatentation of all of the
+# configuration files applied from the 'config' folder.  This makes it
+# easier to see exactly what configuration bits where used.
+define configure-tree
+@$(call RM,$(wildcard $(LIB_OUTPUT_DIR)/*))
+@echo FUSE $(CONFIGURATION_DIR)/current.imageconfig
+$(call fuse,$(PLATFORM),$(TOOLSET),$(CONF_FILE_COMMAND),$(OPT_TRANSFORMS))
+endef
+
+# Include the Fuse-generated list of metadata files which are part of the
+# current configuration
+-include $(SCRIPTS_OUTPUT_DIR)/metadata.mk
+metadata-files := $(METADATA)
+
+# Add the platform metadata file to the list of tracked metadata files.
+metadata-files += bsp/$(PLATFORM)/$(PLATFORM).platform
+
+.PHONY : fuse config
+.NOTPARALLEL :
+
+# Build up the dependency list dynamically to determine if Fuse should
+# be run.
+_deps :=
+
+# Fuse generates 'CURRENT_TOOLSET', 'CURRENT_PLATFORM', and 'CURRENT_CONFIG', 
+# which we can use to check for a parameter switch event.
+ifneq ($(TOOLSET),$(CURRENT_TOOLSET))
+# Reconfigure for different toolsets.
+	_deps += config
+else ifneq ($(PLATFORM),$(CURRENT_PLATFORM))
+# Reconfigure for different platforms.
+	_deps += config
+else ifneq ($(canonical-config),$(CURRENT_CONFIG))
+# Reconfigure for different general configurations.
+
+# Was 'CONFIG' used?
+ifeq ($(origin CONFIG),command line)
+	_deps += config
+# Was 'USER_CONFIG' used?
+else ifneq ($(USER_CONFIG),)
+	_deps += config
+endif
+
+else
+# If we made it here, then the toolset, platform, and general configuration
+# must all be the same as the last run.  In this case we check for changed
+# metadata files and see if the passed in 'USER_CONFIG' has been modified.
+	_deps += $(CONFIGURATION_DIR)/current.imageconfig
+ifneq ($(USER_CONFIG),)
+	metadata-files += $(USER_CONFIG)
+endif
+
+endif
+
+fuse : $(_deps)
+
+# Rule for generating the 'current.imageconfig' file from the Fuse metadata.
+$(CONFIGURATION_DIR)/current.imageconfig : $(wildcard $(metadata-files))
+	$(Q)$(call configure-tree)
+
+# Rule for invoking Fuse when 'make' parameter change.
+config:
+	$(Q)$(call configure-tree)
+

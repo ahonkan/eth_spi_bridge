@@ -1,0 +1,45 @@
+component("smtpc") {
+    parent "nu.os.net.email"
+    description "This component implements the Nucleus SMTP Client component."
+    enable false
+
+    requires("nu.os.net.stack")
+    requires("nu.os.stor.file.vfs")
+    requires("nu.os.net.ssl.openssl.crypto")
+    requires("nu.os.net.ssl.openssl.ssl")
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("src/*.c")
+        }
+    }
+    
+    option("print_debug") {
+        description "When enabled SMTP API will print all commands/data sent and their replies from server"
+        enregister false
+        default 0
+    }
+	
+    option("ssl_cert") {
+        description "Certificate file"
+        enregister false
+        default "client.pem"
+    }
+
+    option("ssl_key") {
+        description "Key file"
+        enregister false
+        default "client.pem"
+    }
+
+    option("ssl_ca_list") {
+        description "List of trusted Certificate Autorities"
+        enregister false
+        default "root.pem"
+    }
+}
+

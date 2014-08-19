@@ -1,0 +1,34 @@
+component("ike") { 
+    parent "nu.os.net"
+    version "1.6.0"
+    description "This component implements the IKE component."
+    enable true
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("**/*.c")
+        }
+    }
+
+    requires("nu.os.net.stack")
+    requires("nu.os.net.ssl.openssl.crypto")
+
+#
+# Compile time options.
+#
+    option("disk_drive") {
+        description "Disk drive letter which contains IKE specific runtime files, such as certificates. The drive letter must be in Upper Case, e.g. A, B, C."
+        default "A"
+    }
+
+    option("cert_dir") {
+        description "Default path where certificates files are placed; drive root by default."
+        default "\\\\"
+    }
+
+}

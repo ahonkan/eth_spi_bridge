@@ -1,0 +1,4 @@
+package("audio") { 
+    parent "nu.os.conn.usb.host"
+    enable true
+}

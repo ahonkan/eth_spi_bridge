@@ -1,0 +1,4 @@
+package("wpa_supp") { 
+    parent      "nu.os.net"
+    enable      true
+}

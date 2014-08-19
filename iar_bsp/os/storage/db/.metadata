@@ -1,0 +1,4 @@
+package("db") {
+    parent "nu.os.stor"
+    enable true
+}

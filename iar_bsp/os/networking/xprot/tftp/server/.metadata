@@ -1,0 +1,44 @@
+component("server") { 
+    parent      "nu.os.net.prot.tftp"
+    description "This component implements the Nucleus TFTP Server"
+    enable      true
+    runlevel    9
+
+    requires("nu.os.net.stack")
+    requires("nu.os.stor.file.vfs")
+    
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("*.c")
+        }
+    }
+
+    option("default_drive") {
+        default     0
+        enregister  false
+        description "Default drive used by the TFTP Server (0=A: drive, 1=B: drive, etc)"
+    }
+
+    option("rfc2347_compliant") {
+        default     true 
+        enregister  false
+        description "Allow negotiation of blksize and timeout with client as per rfc2347 specification. (false=do not allow , true=allow ).  Default is true"
+    }
+
+    option("stack_size"){
+        default 2500
+        description "Stack size for TFTP Server task. (default is 2500 Bytes)."
+    }
+
+    option("udp_port") {
+        default     69
+        enregister  false
+        description "The UDP port number that the server will listen on.  Default is 69 (TFTP protocol default)."
+    }
+    
+}

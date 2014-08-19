@@ -1,0 +1,19 @@
+component("client") { 
+    parent      "nu.os.net.prot.tftp"
+    description "This component implements the Nucleus TFTP Client"
+    enable      true
+
+    requires("nu.os.net.stack")
+    requires("nu.os.stor.file.vfs")
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("*.c")
+        }
+    }
+}

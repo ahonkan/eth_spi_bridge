@@ -1,0 +1,10 @@
+component("gpio") {
+    parent      "nu.bsp.drvr"
+    version     "1.0.0"
+    description "This component initializes gpio for gpio operation"
+    enable      true
+
+    library("nucleus.lib") {
+        sources { Dir.glob("*.c") }
+    }
+}

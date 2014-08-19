@@ -1,0 +1,119 @@
+component("http") {
+    parent "nu.os.net"
+    version "1.0"
+    description "This component implements the Nucleus HTTP-lite component."
+    enable true
+    runlevel 16
+
+    requires("nu.os.net.stack")
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("src/*.c")
+        }
+    }
+
+#
+# Compile time options
+#
+   option("server_enable") {
+      default false
+      enregister false
+      description "Toggle compile-time support for enabling the HTTP Lite Server."
+   }
+
+   option("client_enable") {
+      default true
+      enregister false
+      description "Toggle compile-time support for enabling the HTTP Lite Client."
+   }
+
+   option("include_put_file") {
+      default false
+      enregister false
+      description "Toggle compile-time support for enabling files to be written to the local flat file system with a put command when no plug-in is found for the incoming URI."
+   }
+
+   option("include_delete_file") {
+      default false
+      enregister false
+      description "Toggle compile-time support for enabling files to be deleted from the local flat file system with a delete command when no plug-in is found for the incoming URI."
+   }
+
+   option("include_get_file") {
+      default false
+      enregister false
+      description "Toggle compile-time support for enabling files to be retrieved from the local flat file system with a get command when no plug-in is found for the incoming URI."
+   }
+
+   option("svr_stack_size") {
+      default      2000
+      enregister false
+      description "Size, in bytes, of the HTTP stack without CyaSSL enabled."
+   }
+
+   option("svr_stack_prio") {
+      default      25
+      enregister false
+      description "The priority of the HTTP Server stack task."
+   }
+
+   option("ssl_svr_stack_size") {
+      default      20000
+      enregister false
+      description "Size, in bytes, of the HTTP stack with CyaSSL enabled."
+   }
+
+   option("svr_backlog") {
+      default      10
+      enregister false
+      description "The maximum number of waiting connections to allow.  The HTTP Server processes one connection at a time.  If more connections are queued up than permitted by the backlog value, those connection attempts will be refused."
+   }
+
+   option("timeout") {
+      default      5
+      enregister false
+      description "The time, in seconds, to wait before timing out an inactive HTTP connection on either the client or server side."
+   }
+
+   option("svr_rcv_size") {
+      default      1024
+      enregister false
+      description "The maximum packet size that can be received in one call to NU_Recv by the server.  Note that the entire HTTP header must fit in this size.  The data portion can be received with successive calls to NU_Recv."
+   }
+
+   option("cli_rcv_size") {
+      default      512
+      enregister false
+      description "The maximum packet size that can be received in one call to NU_Recv by the client."
+   }
+
+   option("svr_default_mime") {
+      default      0
+      enregister false
+      description "If a URI does not use a file extension, this is the default MIME type to use.  The values are found in HTTP_Mime_Table.  The default value of 0 maps to plain text."
+   }
+
+   option("svr_default_uri") {
+      default      "index.htm"
+      enregister false
+      description "The default URI to use when no URI is specified on the command line with the IP address."
+   }
+
+   option("svr_uri_len") {
+      default      128
+      enregister false
+      description "The maximum acceptable length of an incoming URI within a client request."
+   }
+
+   option("svr_token_heap") {
+      default      16
+      enregister false
+      description "The maximum number of tokens to parse and store in the index array for a post command."
+   }
+}
+

@@ -1,0 +1,14 @@
+component("ltdc") {
+    parent      "nu.bsp.drvr.display"
+    version     "1.0.0"
+    description "This component implements the LCD driver for the ST IAR STM32F429II-SK RevB BSP."
+    enable      true
+   
+    requires("nu.os.drvr.display")
+   
+    library("nucleus.lib") {
+        cflags  "csgnu_arm" => ""
+        cflags  "rvct" => "--min_array_alignment=4"
+        sources { Dir.glob("*.c") }
+   }
+}

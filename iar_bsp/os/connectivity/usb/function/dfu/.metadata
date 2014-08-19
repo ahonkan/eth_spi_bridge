@@ -1,0 +1,62 @@
+component("dfu") { 
+    parent "nu.os.conn.usb.func"
+    description "This component implements the Device Firmware Capability on Function Side"
+    enable true
+    runlevel 7
+
+    requires("nu.os.conn.usb.func.stack")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+
+    option("detach_timeout") {
+        description "Time (in ms) for which device will wait after receiving DFU_DETACH from host"
+        default 10
+        enregister false
+    }
+
+    option("poll_time") {
+        description "Time for which host will wait before sending DFU_GETSTATUS sebsequent to DFU_DNLOAD or DFU_UPLOAD request"
+        default 30
+        enregister false
+    }
+
+    option("transfer_size") {
+        description "Maximum Number of bytes that the device can accept per control wire transaction"
+        default 256
+        enregister false
+    }
+
+    option("detach_timeout_ticks") {
+        description "Used in detach timer for intial timer ticks"
+        default 1000
+        enregister false
+    }
+
+    option("bitwill_detach") {
+        description "Part of bmAttribute (DFU Functional Descriptor): use for Detachment"
+        default false
+        enregister false
+    }
+
+    option("bitmenifest_tolerant") {
+        description "Part of bmAttribute (DFU Functional Descriptor): used for telling whether host should communicate during dnload and upload or not"
+        default true
+        enregister false
+    }
+
+    option("bit_canupload") {
+        description "Part of bmAttribute (DFU Functional Descriptor): device has capability to upload firmware to host"
+        default true
+        enregister false
+    }
+
+    option("bit_candnload") {
+        description "Part of bmAttribute (DFU Functional Descriptor): device has capability to download firmware from host"
+        default true
+        enregister false
+    }
+}

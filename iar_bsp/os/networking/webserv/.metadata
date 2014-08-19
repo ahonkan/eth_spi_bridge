@@ -1,0 +1,122 @@
+component("web") { 
+    parent "nu.os.net"
+    version "2.4"
+    description "This component implements the Nucleus Webserver."
+    enable true
+    runlevel 9
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("src/*.c")
+        }
+    }
+
+    requires("nu.os.net.stack")
+    requires("nu.os.stor.file.vfs")
+
+#
+# Webserv options
+#
+   option("include_initial_files") {
+      default false
+      enregister false
+      description "Allows Nucleus WebServ to be initialized with files in memory. This provides a base web site for the server to draw upon. This web site consists of the files converted by the FILECONVERT.EXE To use this system."
+   }
+
+   option("include_dir_plgn") {
+      default true
+      enregister false
+      description "Allows use of the Nucleus WebServ directory command. This feature is a plugin that lists the users filesystem on the users browser."
+   }
+
+   option("include_upload_plgn") {
+      default true
+      enregister false
+      description "Allows Nucleus WebServ to support file uploading using multi-part mime. Set this to true to enable this feature."
+   }
+
+   option("include_des_auth") {
+      default false
+      enregister false
+      description "Allows secure user authentication using a Java applet and DES encryption support in the server."
+   }
+
+   option("include_js_auth") {
+      default false
+      enregister false
+      description "Allows authentication through the use of javascripts available to the server."
+   }
+
+   option("include_basic_auth") {
+      default false
+      enregister false
+      description "Allows Basic Authtentication as defined in HTTP 1.0 specification"
+   }
+
+   option("include_ssl") {
+      default false
+      enregister false
+      description "Allows WebServ to use SSL"
+   }
+
+   option("include_cookies") {
+      default false
+      enregister false
+      description "Allows server support of cookies"
+   }
+
+   option("case_sensitive") {
+      default false
+      enregister false
+      description "Allows the server to be case sensitive with the use of file names"
+   }
+
+   option("public_dir") {
+      default "/publicdir"
+      enregister true
+      description "Anything in this directory is ALWAYS public"
+   }
+
+   option("private_dir") {
+      default "/privatedir"
+      enregister true
+      description "Anything in this directory is ALWAYS private"
+   }
+
+   option("file_name_tag") {
+      default "save-as-filename"
+      enregister false
+      description "HTML tag for file upload"
+   }
+
+   option("default_drive") {
+      default 0
+      enregister true
+      description "Default drive for file system"
+   }
+
+   option("ssl_cert") {
+      default "server.pem"
+      enregister true
+      description "Certificate file"
+   }
+
+   option("ssl_key") {
+      default "server.pem"
+      enregister true
+      description "Key file"
+   }
+
+   option("ssl_ca_list") {
+      default "root.pem"
+      enregister true
+      description "List of trusted Certificate Autorities"
+   }
+
+
+}

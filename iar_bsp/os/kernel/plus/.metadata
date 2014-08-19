@@ -1,0 +1,6 @@
+package("plus") { 
+    parent "nu.os.kern"
+    description "This package implements the Nucleus PLUS kernel."
+    enable true
+}
+

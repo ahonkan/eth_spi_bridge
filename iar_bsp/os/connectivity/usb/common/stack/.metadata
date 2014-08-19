@@ -1,0 +1,65 @@
+component("stack") {
+    parent "nu.os.conn.usb.com"
+    version "2.8.0"
+    description "This component implements the USB base stack component."
+    enable true
+
+    #Requirments for USB Stack
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+    requires("nu.os.svcs.registry")
+
+   option("optimize_for_size") {
+      default false
+      enregister false
+      description "Enable Size Optimizations in USB Stack and Class Drivers."
+   }
+   
+   option("otg_enable") {
+      default false
+      enregister false
+      description "Option to enable OTG support in USB stack."
+   }
+
+   option("ss_enable") {
+      default false
+      enregister false
+      description "Enable USB stack for Super Speed capability"
+   }
+
+   option("tests_enable") {
+      default false
+      enregister false
+      description "Enable inclusion of test files required to run USB tests in Kader."
+   }
+
+   option("create_mem_pools") {
+      default true
+      enregister false
+      description "Option to allow separate USB memory pools creation."
+   }
+
+   option("cached_pool_size") {
+      default 1*1024*1024
+      enregister false
+      description "Size of USB Cached memory pool, default = 1M"
+   }
+
+   option("uncached_pool_size") {
+      default 1*1024*1024
+      enregister false
+      description "Size of USB Uncached memory pool, default = 1M"
+   }
+
+   option("test_modes_support"){
+       default false
+       enregister false
+       description "Hardware Test Modes Support for USB 2.0 Compliance Testing"
+   }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

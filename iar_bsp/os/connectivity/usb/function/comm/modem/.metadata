@@ -1,0 +1,27 @@
+component("mdm") { 
+    parent "nu.os.conn.usb.func.comm"
+    version "2.0.0"
+    description "This component implements the USB Function Modem Communications component."
+    enable true
+	runlevel 8
+	
+	requires("nu.os.conn.usb.func.comm.class")
+	
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+	
+	option("configstring") {
+      description "This parameter is used to pass optional configuration string"
+      default "Modem Configuration String"
+      enregister true
+    }
+   
+    option("interfacestring") {
+      description "This parameter is used to pass optional interface string"
+      default "Modem Interface String"
+      enregister true
+   }
+}

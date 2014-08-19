@@ -1,0 +1,36 @@
+component("ftp") { 
+    parent "nu.os.net.prot"
+    version "1.8.0"
+    description "This component implements the Nucleus FTP Client/Server"
+    enable true
+    runlevel 9
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("src/*.c")
+        }
+    }
+
+    requires("nu.os.net.stack")
+    requires("nu.os.stor.file.vfs")
+
+#
+# FTP options
+#
+   option("default_drive") {
+      default 0
+      enregister false
+      description "Default drive used by the FTP Server (0=A: drive, 1=B: drive, etc)"
+   }
+
+   option("master_task_priority") {
+      default 25
+      enregister false
+      description "Default priority used by FTP server tasks. Master and Cleaner tasks will have this priority, Control task will have +2 priority and Data task will have +4 priority."
+   }
+}

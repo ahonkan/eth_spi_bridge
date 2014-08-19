@@ -1,0 +1,14 @@
+component("arch") {
+    parent      "nu.bsp"
+    version     "1.0.0"
+    description "This component implements support for the STM32 Platform"
+    enable      true
+
+    mandatory
+
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("*.c")
+        } 
+    }
+}

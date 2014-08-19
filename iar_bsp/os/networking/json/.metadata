@@ -1,0 +1,45 @@
+component("json") { 
+    parent "nu.os.net"
+    version "1.0"
+    description "This component implements the JSON component."
+    enable true
+	runlevel 31
+
+    requires("nu.os.net.stack")
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("**/*.c")
+        }
+    }
+
+    option("include_parser") {
+        default true
+        enregister false
+        description "Include the JSON Parser in the build. This is set to true by default."
+    }
+
+    option("include_generator") {
+        default true
+        enregister false
+        description "Include the JSON Generator in the build. This is set to true by default."
+    }
+
+    option("include_float_conversion") {
+        default false
+        enregister false
+        description "Include support for the JSON_Double_To_String() and JSON_String_To_Double() functions which convert floating point to string and vice-versa. These are useful since the JSON Parser/Generator only handle floats in string format. This support is disabled by default."
+    }
+
+    option("max_nesting_depth") {
+        default 10
+        values 2..200
+        enregister false
+        description "The maximum nesting level of arrays and objects for the JSON Generator and Parser. This adds an overhead of about 1 byte per nesting depth for the JSON Generator and 2 bytes per nesting depth for the Parser. Default value is 10."
+    }
+}

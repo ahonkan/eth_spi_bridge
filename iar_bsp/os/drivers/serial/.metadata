@@ -1,0 +1,41 @@
+component("serial") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus serial driver."
+    enable true
+
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+
+    runlevel  5
+
+    option("blocking_support") {
+      default true
+      description "This enables blocking support in the serial driver.  If true (default), the serial driver blocks to prevent dropped characters when receiving more characters than the buffer size.  If set to false, blocking is disabled, and character loss is possible."
+    }
+
+    option("buffer_size") {
+      default 100
+      enregister true
+      description "Default size of software buffer in Serial Middleware"
+    }
+
+    option("max_devs_supported"){
+        description "The maximum number of devices supported by the serial driver middleware (default is 4)"
+        default 4
+        values 1..100
+    }
+    
+    option("hibernate_dev") {
+        enregister  true
+        default     true
+        description "This marks the component to be hibernate aware"
+        hidden      true
+    }
+
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") 
+        }
+    }
+}

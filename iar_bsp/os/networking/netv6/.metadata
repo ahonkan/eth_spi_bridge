@@ -1,0 +1,72 @@
+component("ipv6") { 
+    parent "nu.os.net"
+    version "1.5"
+    description "This component implements the Nucleus IPV6 Networking Stack."
+    enable true
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-strict-aliasing -fno-builtin-memcpy -ffunction-sections -fdata-sections"
+            cflags "csgnu_ppc" => "-Wno-strict-aliasing -fno-builtin-memcpy -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-strict-aliasing -fno-builtin-memcpy"
+            Dir.glob("src/*.c") 
+        }
+    }
+
+    requires("nu.os.net.stack")
+
+
+#
+# IPv6 options
+#
+
+   option("export_symbols") {
+      default true
+      description "Exports API symbols for use by loaded processes."
+   }
+
+   option("include_router_spt") {
+      default false
+      enregister false
+      description "Includes support for IPV6 router, but can be disabled if only acting in IPv6 host mode (reduces footprint)"
+   }
+
+   option("include_dhcp6") {
+      default true
+      enregister false
+      description "Includes support for DHCPv6 client support"
+   }
+
+   option("include_dad6") {
+      default true
+      enregister false
+      description "Includes support for Duplicate Address Detection support. Enabling this support will ensure that all IPv6 addresses assigned to IPv6 enabled interfaces are unique"
+   }
+
+   # The following are "hidden" options - these will not show up in the generated HTML files, generated config files or UI config tool and are only
+   # meant to be over-ridden (at this time) by Nucleus experts.  The consequences of setting this options incorrectly are not all known and what values
+   # are optimal are not currently known.  All testing is done with the default values, so these are the only "known" values to work.
+   option("max_dhcp6_tx_count") {
+      description "Maximum number of dhcp6 transmissions that can occur at the same time in the system.  The default max is 10.  
+                   This value can adversely affect DHCP6 operations if configured too low and will waste memory (RAM) if set too high."
+      default      10
+      values       1..20
+      hidden       true
+   }
+
+   option("dhcp6_rx_stack_size") {
+      description "Size, in bytes, of the DHCP6 RX Task stack.  The default 5000.  This value can have dire affects if set too low (stack over-flow)
+                   and will waste memory (RAM) if set too high."
+      default      5000
+      values       512..8192
+      hidden       true
+   }
+
+   option("dhcp6_evt_stack_size") {
+      description "Size, in bytes, of the DHCP6 Event Task stack.  The default 5000.  This value can have dire affects if set too low (stack over-flow)
+                   and will waste memory (RAM) if set too high."
+      default      5000
+      values       512..8192
+      hidden       true
+   }
+}

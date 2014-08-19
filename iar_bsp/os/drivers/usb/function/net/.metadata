@@ -1,0 +1,25 @@
+component("net_if") {
+    parent "nu.os.drvr.usb.func"
+    version "1.5.0"
+    description "This component implements the generic Nucleus USB Function NET driver."
+    enable true
+    
+    requires("nu.os.conn.usb.func.comm.eth")
+    requires("nu.os.net.stack")
+    
+    option("max_buf_size") {
+      description "Maximum size of each buffer in receive buffer groups used by ethernet for receiving data from the Host."
+      default 1600
+   }
+   
+    option("num_rx_grp_bufs") {
+      description "Total Number of receive buffer groups used by ethernet for receiving data from the Host."
+      default 5
+   }
+    
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") 
+        }
+    }
+}

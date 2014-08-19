@@ -1,0 +1,62 @@
+=pod
+
+=head1 NAME
+
+ARC4_set_key, ARC4 - ARC4 encryption
+
+=head1 SYNOPSIS
+
+ #include <openssl/arc4.h>
+
+ void ARC4_set_key(ARC4_KEY *key, int len, const unsigned char *data);
+
+ void ARC4(ARC4_KEY *key, unsigned long len, const unsigned char *indata,
+          unsigned char *outdata);
+
+=head1 DESCRIPTION
+
+This library implements the Alleged-RC4 cipher, which is described for
+example in I<Applied Cryptography>.  It is believed to be compatible
+with RC4[TM], a proprietary cipher of RSA Security Inc.
+
+ARC4 is a stream cipher with variable key length.  Typically, 128 bit
+(16 byte) keys are used for strong encryption, but shorter insecure
+key sizes have been widely used due to export restrictions.
+
+ARC4 consists of a key setup phase and the actual encryption or
+decryption phase.
+
+ARC4_set_key() sets up the B<ARC4_KEY> B<key> using the B<len> bytes long
+key at B<data>.
+
+ARC4() encrypts or decrypts the B<len> bytes of data at B<indata> using
+B<key> and places the result at B<outdata>.  Repeated ARC4() calls with
+the same B<key> yield a continuous key stream.
+
+Since ARC4 is a stream cipher (the input is XORed with a pseudo-random
+key stream to produce the output), decryption uses the same function
+calls as encryption.
+
+Applications should use the higher level functions
+L<EVP_EncryptInit(3)|EVP_EncryptInit(3)>
+etc. instead of calling the ARC4 functions directly.
+
+=head1 RETURN VALUES
+
+ARC4_set_key() and ARC4() do not return values.
+
+=head1 NOTE
+
+Certain conditions have to be observed to securely use stream ciphers.
+It is not permissible to perform multiple encryptions using the same
+key stream.
+
+=head1 SEE ALSO
+
+L<blowfish(3)|blowfish(3)>, L<des(3)|des(3)>, L<rc2(3)|rc2(3)>
+
+=head1 HISTORY
+
+ARC4_set_key() and ARC4() are available in all versions of SSLeay and OpenSSL.
+
+=cut

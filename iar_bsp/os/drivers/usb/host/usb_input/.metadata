@@ -1,0 +1,15 @@
+component("usb_input") {
+    parent "nu.os.drvr.usb.host"
+    version "1.2.0"
+    description "This component implements the USB Input driver for Grafix RS and Inflexion Driver"
+    enable true
+
+    requires("nu.os.ui.input_mgmt")
+    requires("nu.os.conn.usb.host.hid.mouse")
+
+	library("nucleus.lib") {
+        sources { 
+            Dir.glob("**/*.c") 
+        }
+    }
+}

@@ -1,0 +1,5 @@
+package("svcs") { 
+    parent "nu.os"
+    description "This package implements Nucleus OS Services"
+    enable true
+}

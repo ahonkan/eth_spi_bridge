@@ -1,0 +1,106 @@
+##----------------------------------------------------------------------------##
+# Copyright 2010 Mentor Graphics Corporation                                   #
+#    All Rights Reserved.                                                      #
+##----------------------------------------------------------------------------##
+
+## 
+## Standard Rules
+## 
+
+all : $(OBJS) $(PROC_OBJS) $(LIBS) $(EXES) $(PROCS)
+
+# Include the generated dependencies.
+ifneq ($(wildcard $(OBJS:.o=.d)),)
+ifneq ($(MAKECMDGOALS),clean)
+-include $(OBJS:.o=.d))
+endif
+endif
+
+# Include the generated dependencies for PIC objects.                                                                                            
+ifneq ($(wildcard $(PROC_OBJS:.po=.pd)),)
+ifneq ($(MAKECMDGOALS),clean)
+-include $(PROC_OBJS:.po=.pd))
+endif
+endif
+
+#
+# Pattern Matching Rules
+#
+
+# Pattern matching rule for libraries.
+%.lib :
+	@echo AR $@
+	$(Q)$(call update-archive,$@,$(?:.d=.o))
+ifneq ($(NOPOSTAR),0)
+	@echo POSTAR $(join $(dir $@),$(addprefix lib,$(addsuffix .a,$(*F))))
+	$(Q)$(call CP,$@,$(join $(dir $@),$(addprefix lib,$(addsuffix .a,$(*F)))))
+endif
+
+# Pattern matching rule for executables.
+%.out :
+	@echo LD $@
+	$(Q)$(call link,$@,$(^:.d=.o))
+ifneq ($(RAWBINARY),0)
+	@echo POSTLD $(basename $@).bin
+	$(Q)$(call postlink,$@)
+endif
+
+# Pattern matching rule for assembler files.
+$(OBJ_DIR)/%.o : %.s
+	@echo AS $(<:.s=.o)
+	$(Q)$(call cppassemble,$<,$@)
+	@$(call fixup-deps,$(@:.o=.d.tmp),$(@:.o=.d))
+
+# Pattern matching rule for preprocessed assembler files.
+$(OBJ_DIR)/%.o : %.S
+	@echo AS $(<:.S=.o)
+	$(Q)$(call cppassemble,$<,$@)
+	@$(call fixup-deps,$(@:.o=.d.tmp),$(@:.o=.d))
+
+# Pattern matching rule for C files.
+$(OBJ_DIR)/%.o : %.c
+	@echo CC $(<:.c=.o)
+	$(Q)$(call compile,$<,$@)
+	@$(call fixup-deps,$(@:.o=.d.tmp),$(@:.o=.d))
+
+# Pattern matching rule for C++ files.
+$(OBJ_DIR)/%.o : %.cpp
+	@echo CXX $(<:.cpp=.o)
+	$(Q)$(call compilecxx,$<,$@)
+	@$(call fixup-deps,$(@:.o=.d.tmp),$(@:.o=.d))
+
+##
+# Rules for Nucleus process build artifacts
+##
+
+# Pattern matching rule for processes.
+%.load :
+	@echo LD $@
+	$(Q)$(call proc_link,$@,$(CONFIGURATION_DIR)/scripts/$(notdir $@)_objs.mk,$(CONFIGURATION_DIR)/scripts/$(notdir $@)_libs.mk)
+	@echo POSTLD $(basename $@).load
+	$(Q)$(call proc_postlink,$@)
+
+# Pattern matching rule for assembler files.
+$(OBJ_DIR)/%.po : %.s
+	@echo AS $(<:.s=.po)
+	$(Q)$(call proc_assemble,$<,$@)
+	@$(call fixup-deps-proc,$(@:.po=.pd.tmp),$(@:.po=.pd))
+
+# Pattern matching rule for preprocessed assembler files.
+$(OBJ_DIR)/%.po : %.S
+	@echo AS $(<:.S=.po)
+	$(Q)$(call proc_cppassemble,$<,$@)
+	@$(call fixup-deps-proc,$(@:.po=.pd.tmp),$(@:.po=.pd))
+
+# Pattern matching rule for C files.
+$(OBJ_DIR)/%.po : %.c
+	@echo CC $(<:.c=.po)
+	$(Q)$(call proc_compile,$<,$@)
+	@$(call fixup-deps-proc,$(@:.po=.pd.tmp),$(@:.po=.pd))
+
+# Pattern matching rule for C++ files.
+$(OBJ_DIR)/%.po : %.cpp
+	@echo CXX $(<:.cpp=.po)
+	$(Q)$(call proc_compilecxx,$<,$@)
+	@$(call fixup-deps-proc,$(@:.po=.pd.tmp),$(@:.po=.pd))
+

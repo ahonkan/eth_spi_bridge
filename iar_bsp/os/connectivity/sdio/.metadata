@@ -1,0 +1,38 @@
+component("sdio") {
+    parent "nu.os.conn"
+    version "1.0.0"
+    description "This component implements the Nucleus SDIO component."
+    enable true
+    runlevel 5
+
+    requires("nu.os.kern.devmgr")
+    
+    option("optimize_for_size") {
+        default false
+        enregister false
+        description "Enable Size Optimizations in SDIO Stack."
+    }
+   
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+    
+    option("sdmmc_power_settle_delay") {
+        default 400
+        enregister false
+        description "Value of the delay for power to settle in milliseconds"
+    }
+
+    library("nucleus.lib") {
+        sources {
+            cflags "rvct" => "--diag_suppress 61"
+            cflags "csgnu_arm" => "-Wno-format"
+            cflags "csgnu_ppc" => "-Wno-format"
+            cflags "tensilica" => "-Wno-format"
+            Dir.glob("src/*.c")
+        }
+    }
+}

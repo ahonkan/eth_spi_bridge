@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="cdt.managedbuild.config.gnu.mentor.nucleus.exe.debug.623420414">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.mentor.nucleus.exe.debug.623420414" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.mentor.embedded.toolchains.core.nucleus.FuseErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mentor.nucleus.exe.debug.623420414" name="Debug" parent="cdt.managedbuild.config.gnu.mentor.nucleus.exe.debug" postbuildStep="${POSTLD} -O binary ${CWD}/${ProjName}.out ${CWD}/${ProjName}.bin" postcleanStep="">
+					<folderInfo id="cdt.managedbuild.config.gnu.mentor.nucleus.exe.debug.623420414." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.exe.debug.301393778" name="Sourcery CodeBench for Nucleus" superClass="cdt.managedbuild.toolchain.gnu.mentor.nucleus.exe.debug">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus.10284574" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus"/>
+							<builder buildPath="${workspace_loc:/eth_spi_bridge/Debug}" id="cdt.managedbuild.builder.gnu.mentor.nucleus.2088165593" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CodeSourcery GNU Builder" superClass="cdt.managedbuild.builder.gnu.mentor.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus.2095921298" name="CodeSourcery GNU Archiver" superClass="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus.681547101" name="CodeSourcery GNU C++ Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus">
+								<option id="mentor.gnu.cpp.compiler.option.optimization.level.1314002947" name="Optimization Level" superClass="mentor.gnu.cpp.compiler.option.optimization.level" value="mentor.gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="mentor.gnu.cpp.compiler.option.debugging.level.120436567" name="Debug Level" superClass="mentor.gnu.cpp.compiler.option.debugging.level" value="mentor.gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="mentor.gnu.cpp.compiler.option.indexer_include.290652229" name="Include paths for indexer" superClass="mentor.gnu.cpp.compiler.option.indexer_include" valueType="includePath">
+									<listOptionValue builtIn="false" value="${CFG_INCLUDE}"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/./"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/common/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/utils/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/rsn_supp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/tool-csgnu_arm/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/arch/armv7-m/tool-csgnu_arm/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/plat-stm32/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/STM32F4xx/Include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/Include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/stm_devices/"/>
+								</option>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.1093378782" name="CodeSourcery GNU C Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus">
+								<option defaultValue="mentor.gnu.c.optimization.level.none" id="mentor.gnu.c.compiler.option.optimization.level.215663110" name="Optimization Level" superClass="mentor.gnu.c.compiler.option.optimization.level" valueType="enumerated"/>
+								<option id="mentor.gnu.c.compiler.option.debugging.level.352761325" name="Debug Level" superClass="mentor.gnu.c.compiler.option.debugging.level" value="mentor.gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="mentor.gnu.c.compiler.option.indexer_include.2077600067" name="Include paths for indexer" superClass="mentor.gnu.c.compiler.option.indexer_include" valueType="includePath">
+									<listOptionValue builtIn="false" value="${CFG_INCLUDE}"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/./"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/common/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/utils/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/rsn_supp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/tool-csgnu_arm/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/arch/armv7-m/tool-csgnu_arm/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/plat-stm32/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/STM32F4xx/Include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/Include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/stm_devices/"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.138159489" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus.610570141" name="CodeSourcery GNU C Linker" superClass="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus.544233292" name="CodeSourcery GNU C++ Linker" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus.1816247447" name="CodeSourcery GNU Assembler" superClass="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus">
+								<option id="gnu.both.asm.option.debugging.level.1817945277" name="Debug Level" superClass="gnu.both.asm.option.debugging.level" value="gnu.both.asm.debugging.level.max" valueType="enumerated"/>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.666213389" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
+				<externalSettings containerId="iar_bsp;cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.473005953" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
+			</storageModule>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.mentor.nucleus.exe.release.1027367330">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.mentor.nucleus.exe.release.1027367330" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.mentor.embedded.toolchains.core.nucleus.FuseErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mentor.nucleus.exe.release.1027367330" name="Release" parent="cdt.managedbuild.config.gnu.mentor.nucleus.exe.release" postbuildStep="${POSTLD} -O binary ${CWD}/${ProjName}.out ${CWD}/${ProjName}.bin" postcleanStep="">
+					<folderInfo id="cdt.managedbuild.config.gnu.mentor.nucleus.exe.release.1027367330." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.exe.release.2041992739" name="Sourcery CodeBench for Nucleus" superClass="cdt.managedbuild.toolchain.gnu.mentor.nucleus.exe.release">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus.35735892" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus"/>
+							<builder buildPath="${workspace_loc:/eth_spi_bridge/Release}" id="cdt.managedbuild.builder.gnu.mentor.nucleus.65305620" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CodeSourcery GNU Builder" superClass="cdt.managedbuild.builder.gnu.mentor.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus.1143242495" name="CodeSourcery GNU Archiver" superClass="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus.1966277743" name="CodeSourcery GNU C++ Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus">
+								<option id="mentor.gnu.cpp.compiler.option.optimization.level.2012211478" name="Optimization Level" superClass="mentor.gnu.cpp.compiler.option.optimization.level" value="mentor.gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
+								<option id="mentor.gnu.cpp.compiler.option.debugging.level.1528804108" name="Debug Level" superClass="mentor.gnu.cpp.compiler.option.debugging.level"/>
+								<option id="mentor.gnu.cpp.compiler.option.indexer_include.624742285" name="Include paths for indexer" superClass="mentor.gnu.cpp.compiler.option.indexer_include" valueType="includePath">
+									<listOptionValue builtIn="false" value="${CFG_INCLUDE}"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/./"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/common/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/utils/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/rsn_supp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/tool-csgnu_arm/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/arch/armv7-m/tool-csgnu_arm/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/plat-stm32/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/STM32F4xx/Include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/Include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/stm_devices/"/>
+								</option>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.1160762063" name="CodeSourcery GNU C Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus">
+								<option defaultValue="mentor.gnu.c.optimization.level.most" id="mentor.gnu.c.compiler.option.optimization.level.655908958" name="Optimization Level" superClass="mentor.gnu.c.compiler.option.optimization.level" valueType="enumerated"/>
+								<option id="mentor.gnu.c.compiler.option.debugging.level.1842086118" name="Debug Level" superClass="mentor.gnu.c.compiler.option.debugging.level"/>
+								<option id="mentor.gnu.c.compiler.option.indexer_include.589320176" name="Include paths for indexer" superClass="mentor.gnu.c.compiler.option.indexer_include" valueType="includePath">
+									<listOptionValue builtIn="false" value="${CFG_INCLUDE}"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/./"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/common/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/utils/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/crypto/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/rsn_supp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/tool-csgnu_arm/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/arch/armv7-m/tool-csgnu_arm/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/plat-stm32/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/STM32F4xx/Include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/Include/"/>
+									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/stm_devices/"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.525919665" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus.2035161210" name="CodeSourcery GNU C Linker" superClass="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus.872297725" name="CodeSourcery GNU C++ Linker" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus.425433145" name="CodeSourcery GNU Assembler" superClass="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus">
+								<option id="gnu.both.asm.option.debugging.level.1511761363" name="Debug Level" superClass="gnu.both.asm.option.debugging.level" value="gnu.both.asm.debugging.level.none" valueType="enumerated"/>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.741813324" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
+				<externalSettings containerId="iar_bsp;cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.1052189355" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
+			</storageModule>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="eth_spi_bridge.cdt.managedbuild.target.gnu.mentor.nucleus.exe.465701303" name="Executable" projectType="cdt.managedbuild.target.gnu.mentor.nucleus.exe"/>
+	</storageModule>
+	<storageModule moduleId="com.mentor.embedded">
+		<project systemProject="iar_bsp" toolset="csgnu_arm" version="2013.08.3"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mentor.nucleus.exe.debug.623420414;cdt.managedbuild.config.gnu.mentor.nucleus.exe.debug.623420414.;cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.1093378782;cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.138159489">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.mentor.embedded.toolchains.core.nucleus.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mentor.nucleus.exe.release.1027367330;cdt.managedbuild.config.gnu.mentor.nucleus.exe.release.1027367330.;cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.1160762063;cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.525919665">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.mentor.embedded.toolchains.core.nucleus.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+</cproject>

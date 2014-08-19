@@ -1,0 +1,5 @@
+package("kern") {
+    parent "nu.os"
+    description "This package implements the Nucleus OS Kernel."
+    enable true
+}

@@ -1,0 +1,12 @@
+component("ohci") {
+    parent "nu.os.drvr.usb.host"
+    version "1.2.0"
+    description "This component implements the Nucleus USB OHCI Host Driver"
+    enable true
+    requires("nu.os.conn.usb.host.stack")
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") 
+        }
+    }
+}

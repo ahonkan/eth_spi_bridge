@@ -1,0 +1,73 @@
+component("src") { 
+    parent      "nu.os.net.wpa_supp"
+    version     "0.6.9"
+    description "This component implements the wpa_supplicant src/."
+    runlevel    9
+    enable      true
+
+    requires("nu.os.net.stack")
+    requires("nu.os.net.ssl.openssl.crypto")
+    requires("nu.os.net.ssl.openssl.ssl")
+
+    includepath ["os/networking",
+                 "os/networking/wpa_supplicant",
+                 "os/networking/wpa_supplicant/src",
+                 "os/networking/wpa_supplicant/src/common",
+                 "os/networking/wpa_supplicant/src/utils",
+                 "os/networking/wpa_supplicant/src/crypto",
+                 "os/networking/wpa_supplicant/src/rsn_supp"]
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-format -Wno-overflow -Wno-char-subscripts -Wno-unused-but-set-variable -ffunction-sections -fdata-sections"
+            cflags "csgnu_ppc" => "-Wno-format -Wno-overflow -Wno-char-subscripts -Wno-unused-but-set-variable -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-format -Wno-overflow -Wno-char-subscripts -Wno-unused-but-set-variable"
+            cflags "rvct" => "--diag_suppress=warning"
+            Dir.glob("common/*.c") +
+            Dir.glob("crypto/*.c") - Dir.glob("crypto/crypto_nucleus.c") - Dir.glob("crypto/tls_nucleus.c") +
+            Dir.glob("drivers/*.c") +
+            Dir.glob("eap_common/*.c") + Dir.glob("eap_peer/*.c") + Dir.glob("eapol_supp/*.c") +
+            Dir.glob("l2_packet/*.c") +
+            Dir.glob("rsn_supp/*.c") +
+            Dir.glob("utils/*.c") - Dir.glob("utils/os_nucleus.c") +
+            Dir.glob("wps/*.c") +
+            Dir.glob("../wpa_supplicant/*.c") - Dir.glob("../wpa_supplicant/main_nucleus.c")
+        }
+		sources {
+            cflags "csgnu_arm" => "-Wno-format -Wno-overflow -Wno-deprecated-declarations"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+			# These files were not part of open-source code. So they must pass warning checks by the compilers.
+            Dir.glob("utils/os_nucleus.c") + Dir.glob("../wpa_supplicant/main_nucleus.c") + Dir.glob("../wpa_supplicant_cfg.c")
+        }
+    }
+
+    option("default_drive") {
+        description "Default file system drive. Usually 0 for the ramdisk, 1 for removable disks and 2 for fixed disks."
+        default 0
+        values [0,1,2]
+    }
+
+    option("enable_fallback_conf") {
+        description "Enable fall-back configuration option to write pre-defined config file if not found on disk."
+        default true
+    }
+
+    option("fallback_conf_data") {
+        description "Contents of the fall-back configuration file."
+        default "ctrl_interface=/var/run/wpa_supplicant\\nap_scan=2\\nnetwork={\\nssid=\\\"mentor_wifi\\\"\\nkey_mgmt=WPA-PSK\\nproto=WPA\\npairwise=TKIP\\ngroup=TKIP\\npsk=\\\"password\\\"\\ndisabled=1\\n}\\n"
+    }
+
+    option("ctrl_iface") {
+        description "Unique string ID of the control interface. Set to zero length string to disable this interface."
+        default "/var/run/wpa_supplicant"
+    }
+    
+    option("hibernate_dev") {
+        enregister  true
+        default 1
+        description "This marks the component to be hibernate aware"
+    }
+}

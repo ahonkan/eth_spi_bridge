@@ -1,0 +1,34 @@
+component("class") { 
+    parent "nu.os.conn.usb.func.comm"
+    version "2.0.0"
+    description "This component implements the base USB Function Communications component."
+    enable true
+	runlevel 7
+
+    requires("nu.os.conn.usb.func.stack")
+	
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+	
+	option("configstring") {
+      description "This parameter is used to pass optional configuration string"
+      default "COMM Configuration String"
+      enregister true
+    }
+   
+    option("interfacestring") {
+      description "This parameter is used to pass optional interface string"
+      default "COMM Interface String"
+      enregister true
+   }
+   
+   option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+}

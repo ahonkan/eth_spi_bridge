@@ -1,0 +1,42 @@
+component("snmp") { 
+    parent "nu.os.net"
+    version "2.5.0"
+    description "This component implements the SNMP protocol v1/3."
+    runlevel 9
+    enable false
+
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("*.c") + Dir.glob("src/*.c") +
+            Dir.glob("rfc1213/src/*.c") + Dir.glob("rfc147x/src/*.c")
+        }
+    }
+
+#
+# Compile time options
+#
+
+   option("include_snmpv1") {
+      default true
+      enregister false
+      description "Include support for SNMPv1 . It is enabled by default."
+   }
+   
+   option("include_snmpv2") {
+      default true
+      enregister false
+      description "Include support for SNMPv2 . It is enabled by default."
+   }
+
+   option("include_snmpv3") {
+      default false
+      enregister false
+      description "Include support for SNMPv3 . It is disabled by deault . This is dependant on OpenSSL/Crypto ."
+   }
+}

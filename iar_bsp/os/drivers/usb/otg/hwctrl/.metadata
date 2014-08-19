@@ -1,0 +1,21 @@
+component("hwctrl") {
+    parent "nu.os.drvr.usb.otg"
+    version "1.0.0"
+    description "This component implements the generic Nucleus USB OTG driver."
+    enable false
+    
+    option("mode") {
+        default     1
+        description "Operational mode of the OTG device
+                     Function mode 1
+                     Host     mode 2
+                     OTG      mode 3"
+    }
+            
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") 
+
+        }
+    }
+}

@@ -1,0 +1,62 @@
+component("sqlite") {
+    parent "nu.os.stor.db"
+    version "1.0"
+    description "This component implements the Nucleus SQLite version 3.7.14.1"
+    enable false
+    runlevel 16
+    
+    requires("nu.os.stor.file.vfs")
+    
+    option("sql_db_directory"){
+        default "A:\\\\"
+        description "This defines the default path to be used for database, if none given."
+
+    }
+    option("sql_temp_directory"){
+        default "A:\\\\"
+        description "This defines the default path to be used for temporary files."
+    }
+    
+    option("sql_temp_storage"){
+        default 3
+        values [0,1,2,3]
+        description "This defines the default storage medium for temporary files.\n"+
+                    "0. Always store on disk regardless of the setting of the temp_store pragma.\n"+
+                    "1. Store on disk by default but this can be overridden by the temp_store pragma.\n"+
+                    "2. Store in memory by default but this can be overridden by the temp_store pragma.\n"+
+                    "3. Always store in memory regardless of the setting of the temp_store pragma."
+    }
+    
+    option("sql_max_length"){
+        default 1000000000
+        values  1000000..2147483647
+        description "This define the maximum number of bytes in a string or BLOB in SQLite."
+    }
+    
+    option("sql_max_sql_length"){
+        default 1000000000
+        values  1000000..1073741824
+        description "This define the maximum number of bytes in the text of an SQL statement. This value can not be larger the sql_max_length."
+    }
+    
+    option("sql_soundex"){
+        default false
+        description "Soundex is a phonetic algorithm for indexing names by sound, as pronounced in English.\n"+
+                    "This feature is omitted from SQLite by default. It is only available if this compile-time "+
+                    "option is set to true when SQLite is built."
+    }
+    
+    includepath ["os/storage/db/sqlite/src"]
+    
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-unused-but-set-variable -Wno-format"
+            cflags "csgnu_mips" => "-Wno-unused-but-set-variable -Wno-format"
+            cflags "csgnu_ppc" => "-Wno-unused-but-set-variable -Wno-format"
+            cflags "tensilica" => "-Wno-unused-but-set-variable -Wno-format"
+            cflags "rvct" => "--diag_suppress=warning"
+            Dir.glob("src/*.c") + Dir.glob("*.c") - Dir.glob("src/shell.c") - 
+            Dir.glob("src/os_unix.c") - Dir.glob("src/os_win.c")
+        }
+    }
+}

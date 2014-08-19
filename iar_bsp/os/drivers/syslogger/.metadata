@@ -1,0 +1,28 @@
+component("syslogger") {
+    parent      "nu.os.drvr"
+    version     "1.0.0"
+    description "This component implements the generic System Logger Driver"
+    enable      true
+    runlevel    4
+
+    # Define option to specify the output medium
+    option("medium") {
+        default     0                   # Default is standard I/O (0)
+        description "This defines the output medium of the logged data (0=stdio, 1=memory)"
+        values      [0,1]
+    }
+
+    # Define option to specify size of memory buffer if using memory output
+    option("mem_size") {
+        default     0x4000              # 16 KBytes is default
+        description "This defines the size of the memory buffer used if the memory output medium is selected for logging"
+        values      0x400..0x400000     # 1 KByte to 4 MBytes
+    }
+
+    # Add to the library
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("*.c") + Dir.glob("stdio/*.c") + Dir.glob("memory/*.c")
+        }
+    }
+}

@@ -1,0 +1,5 @@
+package("telnet") { 
+    parent      "nu.os.net.prot"
+    description "This package contains the telnet client, server, and commmand shell (for server)"
+    enable      true
+}

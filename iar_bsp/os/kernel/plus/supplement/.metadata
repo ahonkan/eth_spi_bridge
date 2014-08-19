@@ -1,0 +1,59 @@
+component("supplement") { 
+    parent "nu.os.kern.plus"
+    description "This component implements the Nucleus PLUS kernel supplementary components."
+    enable true
+
+    option("plus_object_lists"){    
+        default false
+        description "Enable / Disable plus object lists (default is false)"
+    }
+
+    option("time_test1min"){         
+        default false
+        description "Enable / Disable timing test - 1 min (default is false)"
+        hidden true
+    }
+
+    option("time_test1max"){         
+        default false
+        description "Enable / Disable timing test 1 max (default is false)"
+        hidden true
+    }
+
+    option("time_test2"){            
+        default false
+        description "Enable / Disable timing test 2 (default is false)"
+        hidden true
+    }
+
+    option("time_test3"){            
+        default false
+        description "Enable / Disable timing test 3 (default is false)"
+        hidden true
+    }
+
+    option("static_test"){           
+        default false
+        description "Change static declarations global if enabled (default is false)"
+        hidden true
+    }
+    
+    option("evt_notify"){           
+        default true
+        description "Event notifications are enabled. (default is true)"
+    }
+
+    option("export_symbols"){
+        default     true
+        description "Exports API symbols for use by loaded processes."
+    }
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-strict-aliasing"        
+            cflags "csgnu_ppc" => "-Wno-strict-aliasing"        
+            cflags "tensilica" => "-Wno-strict-aliasing"        
+            Dir.glob("src/*.c")
+        }
+    }
+}

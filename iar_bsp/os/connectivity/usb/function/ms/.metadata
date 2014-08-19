@@ -1,0 +1,4 @@
+package("ms") { 
+    parent "nu.os.conn.usb.func"
+    enable true
+}

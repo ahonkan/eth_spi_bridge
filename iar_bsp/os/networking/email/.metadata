@@ -1,0 +1,5 @@
+package("email") {
+    parent "nu.os.net"
+    enable true
+}
+

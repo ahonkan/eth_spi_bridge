@@ -1,0 +1,21 @@
+component("base") {
+    parent "nu.os.drvr.safe"
+    version "1.0.0"
+    description "This component implements the generic Nucleus SAFE driver."
+    enable true
+
+    #Requirements for Nucleus Safe drivers
+    #Default requirments for most middleware products
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+    requires("nu.os.svcs.registry")
+
+    #Requirements that are specific to Safe drivers
+    requires("nu.os.stor.file.vfs")
+    requires("nu.os.stor.file.fs.safe")
+
+
+    library("nucleus.lib") {
+      sources { Dir.glob("src/*.c") }
+    }
+}

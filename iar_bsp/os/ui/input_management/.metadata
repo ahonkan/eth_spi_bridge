@@ -1,0 +1,22 @@
+component("input_mgmt") {
+    parent "nu.os.ui"
+    version "1.7.0"
+    description "This component implements the Input Management."
+    enable true
+    runlevel 14
+    
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") + 
+            Dir.glob("*.c") 
+        }
+    }
+    
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+
+}

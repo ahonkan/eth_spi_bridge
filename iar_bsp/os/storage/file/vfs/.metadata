@@ -1,0 +1,124 @@
+component("vfs") {
+    parent "nu.os.stor.file"
+    version "3.5.0"
+    description "This component implements the Nucleus Virtual File System Interface"
+    enable true
+
+    # The starting mount point value used by the system, when a device listed in mnt_options needs additional mount points.
+    option("auto_mnt_pt_start_loc") {
+      description	"Starting mount point for enumerating subsequent partitions after the primary"
+      enregister	true
+      binary_build_editable
+      default		"G"
+    }
+
+   	group("mw_mnt_info") {
+      description   "default mount configuration"
+      enregister    true
+
+      # Mount point designation
+      option("pt") {
+
+        default     "A"
+        description "Drive letter to associate with the device"
+      }
+
+      # File system type
+      option("fs") {
+
+        default		"FAT"
+        description "String describing the file system type"
+      }
+
+      # Auto-format ?
+      option("auto_fmt") {
+        default 	false
+        description	"Formats the device if the file system is not present"
+      }
+   }
+
+    runlevel 6
+
+    option("include_check_disk"){
+        default false
+        description "Includes conditionally compiled support for the check disk API."
+    }
+
+    option("include_blk_cache"){
+        default true
+	description "Includes conditionally compiled support for the device layer block cache."
+    }
+
+    option("include_blk_cache_reorder"){
+        default false
+        description "Include support for block reordering."
+    }
+
+    option("num_users"){
+        default 10
+        description "Maximum number of tasks that may be concurrently registered as FILE users."
+    }
+
+    option("max_open_files"){
+        default 10
+        values 1..100
+        description "Maximum number of file per user that can be open at a time in the system."
+	    enregister	true
+        binary_build_editable
+    }
+
+    option("max_devices"){
+        default 10
+        description "Maximum number of Storage devices (includes logical and physical)."
+    }
+
+    option("max_mount_points"){
+        default 10
+        description "Maximum number of logical devices that can be mounted in the system."
+    }
+
+    option("max_file_systems"){
+        default 3
+        description "Maximum number of file systems that can be registered."
+    }
+
+    option("include_cp_support"){
+        default false
+        description "Allows code pages support for whatever code pages are defined."
+    }
+
+    option("error_support"){
+        default true
+        description "Allows errors to be printed / logged"
+    }
+
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+    
+    option("export_symbols"){
+        default     true
+        description "Exports API symbols for use by loaded processes."
+    }
+
+    #Requirements for VFS
+    #Default requirments for most middleware products
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+    requires("nu.os.svcs.registry")
+
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("src/*.c")
+        }
+    }
+}

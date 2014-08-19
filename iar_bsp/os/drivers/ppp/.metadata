@@ -1,0 +1,178 @@
+component("ppp") {
+    parent "nu.os.drvr"
+    version "3.3.0"
+    description "This component implements PPP protocol over Serial and Ethernet."
+    enable false
+    runlevel 12
+    requires("nu.os.net.stack")
+    requires("nu.os.net.ssl.openssl.crypto")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+#
+# Compile time options
+#
+
+   option("cfg_h") {
+      default true
+      description "Exclude the configuration macros from the source tree - must be true."
+   }
+
+   option("enable_serial") {
+      default false
+      description "This enables PPP communication over the serial interface."
+   }
+
+   option("enable_ethernet") {
+      default false
+      description "This enables PPP communication over the ethernet interface also known as PPPoE."
+   }
+
+   option("dev_name_ppp") {
+      default     "PPP"
+      description "Device name for a PPP connection over the serial interface"
+   }
+
+   option("dev_name_pppoe") {
+      default     "PPPoE"
+      description "Device name for a PPP connection over the ethernet interface"
+   }
+
+   option("ser_device") {
+      enregister   true
+      default      guid(0xe3,0xd4,0x4e,0xa7,0x71,0x37,0x46,0x67,0xb7,0xf9,0xe1,0x0f,0xe6,0x8b,0x54,0xf8)
+      description "This is the GUID value of the label for the PPP device. By default the GUID value used is of the label SERIAL_LABEL. This label
+                   is defined in /include/drivers/serial.h. To use a different PPP device than this, please change this GUID value to the value of
+                   the label for the choice of your device. For more information on how to add/create and use labels, please refer to the Nucleus
+                   User's Manual."
+   }
+
+   option("eth_device") {
+      enregister   true
+      default      guid(0xa7,0x34,0x5a,0x9d,0xda,0x39,0x48,0x8e,0xb4,0xdc,0xa8,0x1a,0x97,0x38,0x94,0x83)
+      description "This is the GUID value of the label for the PPPoE device. By default the GUID value used is of the label ETHERNET_LABEL. This label
+                   is defined in /include/drivers/ethernet.h. To use a different PPPoE device than this, please change this GUID value to the value of
+                   the label for the choice of your device. For more information on how to add/create and use labels, please refer to the Nucleus
+                   User's Manual."
+   }
+
+   option("ser_enable_ipv6") {
+      default     false
+      description "Enable IPV6 for the PPP interface over Serial"
+   }
+
+   option("eth_enable_ipv6") {
+      default     false
+      description "Enable IPV6 for the PPP interface over Ethernet (PPPoE)"
+   }
+
+   option("eth_dev_name") {
+      default     "eth0"
+      description "Name of the physical ethernet device to be used for PPP communication"
+   }
+
+   option("dc_protocol_enable") {
+      default     false
+      description "Enable the interface to use Direct Connect Cable Protocol"
+   }
+
+   option("mp_protocol_enable") {
+      default     false
+      description "Enable the interface to use Multilink Protocol"
+   }
+
+   option("um_database_enable") {
+      default     true
+      description "Enable the use of Nucleus Net User Management (UM) module for PPP user accounts"
+   }
+
+   option("cli_enable") {
+      default     false
+      description "Enable the support for Caller Line Identification on the interface"
+   }
+
+   option("use_chap") {
+      default     true
+      description "Enable support for CHAP authentication for client or server.  If connecting as a server, CHAP will be the default authentication protocol if both use_chap_ms1 and use_chap_ms2 are defined false, unless changed by the application via NU_Set_PPP_Link_Options."
+   }
+
+   option("use_pap") {
+      default     true
+      description "Enable support for PAP authentication for client or server.  If defined as false, a client will NAK the protocol in favor of CHAP, MSCHAPv1, or MSCHAPv2, if defined."
+   }
+
+   option("use_chap_ms1") {
+      default     true
+      description "Enable support for MSCHAPv1 authentication for client or server.  If defined as false, clients will NAK the protocol in favor of CHAP or MSCHAPv2, if defined.  If connecting as a server, MSCHAPv1 will be the default authentication protocol, if MSCHAPv2 is false unless changed by the application via NU_Set_PPP_Link_Options.  use_chap must also be true in order to allow MSCHAPv1 as a valid authentication protocol."
+   }
+
+   option("use_chap_ms2") {
+      default     true
+      description "Enable support for MSCHAPv2 authentication for client or server.  If defined as false, clients will NAK the protocol in favor of CHAP or MSCHAPv1, if defined.  If connecting as a server, MSCHAPv2 will be the default authentication protocol unless changed by the application via NU_Set_PPP_Link_Options.  use_chap must also be true in order to allow MSCHAPv2 as a valid authentication protocol."
+   }
+
+   option("use_accm") {
+      default     true
+      description "Enable support for asynchronous control character mapping in PPP."
+   }
+
+   option("use_mru") {
+      default     false
+      description "Defines whether the maximum receive unit will be negotiated.  This option should only be used if the MRU for the link has been changed from the default value of 1500 bytes."
+   }
+
+   option("use_pfc") {
+      default     false
+      description "Defines whether protocol field compression will be used. Using this compression will save 1 byte per packet sent/received."
+   }
+
+   option("use_acc") {
+      default     false
+      description "Defines whether address and control field compression will be used. Using this compression will save 2 bytes per packet sent/received."
+   }
+
+   option("use_magic") {
+      default     true
+      description "Defines whether the LCP magic number will be negotiated. Since the LCP echo packets make use of the magic number, this option is recommended for all links."
+   }
+
+   option("enable_mppe") {
+      default     false
+      description "Enables the use of Microsoft Point-to-Point Encryption Protocol (MPPE) over the
+PPP connections."
+   }
+
+   option("require_encryption") {
+      default     true
+      description "Defines whether MPPE will be used over PPP connections by default. When set to false, the use of MPPE encryption over PPP connections becomes optional."
+   }
+
+   option("use_128_bit_encryption") {
+      default     true
+      description "Enable the use of 128-bit MPPE encryption on PPP connections."
+   }
+
+   option("use_56_bit_encryption") {
+      default     true
+      description "Enable the use of 56-bit MPPE encryption on PPP connections."
+   }
+
+   option("use_40_bit_encryption") {
+      default     true
+      description "Enable the use of 40-bit MPPE encryption on PPP connections."
+   }
+
+   option("use_dns1") {
+      default     true
+      description "Retrieve a primary DNS server when establishing a new PPP connection with a remote server."
+   }
+
+   option("use_dns2") {
+      default     true
+      description "Retrieve a secondary DNS server when establishing a new PPP connection with a remote server."
+   }
+}

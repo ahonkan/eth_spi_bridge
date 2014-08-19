@@ -1,0 +1,6 @@
+package("process") { 
+    parent "nu.os.kern"
+    description "This package implements the Nucleus Process kernel extension."
+    enable false
+}
+

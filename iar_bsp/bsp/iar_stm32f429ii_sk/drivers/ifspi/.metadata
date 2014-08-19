@@ -1,0 +1,13 @@
+component("ifspi") {
+    parent      "nu.bsp.drvr"
+    version     "1.0.0"
+    enable      true
+    description "This component implements a network interface over SPI"
+
+    requires("nu.os.drvr.eth")
+    requires("nu.os.drvr.dma")
+
+    library("nucleus.lib") {
+        sources { Dir.glob("*.c") }
+    }
+}

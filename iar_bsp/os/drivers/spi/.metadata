@@ -1,0 +1,12 @@
+component("spi") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus SPI driver."
+    enable true
+
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") 
+        }
+    }
+}

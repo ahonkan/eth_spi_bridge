@@ -1,0 +1,4 @@
+package("openssl") { 
+    parent "nu.os.net.ssl"
+    enable true
+}

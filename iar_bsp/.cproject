@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.mentor.embedded.toolchains.core.nucleus.FuseErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052" name="Debug" parent="org.eclipse.cdt.build.core.emptycfg">
+					<folderInfo id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.2060593396" name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.1765345649" name="cdt.managedbuild.toolchain.gnu.mentor.nucleus" superClass="cdt.managedbuild.toolchain.gnu.mentor.nucleus">
+							<option id="com.mentor.embedded.toolchains.core.nucleus.toolset.765022002" name="Nucleus Toolset" superClass="com.mentor.embedded.toolchains.core.nucleus.toolset"/>
+							<targetPlatform archList="all" binaryParser="" id="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus.2053065892" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus"/>
+							<builder id="cdt.managedbuild.builder.gnu.mentor.nucleus.525172497" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="CodeSourcery GNU Builder" parallelBuildOn="false" superClass="cdt.managedbuild.builder.gnu.mentor.nucleus">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH" kind="outputPath" name="output/csgnu_arm/iar_stm32f429ii_sk/Debug"/>
+								</outputEntries>
+							</builder>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus.1181443894" name="CodeSourcery GNU Archiver" superClass="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus.207548171" name="CodeSourcery GNU C++ Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.1467216633" name="CodeSourcery GNU C Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus">
+								<inputType id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.617108579" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus.1153008597" name="CodeSourcery GNU C Linker" superClass="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus.1659165779" name="CodeSourcery GNU C++ Linker" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus.1936497290" name="CodeSourcery GNU Assembler" superClass="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.105283734" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.1382777458">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.1382777458" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.mentor.embedded.toolchains.core.nucleus.FuseErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.1382777458" name="Release" parent="org.eclipse.cdt.build.core.emptycfg">
+					<folderInfo id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.1382777458.1675049754" name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.36059653" name="cdt.managedbuild.toolchain.gnu.mentor.nucleus" superClass="cdt.managedbuild.toolchain.gnu.mentor.nucleus">
+							<option id="com.mentor.embedded.toolchains.core.nucleus.toolset.285487383" name="Nucleus Toolset" superClass="com.mentor.embedded.toolchains.core.nucleus.toolset"/>
+							<targetPlatform archList="all" binaryParser="" id="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus.422511809" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus"/>
+							<builder id="cdt.managedbuild.builder.gnu.mentor.nucleus.836882601" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="CodeSourcery GNU Builder" parallelBuildOn="false" superClass="cdt.managedbuild.builder.gnu.mentor.nucleus">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH" kind="outputPath" name="output/csgnu_arm/iar_stm32f429ii_sk/Release"/>
+								</outputEntries>
+							</builder>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus.319232991" name="CodeSourcery GNU Archiver" superClass="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus.313336483" name="CodeSourcery GNU C++ Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.1418258340" name="CodeSourcery GNU C Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus">
+								<inputType id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.1896971495" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus.2099277889" name="CodeSourcery GNU C Linker" superClass="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus.888303649" name="CodeSourcery GNU C++ Linker" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus.2222069" name="CodeSourcery GNU Assembler" superClass="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1545813967" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.473005953">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.473005953" moduleId="org.eclipse.cdt.core.settings" name="eth_spi_bridge.Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.mentor.embedded.toolchains.core.nucleus.FuseErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration buildProperties="" description="Auto-generated build configuration that is auto-associated with its application project." id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.473005953" name="eth_spi_bridge.Debug" parent="org.eclipse.cdt.build.core.emptycfg">
+					<folderInfo id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.473005953." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.1403994783" name="cdt.managedbuild.toolchain.gnu.mentor.nucleus" superClass="cdt.managedbuild.toolchain.gnu.mentor.nucleus">
+							<option id="com.mentor.embedded.toolchains.core.nucleus.toolset.1178953339" name="Nucleus Toolset" superClass="com.mentor.embedded.toolchains.core.nucleus.toolset"/>
+							<targetPlatform archList="all" binaryParser="" id="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus.2008945182" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus"/>
+							<builder id="cdt.managedbuild.builder.gnu.mentor.nucleus.84596372" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="CodeSourcery GNU Builder" parallelBuildOn="false" superClass="cdt.managedbuild.builder.gnu.mentor.nucleus">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH" kind="outputPath" name="output/csgnu_arm/iar_stm32f429ii_sk/eth_spi_bridge.Debug"/>
+								</outputEntries>
+							</builder>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus.997031884" name="CodeSourcery GNU Archiver" superClass="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus.2088760989" name="CodeSourcery GNU C++ Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.187419336" name="CodeSourcery GNU C Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus">
+								<inputType id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.258536584" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus.179380437" name="CodeSourcery GNU C Linker" superClass="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus.1162212351" name="CodeSourcery GNU C++ Linker" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus.588590877" name="CodeSourcery GNU Assembler" superClass="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1279740147" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="com.mentor.embedded">
+				<template id="HelloNucleusAnsiCProject" projectName="eth_spi_bridge"/>
+			</storageModule>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.1052189355">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.1052189355" moduleId="org.eclipse.cdt.core.settings" name="eth_spi_bridge.Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.mentor.embedded.toolchains.core.nucleus.FuseErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration buildProperties="" description="Auto-generated build configuration that is auto-associated with its application project." id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.1052189355" name="eth_spi_bridge.Release" parent="org.eclipse.cdt.build.core.emptycfg">
+					<folderInfo id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.761719052.1052189355." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mentor.nucleus.919727228" name="cdt.managedbuild.toolchain.gnu.mentor.nucleus" superClass="cdt.managedbuild.toolchain.gnu.mentor.nucleus">
+							<option id="com.mentor.embedded.toolchains.core.nucleus.toolset.1165734785" name="Nucleus Toolset" superClass="com.mentor.embedded.toolchains.core.nucleus.toolset"/>
+							<targetPlatform archList="all" binaryParser="" id="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus.1040277745" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.mentor.nucleus"/>
+							<builder id="cdt.managedbuild.builder.gnu.mentor.nucleus.1340097524" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="CodeSourcery GNU Builder" parallelBuildOn="false" superClass="cdt.managedbuild.builder.gnu.mentor.nucleus">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH" kind="outputPath" name="output/csgnu_arm/iar_stm32f429ii_sk/eth_spi_bridge.Release"/>
+								</outputEntries>
+							</builder>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus.435619275" name="CodeSourcery GNU Archiver" superClass="cdt.managedbuild.tool.gnu.mentor.archiver.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus.682347892" name="CodeSourcery GNU C++ Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.compiler.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.1483894539" name="CodeSourcery GNU C Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus">
+								<inputType id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.131426962" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus.797099848" name="CodeSourcery GNU C Linker" superClass="cdt.managedbuild.tool.gnu.mentor.c.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus.176641946" name="CodeSourcery GNU C++ Linker" superClass="cdt.managedbuild.tool.gnu.mentor.cpp.linker.nucleus"/>
+							<tool id="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus.856654297" name="CodeSourcery GNU Assembler" superClass="cdt.managedbuild.tool.gnu.mentor.assembler.nucleus">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1879645833" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="com.mentor.embedded">
+				<template id="HelloNucleusAnsiCProject" projectName="eth_spi_bridge"/>
+			</storageModule>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="com.mentor.embedded">
+		<project architecture="armv7_m" platform="iar_stm32f429ii_sk" toolset="csgnu_arm" version="2013.08.3"/>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="iar_bsp.null.1525690500" name="iar_bsp" projectType="com.mentor.embedded.toolchains.nucleus.systemProject"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+		<buildTargets>
+			<target name="Update Configuration" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>$(MAKE)</buildCommand>
+				<buildArguments/>
+				<buildTarget>config</buildTarget>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>true</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
+			<target name="System Clean" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>$(MAKE)</buildCommand>
+				<buildArguments>TOOLSET= PLATFORM=</buildArguments>
+				<buildTarget>distclean</buildTarget>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>false</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
+		</buildTargets>
+	</storageModule>
+</cproject>

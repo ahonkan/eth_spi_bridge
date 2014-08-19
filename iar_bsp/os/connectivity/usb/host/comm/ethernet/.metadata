@@ -1,0 +1,63 @@
+component("eth") {
+    parent "nu.os.conn.usb.host.comm"
+    version "1.5.0"
+    description "This component implements the USB Host Ethernet Communications component."
+    enable true
+
+    runlevel 8
+    requires("nu.os.conn.usb.host.comm.class")
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+    group("mw_settings") {
+        enregister true
+        description "USB Host Ethernet settings"
+        binary_build_editable
+
+        option("eth_enable_ipv4") {
+            description "Enable IPv4 for this interface."
+            default true
+        }
+
+        option("eth_enable_ipv4_dhcp") {
+            description "Enable IPv4 DHCP for this interface."
+            default false
+        }
+
+        option("eth_ipv4_address") {
+            description "Static IPv4 address for this interface (Not used if IPv4 DHCP is enabled)."
+            default "192.168.0.1"
+        }
+
+        option("eth_ipv4_netmask") {
+            description "IPv4 netmask for this interface (Not used if IPv4 DHCP is enabled)."
+            default "255.255.255.0"
+        }
+
+        option("eth_enable_ipv6") {
+            description "Enable IPv6 for this interface."
+            default false
+        }
+
+        option("eth_ipv6_address") {
+            description "Global IPv6 address for this interface."
+            default "0000:0000:0000:0000:0000:0000:0000:0000"
+        }
+
+        option("eth_ipv6_prefix_length") {
+            description "Prefix-length for global IPv6 address of this interface. (1..128)"
+            default 128
+            values  1..128
+        }
+    }
+
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+}

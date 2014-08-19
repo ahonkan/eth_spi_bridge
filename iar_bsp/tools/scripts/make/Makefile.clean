@@ -1,0 +1,101 @@
+##----------------------------------------------------------------------------##
+# Copyright 2010 Mentor Graphics Corporation                                   #
+#    All Rights Reserved.                                                      #
+#                                                                              #
+##----------------------------------------------------------------------------##
+
+include tools/scripts/make/Makefile.vars
+include tools/scripts/make/Makefile.commands
+
+_deps := 
+
+ifeq ($(DIST),1)
+_deps += distclean
+
+# The below logic for distclean is a bit convoluted due to make's lack of
+# AND/OR constructs.  However, the logic can be explained as follows:
+#
+# | PLATFORM |   TOOLSET | CONFIG   | Directory Removed                      |
+# ============================================================================
+# |  not set |   not set |  default | 'output'                               |
+# |  not set |       set |  default | 'output/<toolset>'                     |
+# |      set |   not set |  default | none - this is an error.               |
+# |      set |       set |  default | 'output/<toolset>/<platform>'          |
+# |  not set |   not set |      set | none - this is an error.               |
+# |  not set |       set |      set | none - this is an error.               |
+# |      set |   not set |      set | none - this is an error.               |
+# |      set |       set |      set | 'output/<toolset>/<platform>/<config>' |
+
+ifneq ($(TOOLSET),)
+
+ifneq ($(PLATFORM),)
+
+ifeq ($(origin CONFIG),command line)
+# |      set |       set |      set |
+clean-dir := $(CONFIGURATION_DIR)
+else
+# |      set |       set |  default |
+clean-dir := $(PLATFORM_DIR)
+endif
+
+else
+
+ifeq ($(origin CONFIG),command line)
+# |  not set |       set |      set |
+$(error 'make TOOLSET=$(TOOLSET) CONFIG=$(CONFIG)' is not allowed)
+else
+# |  not set |       set |  default |
+clean-dir := $(TOOLSET_DIR)
+endif
+
+endif
+
+else
+
+ifneq ($(PLATFORM),)
+
+ifeq ($(origin CONFIG),command line)
+# |      set |   not set |      set | 
+$(error 'make PLATFORM=$(PLATFORM) CONFIG=$(CONFIG) distclean' is not allowed)
+else
+# |      set |   not set |  default | 
+$(error 'make PLATFORM=$(PLATFORM) distclean' is not allowed)
+endif
+
+else
+
+ifeq ($(origin CONFIG),command line)
+# |  not set |   not set |  set | 
+$(error 'make CONFIG=$(CONFIG) distclean' is not allowed)
+else
+# |  not set |   not set |  default | 
+clean-dir := $(OUTPUT_DIR)
+endif
+
+endif
+
+endif
+
+else
+_deps += clean
+endif
+
+.PHONY : cleanall $(_deps)
+.NOTPARALLEL :
+
+cleanall : $(_deps)
+
+clean :
+	@echo RM $(OBJ_DIR)
+	@$(call RMDIR,$(OBJ_DIR))
+	@echo RM $(LIB_OUTPUT_DIR)
+	@$(call RMDIR,$(LIB_OUTPUT_DIR))
+	@echo RM $(EXE_OUTPUT_DIR)
+	@$(call RMDIR,$(EXE_OUTPUT_DIR))
+	@echo RM $(PROC_OUTPUT_DIR)
+	@$(call RMDIR,$(PROC_OUTPUT_DIR))
+distclean :
+	@echo RMDIR $(clean-dir)
+	@$(call RM,tools/scripts/make/Makefile.common)
+	@$(call RMDIR,$(clean-dir))
+

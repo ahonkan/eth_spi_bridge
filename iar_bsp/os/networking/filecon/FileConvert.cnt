@@ -1,0 +1,11 @@
+:Base FileConvert.hlp>Win0
+:Title Nucleus WebServe File Convert Utility
+1 The File Converter - Getting Started
+2 The File Convert Utility=HIDD_FILECONVERT
+2 Adding Files=HD_ADDING_FILES
+2 Creating the Source File=HD_CREATE_SOURCE
+2 Command Line Parameters=HID_COMMAND_LINE
+1 The File Menu
+2 Adding Files=HD_ADDING_FILES
+2 Removing Files=HD_REMOVING_FILES
+2 The File List=HD_FILE_LIST

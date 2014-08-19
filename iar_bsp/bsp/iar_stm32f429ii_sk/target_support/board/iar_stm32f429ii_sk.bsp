@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE bsp SYSTEM "bsp.dtd">
+<!-- BSP for ST iar_stm32f429ii_sk
+
+    Copyright (c) 2007, 2008, 2009, 2010 CodeSourcery, Inc.
+
+    THIS FILE CONTAINS PROPRIETARY, CONFIDENTIAL, AND TRADE SECRET
+    INFORMATION OF CODESOURCERY AND/OR ITS LICENSORS.
+
+    You may not use or distribute this file without the express written
+    permission of CodeSourcery or its authorized distributor.  This file is
+    licensed only for use with Sourcery CodeBench.  No other use is permitted.
+    -->
+<bsp boardFile="iar_stm32f429ii_sk.xml">
+    <debugInterface name="stlink"/>
+</bsp>

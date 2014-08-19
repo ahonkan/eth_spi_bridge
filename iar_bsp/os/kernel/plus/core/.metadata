@@ -1,0 +1,116 @@
+component("core") { 
+    parent "nu.os.kern.plus"
+    description "This component implements the Nucleus PLUS kernel core components."
+    enable true
+
+    mandatory
+
+    includepath ["os/include","."]
+
+    option("min_stack_size"){        
+        default 250
+        description "Define the minimum stack size accepted when creating a Task or HISR (default is 250)"
+    }
+    
+    option("stack_checking"){        
+        default false
+        description "Enable / Disable stack checking (default is false)"
+    }
+
+    option("stack_fill"){            
+        default false
+        description "Enable / Disable stack fill for stack usage tracking (default is false)"
+    }
+
+    option("error_checking"){        
+        default true
+        description "Enable / Disable to control error checking for Nucleus PLUS API (default is true)"
+    }
+
+    option("assert"){                
+        default false
+        description "Enable / Disable assert for additional debugging services (default is false)"
+    }
+
+    option("error_string"){          
+        default false
+        description "Enable / Disable inclusion of additional error strings (default is false)"
+    }
+
+    option("global_int_locking"){    
+        default false
+        description "Enable / Disable global interrupt locking. Interrupt lock-out controlled at global level instead of thread / task level (default is false)"
+    }
+
+    option("min_ram"){               
+        default false
+        description "Enable / Disable to control the usage of RAM by PLUS. When true, minimum RAM is used (default is false)"
+    }
+
+    option("tick_suppression"){       
+        default false
+        description "Enable / Disable Nucleus tick suppression (default is false)"
+    }
+
+    option("inlining"){              
+        default false
+        description "Enable / Disable Plus inlining (default is false)"
+    }
+    
+    option("rom_to_ram_copy"){           
+        default false
+        description "Enable the toolset component to do a data copy from ROM to RAM (default is false)"
+    }
+
+    option("rom_support"){           
+        default false
+        description "Define if code / data necessary to execute from ROM is enabled (default is false)"
+    }
+
+    option("num_task_priorities"){
+        default     256
+        values      8..256
+        description "Define the number of task priorities allowed. Maximum is 256 and minimum is 8. (default 256)"
+    }
+
+    option("lv_timeout"){
+        default     0
+        description "Define the period of the Nucleus PLUS LV (default is 0 minutes which is off)"
+    }
+    
+    option("auto_clear_cb"){
+        default true
+        description "When true, the kernel will automatically clear / zeroize all kernel object control blocks during the create call.  When false, the application must clear kernel control blocks / structures before calling the appropriate create call."
+    }
+
+    option("timer_hisr_stack_size"){        
+        default 2048
+        description "Define the stack size for the timer HISR (default is 2048)"
+    }
+
+    option("ticks_per_sec"){
+        default     100
+        description "Define number of timer ticks that occur per second (default is 100 which is a 10 ms timer tick)"
+        values      1..2000
+    }
+
+    option("export_symbols"){
+        default     true 
+        description "Exports API symbols for use by loaded processes."
+    }
+    
+    option("debug_sched_lock"){
+        default     false
+        description "Setting to true enables debug support for schedule lock.  Invalid usage causes ERC_System_Error() to be called when set to true.  Default is false"
+        hidden      true
+    }
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-strict-aliasing"
+            cflags "csgnu_ppc" => "-Wno-strict-aliasing"
+            cflags "tensilica" => "-Wno-strict-aliasing"
+            Dir.glob("src/*.c")
+        }
+    }
+}

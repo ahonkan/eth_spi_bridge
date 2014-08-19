@@ -1,0 +1,30 @@
+component("cxx") {
+    parent "nu.os.svcs"
+    description "This component implements cxx service"    
+    enable true
+    
+    runlevel 15 
+   
+    requires("nu.os.kern.rtl")    
+    
+    option("init_static_objects") {
+            default true
+            description "Initialize C++ static objects.  (Default value is true)"
+    }
+
+    option("init_exception_support") {
+            default true
+            description "Initialize envirnoment to handle C++ exceptions.  (Default value is true)"           
+    }
+
+    option("export_symbols"){
+        default     true
+        description "Exports API symbols for use by loaded processes."
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c*")
+        }
+    }
+}

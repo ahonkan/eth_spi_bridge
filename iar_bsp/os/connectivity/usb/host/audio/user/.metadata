@@ -1,0 +1,12 @@
+component("user") { 
+    parent "nu.os.conn.usb.host.audio"
+    version "1.3.0"
+    description "This component implements the USB Host Audio User component."
+    enable true
+    requires("nu.os.conn.usb.host.audio.class")
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

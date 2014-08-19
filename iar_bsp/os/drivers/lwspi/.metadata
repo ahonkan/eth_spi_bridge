@@ -1,0 +1,14 @@
+component("lwspi") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic lightweight SPI driver."
+    enable true
+
+    requires("nu.os.conn.lwspi")    
+
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") 
+        }
+    }
+}

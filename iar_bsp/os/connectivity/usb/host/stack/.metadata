@@ -1,0 +1,95 @@
+component("stack") {
+    parent "nu.os.conn.usb.host"
+    version "2.8.0"
+    description "This component implements the base USB Host Stack component."
+    enable true
+
+    runlevel 5
+
+    requires("nu.os.conn.usb.com.stack")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+    option("ncontroller") {
+      description "Number of host controllers present on the board"
+      default 3
+      enregister false
+    }
+
+    option("max_configurations") {
+      description "Maximum number of configurations supported"
+      default 4
+      enregister false
+   }
+
+    option("max_interfaces") {
+      description "Maximum number of interfaces supported"
+      default 8
+      enregister false
+   }
+
+    option("max_endpoints") {
+      description "Maximum number of endpoints supported"
+      default 10
+      enregister false
+   }
+
+    option("max_strings") {
+      description "Maximum number of string descriptors supported"
+      default 16
+      enregister false
+   }
+
+    option("max_iads") {
+      description "Maximum number of IADs supported"
+      default 5
+      enregister false
+   }
+
+    option("max_alt_settings") {
+      description "Maximum number of alternate settings supported"
+      default 3
+      enregister false
+   }
+
+    option("max_unicode_string_len") {
+      description "Maximum length of UNICODE string"
+      default 100
+      enregister false
+   }
+
+    option("max_class_drivers") {
+      description "Maximum number of class drivers supported"
+      default 5
+      enregister false
+   }
+
+    option("max_users") {
+      description "Maximum number of user drivers supported"
+      default 13
+      enregister false
+   }
+
+    option("max_irqs") {
+      description "Maximum IRQs for hardware controllers"
+      default 2
+      enregister false
+   }
+
+    option("user_max_task") {
+      description "Maximum number of tasks for a user session"
+      default 10
+      enregister false
+   }
+   
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+}

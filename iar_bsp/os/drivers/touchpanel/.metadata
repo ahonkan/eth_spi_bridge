@@ -1,0 +1,29 @@
+component("touchpanel") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus touchpanel driver."
+    enable true
+
+    requires("nu.os.ui.input_mgmt")
+    requires("nu.os.drvr.display")
+
+    option("interrupt_mode"){
+    default true
+    description "Setting this option to true enables interrupt mode. Setting to false enables polling mode."
+    }
+
+    option("calibration"){
+        default false
+        description "This option enables/disables touch panel calibration."
+    }
+
+    option("max_devs_supported"){
+        description "The maximum number of devices supported by the touchpanel driver middleware (default is 1)"
+        default 1
+        values [1,2,3,4]
+    }
+
+    library("nucleus.lib") {
+        sources {Dir.glob("*.c")}
+    }
+}

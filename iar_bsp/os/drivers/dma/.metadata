@@ -1,0 +1,29 @@
+component("dma") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the Nucleus DMA device interface."
+    enable false
+
+    library("nucleus.lib") {
+        sources { Dir.glob("*.c") }
+    }
+    option("max_devices") {
+        default      1
+        values 1..254
+        description  "Maximum supported DMA devices"
+    }
+    option("max_channels") {
+        default      1
+        values 1..32
+        description  "Maximum supported channels"
+    }
+    option("max_channel_users") {
+        default      1
+        values 1..254
+        description  "Maximum users per channel"
+    }
+    option("hisr_stack_size") {
+        default      2048
+        description  "DMA Hisr stack size"
+    }
+}

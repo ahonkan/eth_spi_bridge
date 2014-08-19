@@ -1,0 +1,15 @@
+component("shell") { 
+    parent      "nu.os.net"
+    description "This component adds support for networking shell commands"
+    enable      false
+    runlevel    14
+
+    requires("nu.os.net.stack")
+    requires("nu.os.svcs.shell")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

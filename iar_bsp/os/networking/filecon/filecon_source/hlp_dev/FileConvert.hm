@@ -1,0 +1,17 @@
+// MAKEHELP.BAT generated Help Map file.  Used by FILECONVERT.HPJ. 
+ 
+// Commands (ID_* and IDM_*) 
+HIDM_ABOUTBOX                           0x10010
+ 
+// Prompts (IDP_*) 
+ 
+// Resources (IDR_*) 
+HIDR_MAINFRAME                          0x20080
+ 
+// Dialogs (IDD_*) 
+HIDD_ABOUTBOX                           0x20064
+HIDD_FILECONVERT_DIALOG                 0x20066
+HIDD_EDITFILE                           0x20083
+HIDD_STATUS                             0x20084
+ 
+// Frame Controls (IDW_*) 

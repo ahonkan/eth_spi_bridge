@@ -1,0 +1,13 @@
+component("dbg_adv") {
+    parent "nu.os.svcs"
+    description "This component implements the network advertising service for Debug Agent automation"     
+    enable false
+    
+    runlevel 3
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

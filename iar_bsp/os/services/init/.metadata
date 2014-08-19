@@ -1,0 +1,11 @@
+component("init") {
+    parent "nu.os.svcs"
+    description "This component implements the Nucleus Initialization component."
+    enable true
+    
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") 
+        }
+    }
+}

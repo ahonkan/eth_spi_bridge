@@ -1,0 +1,21 @@
+component("ipsec") { 
+    parent "nu.os.net"
+    version "1.6.0"
+    description "This component implements the IPSEC component."
+    runlevel 9
+    enable true
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("src/*.c") << "ips_cfg.c"
+        }
+    }
+
+    requires("nu.os.net.stack")
+    requires("nu.os.net.ssl.openssl.crypto")
+}

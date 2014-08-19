@@ -1,0 +1,33 @@
+component("user") {
+    parent "nu.os.conn.usb.host.ms"
+    version "1.8.0"
+    description "This component implements the USB Host Mass Storage SCSI component."
+    enable true
+	requires("nu.os.conn.usb.host.ms.class")
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+    group("mw_settings") {
+        enregister     true
+        description    "USB device mount configuration"
+        binary_build_editable
+
+        option("pt") {
+            default      "A"
+            description  "Drive letter to associate with the device"
+        }
+
+        option("fs") {
+            default      "FAT"
+            description  "String describing the file system type"
+        }
+
+        option("auto_fmt") {
+            default      true
+            description  "Formats the device if the file system is not present"
+        }
+    }
+}

@@ -1,0 +1,14 @@
+component("csgnu_arm") {
+   parent      "toolsets.iar_stm32f429ii_sk"
+   version     "4.7.3"
+   description "This component holds the IAR STM32F429II-SK specific options for the Sourcery CodeBench for ARM toolset."
+   platform    "iar_stm32f429ii_sk"
+
+   option("ARCH_CFLAGS")   { default "-g -mthumb -mcpu=cortex-m4 -Wall -DSTM32F429xx" }
+   option("ARCH_CXXFLAGS") { default "-g -mthumb -mcpu=cortex-m4" }
+ 
+   option("ARCH_ASFLAGS")  { default "-g -mthumb -mcpu=cortex-m4" }
+   option("ARCH_LDFLAGS")  { default "-mthumb    -march=armv7-m" }
+   option("ARCH_LDSCRIPT") { default "$(TOOLSETS_HOME)/csgnu_arm.iar_stm32f429ii_sk.link_rom.ld"}
+   option("ARCH_ARFLAGS")  { default "" }
+}

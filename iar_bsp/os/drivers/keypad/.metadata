@@ -1,0 +1,41 @@
+component("keypad") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus Generic Keypad driver."
+    enable false
+
+    requires("nu.os.ui.grafixrs")
+
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("*.c") + 
+            Dir.glob("src/*.c") 
+        }
+    }
+
+    #
+    # Compile time options
+    #
+
+    option("task_required") {
+        default false
+        description  "Specify whether a task is required for keypad processing"
+    }
+    option("initial_interval")    {
+        default 15
+        description "First delay after the key press for debouncing"
+    }
+    option("sampling_interval")    {
+        default 5
+        description "Sampling interval for key release detection"
+    }
+    option("use_release_interrupt")    {
+        default false
+        description "Specify whether key up (release) interrupt functionality is available and can be used."
+    }
+    option("max_devs_supported"){
+        description "The maximum number of devices supported by the keypad driver middleware (default is 1)"
+        default 1
+        values [1,2,3,4]
+    }
+}

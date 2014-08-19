@@ -1,0 +1,262 @@
+component("crypto") { 
+    parent "nu.os.net.ssl.openssl"
+    version "2.0.0"
+    description "This component implements the Crypto module of OpenSSL."
+    enable true
+	runlevel 5
+
+    requires("nu.os.stor.file.vfs")
+    
+    includepath ["os/networking/ssl/openssl",
+                 "os/networking/ssl/openssl/crypto",
+                 "os/networking/ssl/openssl/crypto/asn1",
+                 "os/networking/ssl/openssl/crypto/evp"]
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-implicit-function-declaration -Wno-char-subscripts -Wno-unused-function -Wno-unused-but-set-variable -Wno-strict-aliasing -Wno-maybe-uninitialized -ffunction-sections -fdata-sections"
+            cflags "csgnu_ppc" => "-Wno-implicit-function-declaration -Wno-char-subscripts -Wno-unused-function -Wno-unused-but-set-variable -Wno-strict-aliasing -Wno-maybe-uninitialized -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-implicit-function-declaration -Wno-char-subscripts -Wno-unused-function -Wno-unused-but-set-variable"
+            cflags "rvct" => "--diag_suppress=warning"
+            Dir.glob("aes/*.c") - Dir.glob("aes/aes_x86core.c") +
+            Dir.glob("arc4/*.c") - Dir.glob("arc4/arc4.c") - Dir.glob("arc4/arc4s.cpp") - Dir.glob("arc4/arc4speed.c") - Dir.glob("arc4/arc4test.c") +
+            Dir.glob("asn1/*.c") +
+            Dir.glob("bf/*.c") - Dir.glob("bf/bf_cbc.c") - Dir.glob("bf/bf_opts.c") - Dir.glob("bf/bfs.cpp") - Dir.glob("bf/bfspeed.c") - Dir.glob("bf/bftest.c") +
+            Dir.glob("bio/*.c") - Dir.glob("bio/bss_fd.c") - Dir.glob("bio/bss_rtcp.c") +
+            Dir.glob("bn/*.c") - Dir.glob("bn/bnspeed.c") - Dir.glob("bn/bntest.c") - Dir.glob("bn/divtest.c") - Dir.glob("bn/exp.c") - Dir.glob("bn/expspeed.c") - Dir.glob("bn/exptest.c") - Dir.glob("bn/vms-helper.c") +
+            Dir.glob("buffer/*.c") +
+            Dir.glob("camellia/*.c") +
+            Dir.glob("cast/*.c") - Dir.glob("cast/cast_spd.c") - Dir.glob("cast/castopts.c") - Dir.glob("cast/casts.cpp") - Dir.glob("cast/casttest.c") +
+            Dir.glob("cms/*.c") +
+            Dir.glob("comp/*.c") +
+            Dir.glob("conf/*.c") - Dir.glob("conf/cnf_save.c") - Dir.glob("conf/test.c") +
+            Dir.glob("des/*.c") - Dir.glob("des/des_old.c") - Dir.glob("des/des_old2.c") - Dir.glob("des/des_opts.c") - Dir.glob("des/des.c") - Dir.glob("des/des3s.cpp") - Dir.glob("des/dess.cpp") - Dir.glob("des/destest.c") - Dir.glob("des/read_pwd.c") - Dir.glob("des/read2pwd.c") - Dir.glob("des/rpw.c") - Dir.glob("des/speed.c") - Dir.glob("des/ncbc_enc.c") +
+            Dir.glob("dh/*.c") - Dir.glob("dh/dhtest.c") - Dir.glob("dh/p1024.c") - Dir.glob("dh/p192.c") - Dir.glob("dh/p512.c") +
+            Dir.glob("dsa/*.c") - Dir.glob("dsa/dsagen.c") - Dir.glob("dsa/dsatest.c") +
+            Dir.glob("dso/*.c") - Dir.glob("dso/dso_beos.c") - Dir.glob("dso/dso_dl.c") - Dir.glob("dso/dso_dlfcn.c") - Dir.glob("dso/dso_vms.c") - Dir.glob("dso/dso_win32.c") +
+            Dir.glob("ec/*.c") - Dir.glob("ec/ectest.c") +
+            Dir.glob("ecdh/*.c") - Dir.glob("ecdh/ecdhtest.c") +
+            Dir.glob("ecdsa/*.c") - Dir.glob("ecdsa/ecdsatest.c") +
+            Dir.glob("engine/*.c") - Dir.glob("engine/enginetest.c") +
+            Dir.glob("err/*.c") +
+            Dir.glob("evp/*.c") - Dir.glob("evp/e_dsa.c") - Dir.glob("evp/evp_test.c") +
+            Dir.glob("hmac/*.c") - Dir.glob("hmac/hmactest.c") +
+            Dir.glob("idea/*.c") - Dir.glob("idea/idea_spd.c") - Dir.glob("idea/ideatest.c") +
+            Dir.glob("krb5/*.c") +
+            Dir.glob("lhash/*.c") - Dir.glob("lhash/lh_stats.c") - Dir.glob("lhash/lh_test.c") +
+            Dir.glob("md4/*.c") - Dir.glob("md4/md4.c") - Dir.glob("md4/md4s.cpp") - Dir.glob("md4/md4test.c") +
+            Dir.glob("md5/*.c") - Dir.glob("md5/md5.c") - Dir.glob("md5/md5s.cpp") - Dir.glob("md5/md5test.c") +
+            Dir.glob("mdc2/*.c") - Dir.glob("mdc2/mdc2test.c") +
+            Dir.glob("modes/*.c") +
+            Dir.glob("objects/*.c") +
+            Dir.glob("ocsp/*.c") +
+            Dir.glob("pem/*.c") +
+            Dir.glob("pkcs12/*.c") +
+            Dir.glob("pkcs7/*.c") - Dir.glob("pkcs7/bio_ber.c") - Dir.glob("pkcs7/dec.c") - Dir.glob("pkcs7/enc.c") - Dir.glob("pkcs7/example.c") - Dir.glob("pkcs7/pk7_enc.c") - Dir.glob("pkcs7/sign.c") - Dir.glob("pkcs7/verify.c") +
+            Dir.glob("pqueue/*.c") - Dir.glob("pqueue/pq_test.c") +
+            Dir.glob("rand/*.c") - Dir.glob("rand/rand_egd.c") - Dir.glob("rand/rand_nw.c") - Dir.glob("rand/rand_os2.c") - Dir.glob("rand/rand_unix.c") - Dir.glob("rand/rand_vms.c") - Dir.glob("rand/rand_win.c") - Dir.glob("rand/randtest.c") +
+            Dir.glob("rc2/*.c") - Dir.glob("rc2/rc2speed.c") - Dir.glob("rc2/rc2test.c") - Dir.glob("rc2/tab.c") +
+            Dir.glob("ripemd/*.c") - Dir.glob("ripemd/rmd160.c") - Dir.glob("ripemd/rmdtest.c") +
+            Dir.glob("rsa/*.c") - Dir.glob("rsa/rsa_test.c") +
+            Dir.glob("seed/*.c") +
+            Dir.glob("sha/*.c") - Dir.glob("sha/sha.c") - Dir.glob("sha/sha1.c") - Dir.glob("sha/sha1test.c") - Dir.glob("sha/sha256t.c") - Dir.glob("sha/sha512t.c") - Dir.glob("sha/shatest.c") +
+            Dir.glob("stack/*.c") +
+            Dir.glob("ts/*.c") +
+            Dir.glob("txt_db/*.c") +
+            Dir.glob("whrlpool/*.c") - Dir.glob("whrlpool/wp_test.c") +
+            Dir.glob("x509/*.c") +
+            Dir.glob("x509v3/*.c") - Dir.glob("x509v3/tabtest.c") - Dir.glob("x509v3/v3conf.c") - Dir.glob("x509v3/v3prin.c") +
+            Dir.glob("*.c") - Dir.glob("LPdir_*.c") - Dir.glob("o_dir*.c") - Dir.glob("s390xcap.c") - Dir.glob("sparcv9cap.c")
+        }
+    }
+
+#
+# Compile time options
+#
+    option("include_aes") {
+        default true
+        enregister false
+        description "Include AES algorithm."
+    }
+
+    option("include_bio") {
+        default true
+        enregister false
+        description "Include BIO module."
+    }
+
+    option("include_blowfish") {
+        default true
+        enregister false
+        description "Include Blow-Fish algorithm."
+    }
+
+    option("include_camellia") {
+        default true
+        enregister false
+        description "Include CAMELLIA algorithm."
+    }
+
+    option("include_cast") {
+        default true
+        enregister false
+        description "Include Cast algorithm."
+    }
+
+    option("include_comp") {
+        default true
+        enregister false
+        description "Include Comp module."
+    }
+
+    option("include_des") {
+        default true
+        enregister false
+        description "Include DES algorithm."
+    }
+
+    option("include_dh") {
+        default true
+        enregister false
+        description "Include D-H algorithm."
+    }
+
+    option("include_dsa") {
+        default true
+        enregister false
+        description "Include DSA algorithm."
+    }
+
+    option("include_ec") {
+        default true
+        enregister false
+        description "Include EC algorithm."
+    }
+
+    option("include_ecdh") {
+        default true
+        enregister false
+        description "Include ECDH algorithm."
+    }
+
+    option("include_ecdsa") {
+        default true
+        enregister false
+        description "Include ECDSA algorithm."
+    }
+
+    option("include_engine") {
+        default true
+        enregister false
+        description "Include Engine module."
+    }
+
+    option("include_gmp") {
+        default false
+        enregister false
+        description "Include GMP module."
+    }
+
+    option("include_gost") {
+        default true
+        enregister false
+        description "Include GOST module."
+    }
+
+    option("include_jpake") {
+        default false
+        enregister false
+        description "Include JPAKE algorithm."
+    }
+
+    option("include_md2") {
+        default false
+        enregister false
+        description "Include MD2 algorithm."
+    }
+
+    option("include_md4") {
+        default true
+        enregister false
+        description "Include MD4 algorithm."
+    }
+
+    option("include_md5") {
+        default true
+        enregister false
+        description "Include MD5 algorithm."
+    }
+
+    option("include_mdc2") {
+        default true
+        enregister false
+        description "Include MDC2 algorithm."
+    }
+
+    option("include_rc2") {
+        default false
+        enregister false
+        description "Include RC2 algorithm."
+    }
+
+    option("include_arc4") {
+        default true
+        enregister false
+        description "Include ARC4 algorithm."
+    }
+
+    option("include_ripemd") {
+        default true
+        enregister false
+        description "Include RIPEMD algorithm."
+    }
+
+    option("include_rsa") {
+        default true
+        enregister false
+        description "Include RSA algorithm."
+    }
+
+    option("include_seed") {
+        default true
+        enregister false
+        description "Include SEED module."
+    }
+
+    option("include_sha1") {
+        default true
+        enregister false
+        description "Include SHA-1 algorithm."
+    }
+
+    option("include_sha256") {
+        default true
+        enregister false
+        description "Include SHA-256 algorithm."
+    }
+
+    option("include_sha512") {
+        default true
+        enregister false
+        description "Include SHA-512 algorithm."
+    }
+
+    option("include_store") {
+        default false
+        enregister false
+        description "Include Store module."
+    }
+
+    option("include_whirlpool") {
+        default true
+        enregister false
+        description "Include Whirlpool algorithm."
+    }
+    
+    option("hibernate_dev") {
+        enregister  true
+        default 1
+        description "This marks the component to be hibernate aware"
+    }
+
+}

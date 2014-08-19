@@ -1,0 +1,79 @@
+component("libtomcrypt") { 
+    parent "nu.os.net.ssh"
+    description "This component implements crypt library for Secure Shell Server."
+    enable true
+
+    requires("nu.os.net.ssh.db_sshserver")
+
+    includepath ["os/networking/ssh/db_sshserver",
+                 "os/networking/ssh/libtommath",
+                 "os/networking/ssh/libtomcrypt/src/headers"]
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-uninitialized -Wno-unused-but-set-variable -Wno-pointer-sign -Wno-format -Wno-char-subscripts -Wno-implicit-function-declaration"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("../libtommath/bn_mp_addmod.c") + 
+            Dir.glob("../libtommath/bn_mp_clear_multi.c") + 
+            Dir.glob("src/ciphers/*.c") + 
+            Dir.glob("src/ciphers/aes/lt_aes.c") + 
+            Dir.glob("src/ciphers/safer/*.c") + 
+            Dir.glob("src/ciphers/twofish/lt_twofish.c") + 
+            Dir.glob("src/encauth/ccm/*.c") + 
+            Dir.glob("src/encauth/eax/*.c") + 
+            Dir.glob("src/encauth/gcm/*.c") + 
+            Dir.glob("src/encauth/ocb/*.c") + 
+            Dir.glob("src/hashes/*.c") + 
+            Dir.glob("src/hashes/chc/*.c") + 
+            Dir.glob("src/hashes/helper/*.c") + 
+            Dir.glob("src/hashes/sha2/lt_sha256.c") + 
+            Dir.glob("src/hashes/sha2/lt_sha512.c") + 
+            Dir.glob("src/hashes/whirl/lt_whirl.c") +  
+            Dir.glob("src/mac/f9/*.c") + 
+            Dir.glob("src/mac/hmac/*.c") + 
+            Dir.glob("src/mac/omac/*.c") + 
+            Dir.glob("src/mac/pelican/*.c") + 
+            Dir.glob("src/mac/pmac/*.c") + 
+            Dir.glob("src/mac/xcbc/*.c") + 
+            Dir.glob("src/math/*.c") + 
+            Dir.glob("src/math/fp/*.c") + 
+            Dir.glob("src/misc/*.c") + 
+            Dir.glob("src/misc/base64/*.c") + 
+            Dir.glob("src/misc/crypt/*.c") + 
+            Dir.glob("src/misc/mpi/*.c") + 
+            Dir.glob("src/misc/pkcs5/*.c") + 
+            Dir.glob("src/modes/cbc/*.c") + 
+            Dir.glob("src/modes/cfb/*.c") + 
+            Dir.glob("src/modes/ctr/*.c") + 
+            Dir.glob("src/modes/ecb/*.c") + 
+            Dir.glob("src/modes/f8/*.c") + 
+            Dir.glob("src/modes/lrw/*.c") + 
+            Dir.glob("src/modes/ofb/*.c") + 
+            Dir.glob("src/pk/asn1/der/bit/*.c") + 
+            Dir.glob("src/pk/asn1/der/boolean/*.c") + 
+            Dir.glob("src/pk/asn1/der/choice/*.c") + 
+            Dir.glob("src/pk/asn1/der/ia5/*.c") + 
+            Dir.glob("src/pk/asn1/der/integer/*.c") + 
+            Dir.glob("src/pk/asn1/der/object_identifier/*.c") + 
+            Dir.glob("src/pk/asn1/der/octet/*.c") + 
+            Dir.glob("src/pk/asn1/der/printable_string/*.c") + 
+            Dir.glob("src/pk/asn1/der/sequence/*.c") + 
+            Dir.glob("src/pk/asn1/der/set/*.c") + 
+            Dir.glob("src/pk/asn1/der/short_integer/*.c") + 
+            Dir.glob("src/pk/asn1/der/utctime/*.c") + 
+            Dir.glob("src/pk/asn1/der/utf8/*.c") + 
+            Dir.glob("src/pk/dh/*.c") + 
+            Dir.glob("src/pk/dsa/*.c") + 
+            Dir.glob("src/pk/ecc/*.c") + 
+            Dir.glob("src/pk/katja/*.c") + 
+            Dir.glob("src/pk/pkcs1/*.c") + 
+            Dir.glob("src/pk/rsa/*.c") + 
+            Dir.glob("src/prng/*.c") + 
+            Dir.glob("src/prngs/*.c") - 
+            Dir.glob("src/prngs/lt_sober128tab.c")
+        }
+    }
+}

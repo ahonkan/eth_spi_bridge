@@ -1,0 +1,71 @@
+component("wsox") {
+    parent "nu.os.net"
+    version "1.0"
+    description "This component implements the Nucleus WebSocket component."
+    enable false
+    runlevel 16
+
+    requires("nu.os.net.stack")
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations -ffunction-sections -fdata-sections"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("**/*.c")
+        }
+    }
+
+#
+# Compile time options
+#
+
+   option("svr_stack_size") {
+      default      2000
+      enregister false
+      description "Size, in bytes, of the HTTP stack without CyaSSL enabled."
+   }
+
+   option("svr_stack_prio") {
+      default      25
+      enregister false
+      description "The priority of the HTTP Server stack task."
+   }
+
+   option("svr_backlog") {
+      default      10
+      enregister false
+      description "The maximum number of waiting connections to allow.  The HTTP Server processes one connection at a time.  If more connections are queued up than permitted by the backlog value, those connection attempts will be refused."
+   }
+
+   option("svr_rcv_size") {
+      default      1024
+      enregister false
+      description "The maximum packet size that can be received in one call to NU_Recv by the server.  Note that the entire HTTP header must fit in this size.  The data portion can be received with successive calls to NU_Recv."
+   }
+
+   option("clnt_timeout") {
+      default      10
+      enregister false
+      description "The number of seconds to wait for a response from the foreign server when issuing a WebSocket connection request as a client."
+   }
+
+   option("clnt_close_timeout") {
+      default      5
+      enregister false
+      description "The number of seconds to wait for the foreign server to close the underlying TCP connection after a close frame has been sent and received by both sides before the client closes the underlying TCP connection."
+   }
+
+   option("ping_message") {
+      default      "Sending PING"
+      enregister false
+      description "The message to be sent in PING frames transmitted by the module periodically via NU_WSOX_Schedule_Ping()."
+   }
+
+   option("recv_hndl_notify") {
+      default true
+      enregister false
+      description "When a new WebSocket handle is created, receive notifications will be either enabled or disabled on that handle according to this value.  This can be changed at run-time on a per handle basis via the API routine NU_WSOX_Toggle_Recv()."
+   }
+}

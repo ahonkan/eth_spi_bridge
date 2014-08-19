@@ -1,0 +1,4 @@
+package("armv7_m") {
+    parent  "nu.os.arch"
+    enable  true
+}

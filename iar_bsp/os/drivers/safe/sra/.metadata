@@ -1,0 +1,24 @@
+component("sra") {
+    parent      "nu.os.drvr.safe"
+    version     "1.0.0"
+    description "This component implements the generic SAFE RAM Flash driver device"
+    enable      true
+    
+    requires("nu.os.stor.file.vfs")
+    requires("nu.os.stor.file.fs.safe")
+    requires("nu.os.drvr.safe.base")
+    
+    option("maxfile"){
+        default 4
+        description "Maximum number of file could be opened at once."
+    }
+
+    option("ram_secsize"){
+        default 4096
+        description "Typical sector size."
+    }
+
+    library("nucleus.lib") {
+        sources { Dir.glob("src/*.c") }
+    }
+}

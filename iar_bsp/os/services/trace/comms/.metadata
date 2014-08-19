@@ -1,0 +1,28 @@
+component("comms") {
+    parent "nu.os.svcs.trace"
+    description "This component implements the Nucleus Trace Communications API."
+    enable false
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-strict-aliasing"        
+            cflags "csgnu_ppc" => "-Wno-strict-aliasing"     
+            Dir.glob("**/*.c")
+        }
+    }
+
+    option("channel"){
+        default      0
+        values       [0,1,2,3]
+        description  "Communication channel used for target to host trace data transfer.  0 = Debug Interface, 1 = Serial, 2 = Ethernet, 3 = File)
+        Note: When Serial communication channel is used, please ensure <platform>.<serial_port>.stdio=0"
+    }
+
+    option("buffer_flush_threshold"){
+        default      60
+        values       10...90
+        description "Specify trace buffer threshold in terms of percentage of trace buffer size. Once the threshold is reached the contents of trace buffer are flushed to file.
+        Only valid for File communication channel."
+    }
+
+}

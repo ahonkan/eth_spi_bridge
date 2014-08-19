@@ -1,0 +1,26 @@
+component("mem_mgmt") {
+    parent "nu.os.kern.process"
+    description "This component implements the Nucleus Processes memory management components."
+    enable false
+
+    requires("nu.os.kern.process.core")
+
+    # Currently only ARM is supported by Nucleus Processes
+    requires("nu.os.arch.arm.process.mem_mgmt")
+
+    option("export_symbols"){
+        default     true
+        description "Exports API symbols for use by loaded processes."
+    }
+
+    option("no_execute"){
+        default     true
+        description "When hardware support is available setting this to true will allow memory regions, considered to be non-executable, created for processes during load to enforce the restriction."
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

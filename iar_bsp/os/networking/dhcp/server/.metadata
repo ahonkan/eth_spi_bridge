@@ -1,0 +1,162 @@
+component("server") { 
+    parent "nu.os.net.dhcp"
+    version "1.2.0"
+    description "This component implements the  Nucleus DHCP server"
+    enable false
+    runlevel 16
+
+    requires("nu.os.net.stack")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+#
+# Compile time options
+#
+
+   #The following options are used to configure the storage options (file names etc) that are used to store 
+   #DHCP server related information like leases etc.
+
+   option("default_drive") {
+      default 0
+      enregister false
+      description "Set this to drive number to be used for storing records of any and all leases that are in use.(0 for 'a:', 1 for 'b:' and so on)."
+   }
+   
+   option("directory_path") {
+      default "a:\\\\dhcps"
+      enregister false
+      description "Directory Path and name for DHCP server directory that stores DHCP related files. Keep the drive letter according to the default_drive option."
+   }
+   
+   option("binding_file_name") {
+      default "\\\\bind.dat"
+      enregister false
+      description "Filename to store binding info. Does not require frequent changing."
+   }
+   
+   option("binding_file_backup") {
+      default "\\\\bind.bak"
+      enregister false
+      description "Backup filename for binding info. Does not require frequent changing."
+   }
+   
+   option("configuration_file_name") {
+      default "\\\\config.dat"
+      enregister false
+      description "Filename to store DHCP server configurations. Does not require frequent changing."
+   }
+   
+   option("options_block_file_name") {
+      default "\\\\opts.dat"
+      enregister false
+      description "Filename to store DHCP option data. Does not require frequent changing."
+   }
+   
+   # The following options are the configuration parameters of the Nucleus DHCP server
+   
+      option("interface_name") {
+      default "eth0"
+      enregister false
+      description "Default Network Interface over which DHCP Server will run."
+   }  
+   
+   option("subnet_mask") {
+      default "255.255.255.0"
+      enregister false
+      description "Subnet Mask for the Network. Used to determine if a specified IP range is valid before adding it to a control block."
+   }
+
+   option("include_router") {
+      default true
+      enregister false
+      description "Enable for DHCP Router option. Setting this to false will exclude router functionality from the build for the DHCP server."
+   }
+   
+   option("router1_address") {
+      default "200.100.200.5"
+      enregister false
+      description "Address of the router on the Network"
+   }
+
+   option("include_dns_server") {
+      default true
+      enregister false
+      description "Enable for DHCP DNS Server option. Setting this to false will exclude Domain name server functionality from the build for the DHCP server."
+   }
+   
+   option("domain_server1_addr") {
+      default "200.100.200.2"
+      enregister false
+      description "1st DNS Server Address. Set this address to the 1st Domain Name Server address on your Network."
+   }   
+   
+   option("domain_server2_addr") {
+      default "200.100.200.3"
+      enregister false
+      description "2nd DNS Server Address. Set this address to the 2nd Domain Name Server address on your Network."
+   }   
+   
+   option("broadcast_addr") {
+      default "200.100.200.255"
+      enregister false
+      description "Broadcast Address on the Network. A message sent to this broadcast address is received by all network-attached hosts"
+   }
+
+   option("subnet_addr") {
+      default "200.100.200.0"
+      enregister false
+      description "Subnet Address for this Network. Used to establish correct control block from which to issue parameters to requesting clients."
+   }
+   
+   option("ip_range_low") {
+      default "200.100.200.10"
+      enregister false
+      description "Starting address of the IP range from which IP addresses will be assigned to incoming clients."
+   }
+
+   option("ip_range_high") {
+      default "200.100.200.20"
+      enregister false
+      description "Ending address of the IP range from which IP addresses will be assigned to incoming clients."
+   }   
+   
+   option("include_domain_name") {
+      default true
+      enregister false
+      description "Enable for DHCP Domain Name option. Setting this to false will exclude domain name functionality of the DHCP server from the build."
+   }
+   
+   option("domain_name") {
+      default "yourdomain.com"
+      enregister false
+      description "Domain Name. Set this to your Domain name."
+   }   
+
+   option("lease_time") {
+      default 300                   # 5 minutes
+      enregister false
+      description "Lease Time in seconds. Sets the amount of time that a client can hold a binding without renewing/rebinding."
+   }
+
+   option("renewal_t1_time") {
+      default 150                   # 2.5 minutes
+      enregister false
+      description "Renewal Time in seconds. After this portion of the lease time has expired, the client will attempt to renew its lease to keep using its IP address."
+   }
+
+   option("rebind_t2_time") {
+      default 225                   # 3.75 minutes
+      enregister false
+      description "Rebind Time in seconds. If the client is unable to renew its lease within this time, the lease will expire. The client then needs to obtain a new lease."
+   }
+   
+   option("offered_wait_time") {
+      default 150                   # 2.5 minutes
+      enregister false
+      description "Wait time for an offered IP address."
+   }   
+}

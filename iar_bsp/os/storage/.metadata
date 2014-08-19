@@ -1,0 +1,4 @@
+package("stor") {
+    parent "nu.os"
+    enable true
+}

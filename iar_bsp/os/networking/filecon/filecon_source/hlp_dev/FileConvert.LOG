@@ -1,0 +1,21 @@
+Microsoft (R) Help Compiler
+HCRTF 4.02.0060
+Copyright (c) Microsoft Corp 1990 - 1995. All rights reserved.
+fileconvert.hpj
+    HC3048: Warning: topic #6 of C:\DEVELOPMENT\WebServ\FileCon\fileconsrc\hlp_DEV\.\FileConvert.rtf : 
+	Nonscrolling region defined after scrolling region.
+    HC3048: Warning: topic #8 of C:\DEVELOPMENT\WebServ\FileCon\fileconsrc\hlp_DEV\.\FileConvert.rtf : 
+	Nonscrolling region defined after scrolling region.
+    HC3048: Warning: topic #10 of C:\DEVELOPMENT\WebServ\FileCon\fileconsrc\hlp_DEV\.\FileConvert.rtf : 
+	Nonscrolling region defined after scrolling region.
+12	Topics
+0	Jumps
+0	Keywords
+15	Bitmaps
+
+
+Created C:\DEVELOPMENT\WebServ\FileCon\fileconsrc\hlp_DEV\FileConvert.HLP, 343,187 bytes
+Bitmaps: 328,691 bytes
+Hall+Zeck compression decreased help file by 6,585 bytes.
+Compile time: 0 minutes, 25 seconds
+0 notes, 3 warnings

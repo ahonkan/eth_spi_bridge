@@ -1,0 +1,5 @@
+package("pwr") { 
+    parent "nu.os.svcs"
+    description "This package implements the Nucleus Power Management Services"
+    enable true
+}

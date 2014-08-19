@@ -1,0 +1,31 @@
+component("safe") {
+    parent "nu.os.stor.file.fs"
+    version "3.6.0"
+    description "This component implements the Nucleus FILE Safe filesystem library."
+    enable true
+
+    option("max_direntry_name") {
+        default 256
+        description "Maximum length of file or directory name. Number of direntries in a descriptor block is contigent on this value."
+    }
+    
+    #Requirements for Nucleus Safe
+    #Default requirments for most middleware products
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+    requires("nu.os.svcs.registry")
+ 
+    #Requirements that are specific to Safe
+    requires("nu.os.stor.file.vfs")
+
+    library("nucleus.lib") {
+        sources { 
+            cflags "csgnu_arm" => "-Wno-deprecated-declarations"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("src/*.c") 
+        }
+    }
+}

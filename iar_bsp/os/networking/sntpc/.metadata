@@ -1,0 +1,34 @@
+component("sntpc") { 
+    parent "nu.os.net"
+    version "1.3.0"
+    description "This component implements the SNTP Client."
+    enable true
+    runlevel 9
+
+    requires("nu.os.net.stack")
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+    
+    option("max_servers") {
+      description "Maximum number of SNTP servers that client can communicate with simultaneously."
+      default      10
+      values       0..65535
+      enregister   true
+    }
+
+    option("use_default_server") {
+      default true
+      enregister false
+      description "This option controls whether the time server specified in the 'default_server' option must be automatically used at start-up. If this option is disabled, then the user is expected to explicitly register a server with the SNTP Client using the API."
+    }
+
+    option("default_server") {
+      default "2.pool.ntp.org"
+      enregister false
+      description "The hostname of the SNTP Server to be used by the client. This is the default server registered with the client upon start-up. More servers can be added to the SNTP Client database using API functions. This server is only registered if the 'use_default_server' option is enabled. This hostname is resolved to an IPv4 address. Use the API if you want to register an IPv6 server."
+    }
+}

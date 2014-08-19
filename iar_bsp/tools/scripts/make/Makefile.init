@@ -1,0 +1,27 @@
+##----------------------------------------------------------------------------##
+# Copyright 2010 Mentor Graphics Corporation                                   #
+#    All Rights Reserved.                                                      #
+##----------------------------------------------------------------------------##
+
+include tools/scripts/make/Makefile.vars
+include tools/scripts/make/Makefile.commands
+
+# Build up the list of object output directories from the Fuse-generated
+# objects list.
+include $(CONFIGURATION_DIR)/scripts/objs.mk
+output-dirs := $(sort $(dir $(OBJS)))
+output-dirs += $(sort $(dir $(PROC_OBJS)))
+
+# Build up the complete list of output directories.
+build-output-dirs := $(CONFIGURATION_DIR) $(LIB_OUTPUT_DIR) $(EXE_OUTPUT_DIR) $(PROC_OUTPUT_DIR) \
+                     $(SCRIPTS_OUTPUT_DIR) $(OBJ_DIR) $(output-dirs)
+
+.PHONY : init
+.NOTPARALLEL :
+
+init : $(build-output-dirs)
+
+# Create the output directories, if needed.
+$(build-output-dirs) :
+	@$(call MKDIR,$@)
+

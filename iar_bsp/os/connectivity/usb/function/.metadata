@@ -1,0 +1,4 @@
+package("func") { 
+    parent "nu.os.conn.usb"
+    enable true
+}

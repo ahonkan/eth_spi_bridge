@@ -1,0 +1,13 @@
+component("syslog") {
+    parent      "nu.os.svcs"
+    description "This component implements the generic System Log Component"
+    enable      true
+
+    requires("nu.os.kern.devmgr")
+
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c")
+        }
+    }
+}

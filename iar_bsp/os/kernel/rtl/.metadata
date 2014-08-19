@@ -1,0 +1,35 @@
+component("rtl") {
+    parent "nu.os.kern"
+    description "This component implements the Nucleus Run-Time Library (RTL) support."
+    enable true
+    
+    option("malloc_pool") {
+            default 0
+            values [0,1,2]
+            description "Nucleus memory pool used for malloc.  0 = System_Memory, 1 = Uncached_System_Memory and 2 = NU_Malloc_User_Mem_Pool (provided by user).  (Default value is 0)"
+    }
+
+    option("fp_override") {
+            default false
+            description "Disable floating point support in printf and scanf.  (Default value is false)"           
+    }
+
+    option("heap_size") {
+            default 512
+            values  32..0x100000
+            description "Size of heap in bytes.  Minimum is 32 bytes and maximum is 1 MByte. (Default is 512 bytes)"        
+    }
+
+    option("export_symbols"){
+        default     true
+        description "Exports API symbols for use by loaded processes."
+    }
+
+    library("nucleus.lib") {
+        sources { 
+            cflags "csgnu_arm" => "-Wno-uninitialized"
+            cflags "csgnu_ppc" => "-Wno-uninitialized"
+            Dir.glob("src/*.c") 
+        }
+    }
+}

@@ -1,0 +1,4 @@
+package("usb") { 
+    parent "nu.os.drvr"
+    enable true
+}

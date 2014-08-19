@@ -1,0 +1,12 @@
+component("can") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus device manager can driver."
+    enable true
+
+    requires("nu.os.conn.can")
+
+    library("nucleus.lib") {
+        sources { Dir.glob("*.c") }
+    }
+}

@@ -1,0 +1,73 @@
+component("devmgr") {
+    parent "nu.os.kern"
+    description "This component implements the Nucleus Device Manager."
+    enable true
+    
+    runlevel 1
+    
+    requires("nu.os.svcs.init")
+    requires("nu.os.svcs.registry")
+    
+    option("max_dev_id_cnt"){
+        default 30
+        values 1..100
+        description "Maximum number of device id's allowed in the system. (default is 30)"
+        enregister true
+    }
+
+    option("max_dev_label_cnt"){
+        default 5
+        values [1,2,3,4,5]
+        description "Maximum number of labels allowed for each device. (default is 5)"
+    }
+
+    option("max_dev_session_cnt"){
+        default 3
+        values [1,2,3]
+        description "Maximum number of sessions allowed for each device. (default is 3)"
+    }
+
+    option("max_device_listeners"){
+        default 15
+        description "Maximum number of device listeners. (default is 15)"
+    }
+    
+    option("err_check_enable"){
+        default true
+        description "Enable / Disable error checking in device manager. (default is true)"
+    }
+    
+    option("discovery_task_enable"){
+        default true
+        description "Enable / Disable device discovery task using this option. (default is true)"
+    }
+    
+    option("discovery_task_max_id_cnt"){
+        default 30
+        values 1..100
+        description "Maximum number of device id's that can be returned by the Device Discovery Task. (default is 30)"
+    }
+
+    option("discovery_task_stack_size"){
+        default 10240
+        description "Stack size definition for device discovery task. (default is 10K Bytes)."
+    }
+    
+    option("hibernate_dev") {
+        default     true
+        description "This marks the component to be hibernate aware"
+        enregister  true
+        hidden      true
+    }
+
+    option("export_symbols"){
+        default     true 
+        description "Exports API symbols for use by Nucleus processes."
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

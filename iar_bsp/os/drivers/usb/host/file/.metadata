@@ -1,0 +1,24 @@
+component("file_if") {
+    parent      "nu.os.drvr.usb.host"
+    version     "1.4.0"
+    description "This component implements the generic Nucleus USB Host FILE driver."
+    enable      true
+
+    requires("nu.os.conn.usb.host.ms.user")
+    requires("nu.os.stor.file.vfs")
+    
+    option("num_sectors") {
+        default     2
+        values      1..256
+        description "Size of un-cached memory pool (in the form of sectors) used by Nucleus USB Host FILE Interface for I/O.
+                    It is maximum number of sectors that Nucleus USB Host FILE Interface can request for read/write to USB Host driver.
+                    It is synchronized with Nucleus FAT File System which can also read/write maximum 256 sectors at a time.
+                    Where the size of each sector is 512 Bytes." 
+    }
+    
+    library("nucleus.lib") {
+        sources { 
+            Dir.glob("src/*.c") 
+        }
+    }
+}

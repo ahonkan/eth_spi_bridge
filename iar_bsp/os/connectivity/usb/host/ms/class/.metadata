@@ -1,0 +1,83 @@
+component("class") { 
+    parent "nu.os.conn.usb.host.ms"
+    version "1.8.0"
+    description "This component implements the base USB Host Mass Storage component."
+    enable true
+	
+	runlevel 7
+	requires("nu.os.conn.usb.host.stack")
+	
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+    
+    option("max_luns_per_device") {
+        default 5
+        description "Maximum logical units to be supported by UMS class driver on a single USB storage device."
+        enregister false
+    }
+    
+    option("max_devices") {
+      description "Maximum number of devices supported.If optimization is enabled, set its value to 4."
+      default 16
+      enregister false
+   }
+   
+   option("event_reporter_task_stacksize_factor") {
+      description "MSC event reporter task stack size multiplication factor. Stack size is calculated by
+                   multiplying this factor with nucleus kernel min stack size"
+      default 7
+      enregister false
+   }
+   
+   option("event_reporter_task_priority") {
+      description "MSC event reporter task priority."
+      default 101
+      enregister false
+   }
+   
+   option("event_reporter_task_preemption_enable") {
+      description "MSC event reporter task preemption."
+      default true
+      enregister false
+   }
+   
+   option("event_reporter_task_timeslice") {
+      description "MSC event reporter task time slice."
+      default 20
+      enregister false
+   }
+   
+   option("enable_subclass_scsi") {
+      description "Enable SCSI subclass of UMS class driver."
+      default true
+      enregister false
+   }
+   
+   option("enable_subclass_ufi") {
+      description "Enable UFI subclass of UMS class driver."
+      default true
+      enregister false
+   }
+   
+   option("enable_subclass_sff8020") {
+      description "Enable SFF8020I subclass of UMS class driver."
+      default true
+      enregister false
+   }
+   
+   option("enable_subclass_sff8070") {
+      description "Enable SFF8070I subclass of UMS class driver."
+      default false
+      enregister false
+   }
+}

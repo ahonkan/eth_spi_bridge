@@ -1,0 +1,67 @@
+component("grafixrs") { 
+   parent "nu.os.ui"
+   version "2.12.0"
+   description "This component implements the Nucleus Grafix RS component."
+   enable true
+   runlevel 13
+
+   active_artifact "library"
+
+   requires("nu.os.drvr.display")
+   requires("nu.os.kern.devmgr")
+
+   library("nucleus.lib") {
+        sources {
+            # suppressing strict aliasing and uninitialised access warnings for csgnu
+            cflags "csgnu_arm" => "-Wno-strict-aliasing -Wno-uninitialized"
+            cflags "csgnu_ppc" => "-Wno-strict-aliasing -Wno-uninitialized"
+            # suppressing strict aliasing warnings for tensilica
+            cflags "tensilica" => "-Wno-strict-aliasing"
+            # suppressing uninitialised access warnings for rvct
+            cflags "rvct" => "--min_array_alignment=4 --diag_suppress=3017"
+            Dir.glob("*.c") +
+            Dir.glob("src/*.c")
+        }
+    }
+    
+    process("grafixrs.load") {
+        sources {
+            Dir.glob("*.c") + Dir.glob("src/*.c")
+        }
+    }
+
+    option("image_support") {
+    	default			false
+    	description		"Specifies if image support is desired in GRAFIX RS"	
+    }
+    option("cursor_support"){
+    	default			false
+    	description		"Specifies if mouse cursor support is desired in GRAFIX RS"	
+    }
+    option("global_alpha_support"){
+    	default			false
+    	description		"Specifies if global alpha support is desired in GRAFIX RS"	
+    }
+    option("fill_patterns_support"){
+    	default			false
+    	description		"Specifies if fill patterns support is desired in GRAFIX RS"	
+    }
+    option("dashed_line_support"){
+    	default			false
+    	description		"Specifies if dashed line support is desired in GRAFIX RS"	
+    }
+    option("include_default_font"){
+    	default			true
+    	description		"Specifies if default font should be included in GRAFIX RS"	
+    }
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+    option("export_symbols"){
+        default     false
+        description "Exports API symbols for use by Nucleus processes."
+    }
+}

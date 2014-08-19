@@ -1,0 +1,505 @@
+component("stack") {
+    parent "nu.os.net"
+    version "5.4.0"
+    description "This component implements the Nucleus Networking Stack."
+    enable true
+    runlevel 7
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-strict-aliasing -fno-builtin-memcpy -ffunction-sections -fdata-sections"
+            cflags "csgnu_ppc" => "-Wno-strict-aliasing -fno-builtin-memcpy -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-strict-aliasing -fno-builtin-memcpy"
+            Dir.glob("src/*.c") << "optimizations/block_copy/nbc.c" << "hosts.c"
+        }
+    }
+
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+    requires("nu.os.svcs.registry")
+    requires("nu.os.drvr.eth")
+    requires("nu.os.kern.eqm")
+
+#
+# Compile time options
+#
+    option("export_symbols") {
+        default     true
+        description "Exports API symbols for use by loaded processes."
+    }
+
+   option("cfg_h") {
+      default true
+      enregister false
+      description "Exclude the configuration macros from the source tree - must be true."
+      hidden true
+   }
+
+   option("include_ip_fwd") {
+      default false
+      enregister false
+      description "Include IP forwarding support in the stack.  If a packet is received that is not destined to the receiving node, it will be transmitted (forwarded) to the destination address in the packet."
+   }
+
+   option("include_udp") {
+      default true
+      enregister false
+      description "Include UDP socket support in the stack.  When disabled, sockets of type NU_TYPE_DGRAM cannot be created."
+   }
+
+   option("include_tcp") {
+      default true
+      enregister false
+      description "Include TCP socket support in the stack.  When disabled, sockets of type NU_TYPE_STREAM cannot be created."
+   }
+
+   option("include_congestion_ctrl") {
+      default true
+      enregister false
+      description "Include TCP congestion control support in the stack per RFC 2581.  Congestion control regulates the amount of data injected into the network from a host node in an attempt to reduce congestion on the network and therefore reducing the number of retransmitted segments."
+   }
+
+   option("include_pmtu_discvry") {
+      default true
+      enregister false
+      description "Include Path MTU Discovery support in the stack per RFCs 1191 and 1981.  Path MTU Discovery helps reduce fragmentation at intermediary routers by finding the smallest MTU along the path to a destination and ensuring no packets larger than that value are transmitted from the node."
+   }
+
+   option("include_sack") {
+      default true
+      enregister false
+      description "Include TCP Selective ACK support in the stack per RFC 2018.  Selective acknowledgements help reduce the number of retransmissions on the network by informing the receiver of missing data segments in an outstanding window of data."
+   }
+
+   option("include_dsack") {
+      default true
+      enregister false
+      description "Include TCP duplicate selective ACK support in the stack per RFC 2883.  Duplicate selective acknowledgements help reduce the number of retransmissions on the network by informing the receiver of segments that have been received multiple times, and therefore were unnecessarily retransmitted."
+   }
+
+   option("include_windowscale") {
+      default true
+      enregister false
+      description "Include TCP window scale option support in the stack per RFC 1323.  The TCP window scale option increases the TCP window size from a 16-bit value to a 32-bit value allowing larger amounts of data to be outstanding for a single connection."
+   }
+
+   option("include_timestamp") {
+      default true
+      enregister false
+      description "Include TCP timestamp option support in the stack per RFC 1323.  The TCP timestamp option provides a finer grained measurement of round trip times for segments and therefore a more accurate retransmission timer."
+   }
+
+   option("include_lmtd_tx") {
+      default true
+      enregister false
+      description "Include TCP Limited Transmit in the stack per RFC 3042.  Limited Transmit is an enhancement to TCP's loss recovery algorithm which speeds up the recovery of lost segments in a lossy network."
+   }
+
+   option("include_ip_raw") {
+      default false
+      enregister false
+      description "Include RAW IP support in the stack.  When disabled, sockets of type NU_TYPE_RAW cannot be created."
+   }
+
+   option("include_ll_config") {
+      default false
+      enregister false
+      description "Include IPv4 link-local autoconfiguration support in the stack per RFC 3927.  Link-local autoconfiguration enables an IPv4 node to create its own IPv4 address in the absence of a DHCP server that is valid for use in communicating over the local network."
+   }
+
+   option("include_hw_offload") {
+      default false
+      enregister false
+      description "Include hardware offloading support in the stack.  The underlying driver must support hardware offloading to use this option."
+   }
+
+   option("include_net_debug") {
+      default false
+      enregister false
+      description "Include advanced debugging support in the stack.  This support will track the location of network buffers throughout the system and alert the application if a buffer has been misappropriated."
+   }
+
+   option("include_notifications") {
+      default false
+      enregister false
+      description "Include notification module support in the stack.  The notification module is used in conjunction with the debug module to notify the application layer of events that occur within network drivers or other parts of the TCP/IP stack."
+   }
+
+   option("include_ip_rasm") {
+      default true
+      enregister false
+      description "Include IP reassembly support in the stack.  If disabled, the node will not be able to reassemble incoming fragmented packets."
+   }
+
+   option("include_ip_frag") {
+      default true
+      enregister false
+      description "Include IP fragmentation support in the stack.  If disabled, the node will not be able to transmit packets larger than the link MTU."
+   }
+
+   option("include_ip_mult") {
+      default true
+      enregister false
+      description "Include IP multicasting support in the stack.  If disabled, the node will not be able to join multicast groups on the link or receive data destined to multicast addresses.  The node can still transmit data to a destination multicast address."
+   }
+
+   option("include_loopback") {
+      default true
+      enregister false
+      description "Include loopback device support in the stack.  If disabled, the node can still send data to itself using a physical network interface such as Ethernet.  This support is useful when a physical network interface is not available."
+   }
+
+   option("include_arp") {
+      default true
+      enregister false
+      description "Include ARP support in the stack.  If disabled, the node will not be able to communicate over IPv4 since it will not be able to resolve the hardware address of destination IPv4 addresses."
+   }
+
+   option("include_rarp") {
+      default false
+      enregister false
+      description "Include Reverse Address Resolution Protocol support in the stack.  RARP can be used to obtain an IPv4 address from an administrative host in the absence of a DHCP server."
+   }
+
+   option("include_dns") {
+      default true
+      enregister false
+      description "Include client side Domain Name Support in the stack.  DNS is used to resolve the IP address of a host name and vice versa."
+   }
+
+   option("include_dhcp") {
+      default true
+      enregister false
+      description "Include DHCP client side support in the stack.  DHCP is used to obtain an IP address and other network information from a network server."
+   }
+
+   option("include_bootp") {
+      default false
+      enregister false
+      description "Include BOOTP support in the stack.  BOOTP is used to obtain an IPv4 address from a network server."
+   }
+
+   option("include_ipv4") {
+      default true
+      enregister false
+      description "Include IPV4 support in the stack.  If disabled, the stack cannot send/receive IPv4 packets."
+   }
+
+   option("include_tcp_keepalive") {
+      default false
+      enregister false
+      description "Include TCP Keep-Alive in the stack.  TCP Keep-Alive is used by the TCP layer to detect when a connection has been terminated without undergoing the usual FIN/ACK sequence.  This can occur if a remote node is ungracefully shut down or an intermediary link goes down."
+   }
+
+   option("include_newreno") {
+      default false
+      enregister false
+      description "Include TCP NewReno algorithm per RFC 3782.  TCP NewReno helps improve the fast recovery phase of congestion control."
+   }
+
+   option("include_net_error_logging") {
+      default true
+      enregister false
+      description "Include error logging support in the stack.  When enabled, errors of various criticality are stored in the global array NLOG_Entry_List."
+   }
+
+   option("include_net_api_err_check") {
+      default true
+      enregister false
+      description "Include API input validation.  When enabled, the input parameters passed into each API routine will be checked for validity."
+   }
+
+   option("include_lite_icmp") {
+      default false
+      enregister false
+      description "Enable minimal ICMP components; echo reply, destination unreachable, time exceeded."
+   }
+
+   option("include_tcp_ooo") {
+      default true
+      enregister false
+      description "Enable processing of TCP packets received out of order.  When disabled, out of order packets will be dropped."
+   }
+
+   option("include_so_reuseaddr") {
+      default true
+      enregister false
+      description "Include SO_REUSEADDR socket option that enables multiple sockets to bind to the same port."
+   }
+
+   option("include_mdns") {
+      default false
+      enregister false
+      description "Include the Multicast DNS protocol in the networking stack."
+   }
+
+   option("num_mdns_q_elements") {
+      description "Size of the mDNS event queue.  The default size of this queue is 8.  If there will be a lot of continuous queries initiated from the application, this value should be increased."
+      default      8
+      values       8..128
+      hidden       false
+   }
+
+   option("mdns_tsk_prio") {
+      default 25
+      enregister false
+      description "Priority of the mDNS master task."
+   }
+
+   option("mdns_wake_tsk_prio") {
+      default 25
+      enregister false
+      description "Priority of the mDNS wake task."
+   }
+
+   option("mdns_master_tsk_size") {
+      description "Size, in bytes, of the mDNS master task."
+      default      2000
+      values       512..8192
+      hidden       false
+   }
+
+   option("mdns_wake_tsk_size") {
+      description "Size, in bytes, of the mDNS wake task.  This should not be set to less than the minimum stack size for the specific platform as defined by nu.os.kern.plus.core.min_stack_size.  If it is, the value will be reset at compile-time."
+      default      250
+      values       250..8192
+      hidden       false
+   }
+
+   option("mdns_signal") {
+      description "The callback signal used to inform the callback task that a change has been made to a record of interest to the task, as specified by NU_Start_mDNS_Query."
+      default      31
+      values       0..31
+      hidden       false
+   }
+
+   option("dns_sd_default_ttl") {
+      default 120
+      values 0..4294967295
+      enregister false
+      description "Default value to use for TTL field of local PTR, SRV and TXT records created when using NU_DNS_SD_Register_Service."
+   }
+
+   option("dns_sd_default_prio") {
+      default 0
+      values 0..65535
+      enregister false
+      description "Default value to use for priority field of local SRV records created when using NU_DNS_SD_Register_Service."
+   }
+
+   option("dns_sd_default_weight") {
+      default 0
+      values 0..65535
+      enregister false
+      description "Default value to use for weight field of local SRV records created when using NU_DNS_SD_Register_Service."
+   }
+
+   option("bufs_in_uncached_mem") {
+      default true
+      enregister false
+      description "The net buffers will be allocated from the non-cached memory. The default value of this option is true."
+   }   
+   
+   option("max_bufs") {
+      default 200
+      enregister false
+      description "Maximum number of buffers available for sending and receiving data packets."
+   }
+
+   option("buf_size") {
+      default 512
+      enregister false
+      description "Size of buffers used by stack to send and receive data packets.  This size might need to change to accommodate different DMA controllers"
+   }
+
+   option("reasm_size") {
+      default 65535
+      enregister false
+      description "Maximum reassembly size of an incoming fragmented packet.  This value determines how many buffers will be used to receive a fragmented packet chain."
+   }
+
+   option("tcp_max_ports") {
+      default 30
+      enregister false
+      description "Maximum number of TCP ports available in the system.  When this value is exhausted, no more TCP connections can be made until a TCP connection is closed."
+   }
+
+   option("udp_max_ports") {
+      default 30
+      enregister false
+      description "Maximum number of UDP ports available in the system.  When this value is exhausted, no more UDP sockets can be created until a UDP socket is closed."
+   }
+
+   option("ipr_max_ports") {
+      default 30
+      enregister false
+      description "Maximum number of RAW ports available in the system.  When this value is exhausted, no more RAW sockets can be created until a RAW socket is closed."
+   }
+
+   option("arp_cache_length") {
+      default 10
+      enregister false
+      description "Length of the local IPv4 ARP cache that holds the IPv4 address / MAC address mappings of remote nodes.  When this value is exhausted, the oldest entries are overwritten first to make room for a new entry."
+   }
+
+   option("ip_max_memberships") {
+      default 10
+      enregister false
+      description "Maximum number of multicast groups that can be joined by an individual socket."
+   }
+
+   option("max_mcast_srcaddr") {
+      default 10
+      enregister false
+      description "Maximum number of source addresses that can be maintained by each multicast group on a per device and per socket basis."
+   }
+
+   option("req_alignment") {
+      default 16
+      enregister false
+      description "The required byte alignment for network buffers.  A value less than 4 should not be specified."
+   }
+
+    option("max_devs_supported"){
+        description "The maximum number of devices supported by the Ethernet driver middleware (default is 8)."
+        default 8
+        values 1..100
+    }
+
+    option("eqm_support_enabled"){
+        description "Enable EQM support. THE EQM is 'Event Queue Manager' that has an efficient implementation for event handling resulting is low memory footprint and no event duplication in user listener queues. The networking stack uses the 'Event Notification' system when EQM is disabled."
+        default true
+    }
+
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+
+   option("hostname") {
+      default "localhost"
+      enregister false
+      description "The local host's name."
+   }
+
+#
+# DNS Configuration Options.
+#
+
+   option("dns_max_dns_servers") {
+      default 5
+      enregister false
+      description "Maximum number of DNS servers that can be registered with the networking stack at one time."
+   }
+
+   option("dns_max_ip_addrs") {
+      default 5
+      enregister false
+      description "Maximum number of IP addresses to store with each DNS host record."
+   }
+
+   option("dns_max_message_size") {
+      default 512
+      enregister false
+      description "Maximum size of an incoming DNS message.  This memory remains allocated throughout the lifetime of the networking stack when DNS is enabled."
+   }
+
+   option("dns_max_attempts") {
+      default 5
+      enregister false
+      description "Maximum number of times to query a DNS server when attempting to resolving a host name or address."
+   }
+
+   option("dns_max_mx_records") {
+      default 10
+      enregister false
+      description "Maximum number of MX records to return to a caller."
+   }
+
+   option("dns_max_mx_name_size") {
+      default 128
+      enregister false
+      description "Maximum name length of a MX record to return to a caller."
+   }
+
+   option("mdns_local_ttl") {
+      default 120
+      enregister false
+      description "Default TTL of a local host record created via mDNS when an IP address is added to an interface."
+   }
+
+   option("dns_default_name") {
+      default "Nucleus Device"
+      enregister false
+      description "Default Name to be used for DNS-SD service advertisement."
+   }
+
+#
+# Run time options.  These are the defaults.  The interface platform file should specify/override these.
+#
+   option("domainname") {
+      default "localdomain.com"
+      enregister true
+      description "The local domain name."
+      binary_build_editable
+   }
+
+   # The following are "hidden" options - these will not show up in the generated HTML files, generated config files or UI config tool and are only
+   # meant to be over-ridden (at this time) by Nucleus experts.  The consequences of setting this options incorrectly are not all known and what values
+   # are optimal are not currently known.  All testing is done with the default values, so these are the only "known" values to work.
+   option("num_evt_q_elements") {
+      description "Size of the Networking stack event queue.  The default size of this queue is 64.  Because many of the networking stack operations
+                   utilize this queue, setting the size of this queue too small can have great performance penalties or even cause the stack to fail.
+                   This is a hidden option because of the importance of this queue to the stack's operation and inability to identify the exact nature
+                   of problems that can occur if set too low (or benefits if set too high)."
+      default      64
+      values       8..128
+      hidden       true
+   }
+
+   option("ev_stack_size") {
+      description "Size, in bytes, of the Networking stack Events Dispatcher Task stack.  The default size of this stack is 4000.  Because this task is responsible
+                   for all net stack timing related events, setting this stack too small can have dire consequences (stack overflow, etc).  Setting this stack size too
+                   large simply wastes memory (RAM)."
+      default      4000
+      values       512..8192
+      hidden       true
+   }
+
+   option("tm_stack_size") {
+      description "Size, in bytes, of the Networking stack Timer Task stack.  The default size of this stack is 5000.  Because this task is responsible
+                   for all received packets, setting this stack too small can have dire consequences (stack overflow, etc).  Setting this stack size too
+                   large simply wastes memory (RAM)."
+      default      5000
+      values       512..8192
+      hidden       true
+   }
+
+   option("dhcp_stack_size") {
+      description "Size, in bytes, of the Networking stack DHCP Event Handler task stack.  The default size of this stack is 2000.  Because this task is responsible
+                   for all DHCP client operations, setting this stack too small can have dire consequences (stack overflow, etc).  Setting this stack size too
+                   large simply wastes memory (RAM)."
+      default      2000
+      values       256..4096
+      hidden       true
+   }
+
+   option("buf_hisr_stack_size") {
+      description "Size, in bytes, of the Networking stack buffer suspension HISR stack.  The default size of this stack is 512.  Setting this stack too small can have
+                  dire consequences (stack overflow, etc).  Setting this stack size too large simply wastes memory (RAM)."
+      default      512
+      values       256..2048
+      hidden       true
+   }
+
+   option("link_task_stack_size") {
+      description "Size, in bytes, of the Networking stack Link Task stack.  The default size of this stack is 2500.  This task is responsible for all link-up / link-down
+                   events in the networking stack and setting this stack too small can have dire consequences (stack overflow, etc).  Setting this stack size too
+                   large simply wastes memory (RAM)."
+      default      2500
+      values       512..8192
+      hidden       true
+   }
+}

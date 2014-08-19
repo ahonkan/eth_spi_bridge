@@ -1,0 +1,73 @@
+component("db_sshserver") { 
+    parent "nu.os.net.ssh"
+    version "2012.55"
+    description "This component implements the Secure Shell Server."
+    enable true
+    runlevel 9
+
+    requires("nu.os.net.stack")
+    requires("nu.os.svcs.shell")
+    requires("nu.os.stor.file.vfs")
+    requires("nu.os.net.ssh.libtomcrypt")
+
+    option("interface") {
+        enregister false
+        description "SSH Server: Listen on specified address for connection request. Default set to listen on all addresses."
+        default ""
+    }
+    
+    option("port") {
+        enregister false
+        description "SSH Server: Listen on specified TCP port. Default set to 22."
+        values  1..65535
+        default 22
+    }
+
+    option("rsa_auth") {
+        enregister false
+        description "Enables server authentication using RSA keys. If include_initial_files "\
+                    "is set to false, the key file must be placed at host_key_path path by name "\
+                    "dropbear_rsa_host_key."
+        default false
+    }
+
+    option("dss_auth") {
+        enregister false
+        description "Enables server authentication using DSS keys. If include_initial_files "\
+                    "is set to false, the key file must be placed at host_key_path path by name "\
+                    "dropbear_dss_host_key."
+        default true
+    }
+
+    option("include_initial_files") {
+        enregister false
+        description "Loads host key files from file dropbear_host_keys.c to filesystem."
+        default true
+    }
+    
+    option("host_key_path") {
+        description "Default hostkey path."
+        default "A:\\\\"
+    }
+    
+    option("debug_trace") {
+        enregister false
+        description "Enable Debug Trace."
+        default false
+    }
+
+    includepath ["os/networking/ssh",
+                 "os/networking/ssh/libtommath",
+                 "os/networking/ssh/libtomcrypt/src/headers"]
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-uninitialized -Wno-unused-but-set-variable -Wno-pointer-sign -Wno-format -Wno-char-subscripts -Wno-implicit-function-declaration"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("*.c")
+        }
+    }
+}

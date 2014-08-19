@@ -1,0 +1,22 @@
+component("linkload") {
+    parent "nu.os.kern.process"
+    description "This component implements run-time linking and loading support for the Nucleus Light Weight Process kernel extension."
+    enable false
+
+    requires("nu.os.kern.process.core")
+    requires("nu.os.stor.file.vfs")
+
+    # Currently only ARM is supported by Nucleus Processes
+    requires("nu.os.arch.arm.process.linkload")
+
+    option("dup_symbol_check"){
+        default     true
+        description "Setting to true will enable duplicate symbol detection during the loading process. This means that a process exporting a symbol that has already been exported by another loaded process will fail to load. Setting this to false will disable this check and improve load time. Default is true."
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}

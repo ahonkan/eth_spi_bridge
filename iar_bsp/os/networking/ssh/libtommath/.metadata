@@ -1,0 +1,24 @@
+component("libtommath") { 
+    parent "nu.os.net.ssh"
+    description "This component implements big number library for Secure Shell Server."
+    enable true
+
+    requires("nu.os.net.ssh.db_sshserver")
+
+    includepath ["os/networking/ssh/db_sshserver",
+                 "os/networking/ssh/libtommath",
+                 "os/networking/ssh/libtomcrypt/src/headers"]
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-uninitialized -Wno-unused-but-set-variable -Wno-pointer-sign -Wno-format -Wno-char-subscripts -Wno-implicit-function-declaration"
+            cflags "csgnu_mips" => "-Wno-deprecated-declarations"
+            cflags "csgnu_ppc" => "-Wno-deprecated-declarations"
+            cflags "tensilica" => "-Wno-deprecated-declarations"
+            cflags "rvct" => "--diag_suppress 1361"
+            Dir.glob("*.c") - 
+            Dir.glob("bn_mp_addmod.c") - 
+            Dir.glob("bn_mp_clear_multi.c")
+        }
+    }
+}

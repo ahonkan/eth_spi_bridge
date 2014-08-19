@@ -1,0 +1,4 @@
+package("tftp") { 
+    parent "nu.os.net.prot"
+    enable true
+}

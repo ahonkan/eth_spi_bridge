@@ -1,0 +1,64 @@
+component("ssl") { 
+    parent "nu.os.net.ssl.openssl"
+    version "2.0.0"
+    description "This component implements the SSL/TLS module of OpenSSL."
+    enable true
+
+    requires("nu.os.net.ssl.openssl.crypto")
+
+    includepath ["os/networking/ssl/openssl",
+                 "os/networking/ssl/openssl/crypto",
+                 "os/networking/ssl/openssl/crypto/asn1",
+                 "os/networking/ssl/openssl/crypto/evp"]
+
+    library("nucleus.lib") {
+        sources {
+            cflags "csgnu_arm" => "-Wno-implicit-function-declaration -Wno-char-subscripts -Wno-unused-function -ffunction-sections -fdata-sections"
+            cflags "csgnu_ppc" => "-Wno-implicit-function-declaration -Wno-char-subscripts -Wno-unused-function -ffunction-sections -fdata-sections"
+            cflags "tensilica" => "-Wno-implicit-function-declaration -Wno-char-subscripts -Wno-unused-function"
+            cflags "rvct" => "--diag_suppress=warning"
+            Dir.glob("*.c") - Dir.glob("ssl_task.c") - Dir.glob("ssltest.c")
+        }
+    }
+
+#
+# Compile time options
+#
+
+    option("include_krb5") {
+        default false
+        enregister false
+        description "Include KRB5 protocol."
+    }
+
+    option("include_psk") {
+        default true
+        enregister false
+        description "Include PSK algorithm."
+    }
+
+    option("include_ssl2") {
+        default true
+        enregister false
+        description "Include SSL2 protocol."
+    }
+
+    option("include_ssl3") {
+        default true
+        enregister false
+        description "Include SSL3 protocol."
+    }
+
+    option("include_tls1") {
+        default true
+        enregister false
+        description "Include TLS1 protocol."
+    }
+
+    option("include_x509") {
+        default true
+        enregister false
+        description "Include X509 module."
+    }
+
+}

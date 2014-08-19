@@ -1,0 +1,4 @@
+package("conn") { 
+    parent "nu.os"
+    enable true
+}

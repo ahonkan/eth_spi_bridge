@@ -1,0 +1,21 @@
+component("mdm") { 
+    parent "nu.os.conn.usb.host.comm"
+    version "1.5.0"
+    description "This component implements the USB Host Modem Communications component."
+    enable true
+	
+	runlevel 8
+	requires("nu.os.conn.usb.host.comm.class")
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+    option("hibernate_dev") {
+        enregister  true
+        default true
+        description "This marks the component to be hibernate aware"
+        hidden true
+    }
+}

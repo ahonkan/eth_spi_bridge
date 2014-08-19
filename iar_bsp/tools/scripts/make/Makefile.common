@@ -1,0 +1,7 @@
+# Generated -- DO NOT EDIT
+
+CURRENT_TOOLSET = csgnu_arm
+CURRENT_PLATFORM = iar_stm32f429ii_sk
+CURRENT_CONFIG = eth_spi_bridge.Debug
+CURRENT_USER_CONFIG = eth_spi_bridge.Debug.config
+

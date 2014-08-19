@@ -1,0 +1,48 @@
+component("lwspi") { 
+    parent "nu.os.conn"
+    version "1.0.0"
+    description "This component implements the light weight version of Nucleus SPI."
+    enable true
+    requires("nu.os.kern.plus.core")
+    requires("nu.os.kern.devmgr")
+
+    runlevel 5
+   
+   option("num_spi_buses") {
+      default 1
+      values 1..10
+      enregister false
+      description "Number of supported SPI buses in system"
+   }
+   
+   option("num_spi_slaves") {
+      default 1
+      values (1..255)
+      enregister false
+      description "Number of supported slaves per SPI buse"
+   }
+   
+   option("int_mode_io_enable") {
+      default false
+      enregister false
+      description "Enable or disable interrupt mode I/O"
+   }  
+       
+   option("err_check_enable") {
+      default false
+      enregister false
+      description "Enable error checking in SPI generic layer"
+   }
+   
+   option("extended_api_enable") {
+      default false
+      enregister false
+      description "Enable extended API in SPI generic layer"
+   }
+   
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+}

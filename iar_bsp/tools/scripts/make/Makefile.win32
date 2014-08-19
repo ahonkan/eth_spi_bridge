@@ -1,0 +1,92 @@
+##----------------------------------------------------------------------------##
+# Copyright 2010 Mentor Graphics Corporation                                   #
+#    All Rights Reserved.                                                      #
+##----------------------------------------------------------------------------##
+
+# Calls Fuse to generate the sub-Makefiles.
+#
+# $(1) - the target platform name.
+# $(2) - the toolset name.
+# $(3) - optional parameter for configuration file
+# $(4) - optional transforms
+
+define fuse
+@call tools\bin\fuse\bin\fuse.bat -D platform=$(PLATFORM) -D toolset=$(TOOLSET) -D config=$(canonical-config) -D clone=$(PLATFORM_CLONE) -D autoincludepath=$(AUTOINCLUDEPATH) -D cdtconfig=$(CDTCONFIG) -D userconfig=$(USER_CONFIG) -p $(1) -t $(2) $(3) -n $(4)
+endef
+
+##
+## Basic Variable Commands 
+##
+
+# Redirects stdout and stderr to the null device
+# and resets the errorlevel to 0.
+ignore-err = > NUL 2>&1 & verify > NUL
+
+# Set the shell to the native Windows shell.
+SHELL = cmd.exe
+
+# Create a directory and needed parent directories.
+#
+# $(1) - the directory to create.
+MKDIR = mkdir $(subst /,\,$(1)) $(ignore-err)
+
+# Recursively remove a directory.
+#
+# $(1) - the directory to remove.
+RMDIR = rd /s /q $(subst /,\,$(1)) $(ignore-err)
+
+# Remove a file.
+#
+# $(1) - the file to delete.
+RM = del /q  $(subst /,\,$(1)) $(ignore-err)
+
+# Copy a file.
+#
+# $(1) - the source file.
+# $(2) - the target file.
+CP = copy  /y $(subst /,\,$(1))  $(subst /,\,$(2)) > NUL
+
+# The character used to seperate commands.
+SEP = &
+
+# Print a string.
+#
+# $(1) - the string to print.
+define print
+$(if $(1),echo $(1),$(SHELL) /c "echo.")
+endef
+
+# Print a string to a file.
+#
+# $(1) - the string to print.
+# $(2) - the file to print to.
+define print-to-file
+echo $(1) 2>NUL > $(subst /,\,$(2))
+endef
+
+# Concatenate multiple files together.
+#
+# $(1) - a whitespace seperated list of files to cat.
+# $(2) - the file to store the concatenation to.
+CAT = type $(subst /,\,$(1)) 2>NUL > $(subst /,\,$(2))
+
+# Copy a directory
+#
+# &(1) - Source directory
+# &(2) - Destination directory
+CPDIR = xcopy $(subst /,\,$(1)) $(subst /,\,$(2)) /s/e/h  $(ignore-err)
+
+# Copies directories ignoring folder/file
+# &(1) - Source directory
+# &(2) - Destination directory
+# &(3) - Exlude
+define copy_dir_ignore
+echo \bsp\ 2>NUL > exclude.txt
+xcopy $(subst /,\,$(1)) $(subst /,\,$(2)) /s/e/h/exclude:exclude.txt  $(ignore-err)
+del /q  exclude.txt $(ignore-err)
+del /q  $(subst /,\,$(2))\exclude.txt $(ignore-err)
+endef
+
+define create_dir
+mkdir $(subst /,\,$(1))
+endef

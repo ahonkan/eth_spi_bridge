@@ -1,0 +1,19 @@
+component("cpu") {
+    parent "nu.os.drvr"
+    version "1.0.0"
+    description "This component implements the generic Nucleus Power Interface for Power-Aware device drivers."
+    enable true
+
+    requires("nu.os.kern.devmgr")
+    
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("src/*.c")
+        }
+    }
+
+    option("voltage_scaling") {
+        default      false
+        description  "Specifies whether voltage scaling is enabled"
+    }
+}

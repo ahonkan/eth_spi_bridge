@@ -1,0 +1,61 @@
+component("class") { 
+    parent "nu.os.conn.usb.host.audio"
+    version "2.0.0"
+    description "This component implements the base USB Host Audio component."
+    enable true
+	
+    runlevel 7
+    requires("nu.os.conn.usb.host.stack")
+	
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+    
+    option("max_possible_entities") {
+        description "Maximum possible entity(terminal / unit) ids, an audio device can have.
+                     Its value must be equal to the maximum id from all entities present in
+                     an Audio Device. Its value can range from 0-255."
+        default 32
+   }
+   
+    option("max_streaming_infs") {
+        description "Maximum possible streaming interfaces present in an audio control
+                     interface. Its value can range from 1 to 255. Its value cannot be
+                     greater than NU_USB_MAX_INTERFACES macro, defined in nu_usb_stack_cfg.h file."
+        default 5
+   }
+   
+    option("play_task_prio") {
+        description "Priority of playing task. This task is created whenever user opens a 
+                     playing session and is deleted when user closes session. User should
+                     define this priority according to his/her application."
+        default 200
+   }
+
+    option("play_task_time_slice") {
+        description "Time slice of playing task. User should  define this 
+                     time slice according to her/his application."
+        default 1
+   }
+
+    option("record_task_prio") {
+        description "Priority of recording task. This task is created whenever user opens
+                     recording session and is deleted when user closes session. User should
+                     define this priority according to her/his application."
+        default 199
+   }
+
+    option("record_task_time_slice") {
+        description "Time slice of recording task.User should  define this 
+                     time slice according to her/his application."
+        default 1
+   }
+
+    option("num_play_trans") {
+        description "Number of irps to be submitted simultaneously for a single playback
+                     transfer."
+        default 3
+   }
+}

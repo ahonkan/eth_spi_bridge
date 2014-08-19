@@ -1,0 +1,20 @@
+component("server") { 
+    parent      "nu.os.net.prot.telnet"
+    description "This component implements the Nucleus Telnet Server"
+    enable      true
+
+    requires("nu.os.net.stack")
+    requires("nu.os.net.prot.telnet.core")
+
+    option("tcp_port") {
+        default     23
+        enregister  false
+        description "The TCP port number that the server will listen on.  Default is 23 (Telnet protocol default)."
+    }
+
+    library("nucleus.lib") {
+        sources {
+            Dir.glob("*.c")
+        }
+    }
+}
