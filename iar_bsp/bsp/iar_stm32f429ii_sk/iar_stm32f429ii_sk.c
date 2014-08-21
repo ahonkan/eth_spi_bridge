@@ -86,7 +86,15 @@ const ESAL_GE_MEM_REGION      ESAL_DP_MEM_Region_Data[ESAL_DP_MEM_NUM_REGIONS] =
              ESAL_ROM,                      /* Memory type      */
              ESAL_INST_AND_DATA},           /* Memory access    */
 
-            /* MEMORY REGION 2 - SRAM (INTERNAL)                */
+             /* MEMORY REGION 2 - Core Coupled SRAM (INTERNAL)   */
+             {(VOID *)0x10000000,            /* Physical Start   */
+              (VOID *)0x10000000,            /* Virtual Start    */
+              ESAL_GE_MEM_1K * 64,           /* Size             */
+              ESAL_NOCACHE,                  /* Cache type       */
+              ESAL_RAM,                      /* Memory type      */
+              ESAL_INST_AND_DATA},           /* Memory access    */
+
+             /* MEMORY REGION 3 - SRAM (INTERNAL)                */
             {(VOID *)0x20000000,            /* Physical Start   */
              (VOID *)0x20000000,            /* Virtual Start    */
              ESAL_GE_MEM_1K * 192,          /* Size             */
@@ -94,7 +102,7 @@ const ESAL_GE_MEM_REGION      ESAL_DP_MEM_Region_Data[ESAL_DP_MEM_NUM_REGIONS] =
              ESAL_RAM,                      /* Memory type      */
              ESAL_INST_AND_DATA},           /* Memory access    */
 
-            /* MEMORY REGION 3 - PERIPHERAL REGISTERS           */
+            /* MEMORY REGION 4 - PERIPHERAL REGISTERS           */
             {(VOID *)ESAL_DP_PERIPH_BASE,   /* Physical Start   */
              (VOID *)ESAL_DP_PERIPH_BASE,   /* Virtual Start    */
              ESAL_GE_MEM_64M,               /* Size             */
@@ -102,7 +110,7 @@ const ESAL_GE_MEM_REGION      ESAL_DP_MEM_Region_Data[ESAL_DP_MEM_NUM_REGIONS] =
              ESAL_MEM_MAPPED,               /* Memory type      */
              ESAL_DATA},                    /* Memory access    */
 
-            /* MEMORY REGION 4 - SDRAM (EXTERNAL)               */
+            /* MEMORY REGION 5 - SDRAM (EXTERNAL)               */
             {(VOID *)0xD0000000,            /* Physical Start   */
              (VOID *)0xD0000000,            /* Virtual Start    */
              ESAL_GE_MEM_4M,                /* Size             */

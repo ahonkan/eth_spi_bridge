@@ -26,32 +26,6 @@
 								<option id="mentor.gnu.cpp.compiler.option.debugging.level.120436567" name="Debug Level" superClass="mentor.gnu.cpp.compiler.option.debugging.level" value="mentor.gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="mentor.gnu.cpp.compiler.option.indexer_include.290652229" name="Include paths for indexer" superClass="mentor.gnu.cpp.compiler.option.indexer_include" valueType="includePath">
 									<listOptionValue builtIn="false" value="${CFG_INCLUDE}"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/./"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/common/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/utils/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/rsn_supp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/tool-csgnu_arm/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/arch/armv7-m/tool-csgnu_arm/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/plat-stm32/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/STM32F4xx/Include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/Include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/stm_devices/"/>
 								</option>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.1093378782" name="CodeSourcery GNU C Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus">
@@ -59,32 +33,6 @@
 								<option id="mentor.gnu.c.compiler.option.debugging.level.352761325" name="Debug Level" superClass="mentor.gnu.c.compiler.option.debugging.level" value="mentor.gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="mentor.gnu.c.compiler.option.indexer_include.2077600067" name="Include paths for indexer" superClass="mentor.gnu.c.compiler.option.indexer_include" valueType="includePath">
 									<listOptionValue builtIn="false" value="${CFG_INCLUDE}"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/./"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/common/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/utils/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/rsn_supp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/tool-csgnu_arm/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/arch/armv7-m/tool-csgnu_arm/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/plat-stm32/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/STM32F4xx/Include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/Include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/stm_devices/"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.138159489" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input"/>
 							</tool>
@@ -130,32 +78,6 @@
 								<option id="mentor.gnu.cpp.compiler.option.debugging.level.1528804108" name="Debug Level" superClass="mentor.gnu.cpp.compiler.option.debugging.level"/>
 								<option id="mentor.gnu.cpp.compiler.option.indexer_include.624742285" name="Include paths for indexer" superClass="mentor.gnu.cpp.compiler.option.indexer_include" valueType="includePath">
 									<listOptionValue builtIn="false" value="${CFG_INCLUDE}"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/./"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/common/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/utils/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/rsn_supp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/tool-csgnu_arm/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/arch/armv7-m/tool-csgnu_arm/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/plat-stm32/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/STM32F4xx/Include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/Include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/stm_devices/"/>
 								</option>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.1160762063" name="CodeSourcery GNU C Compiler" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus">
@@ -163,32 +85,6 @@
 								<option id="mentor.gnu.c.compiler.option.debugging.level.1842086118" name="Debug Level" superClass="mentor.gnu.c.compiler.option.debugging.level"/>
 								<option id="mentor.gnu.c.compiler.option.indexer_include.589320176" name="Include paths for indexer" superClass="mentor.gnu.c.compiler.option.indexer_include" valueType="includePath">
 									<listOptionValue builtIn="false" value="${CFG_INCLUDE}"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/./"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/asn1/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/ssl/openssl/crypto/evp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/common/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/utils/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/crypto/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/networking/wpa_supplicant/src/rsn_supp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/include/arch/armv7-m/tool-csgnu_arm/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/os/arch/armv7-m/tool-csgnu_arm/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/plat-stm32/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/STM32F4xx/Include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/arch/CMSIS/Include/"/>
-									<listOptionValue builtIn="false" value="${SYSTEM_HOME}/bsp/iar_stm32f429ii_sk/include/bsp/stm_devices/"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input.525919665" superClass="cdt.managedbuild.tool.gnu.mentor.c.compiler.nucleus.input"/>
 							</tool>

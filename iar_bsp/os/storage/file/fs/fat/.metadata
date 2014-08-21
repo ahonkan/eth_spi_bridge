@@ -15,9 +15,9 @@ component("fat") {
     }
     
     option("default_cache_size") {
-        values 2..4294967295
+        values 32
         default 32
-        description "The FAT cache reduces the number of disk accesses to read data from the file allocation table. Uses 514  + (size >> 3) bytes per entry."
+        description "Value from 2 to 2^31.  The FAT cache reduces the number of disk accesses to read data from the file allocation table. Uses 514  + (size >> 3) bytes per entry."
     }
     
     #Requirements for Nucleus FILE
