@@ -53,7 +53,7 @@
 #define         ESAL_DP_REF_CLOCK_RATE                  8000000UL
 
 /* Define number of memory regions contained on the given development platform */
-#define         ESAL_DP_MEM_NUM_REGIONS                 4
+#define         ESAL_DP_MEM_NUM_REGIONS                 5
 
 /* Define if an interrupt controller (off processor) exists on the board and
    controlling / handling of interrupts from this interrupt controller must

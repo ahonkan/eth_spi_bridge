@@ -1022,7 +1022,7 @@ static VOID IFSPI_Task_Entry(UNSIGNED argc, VOID *argv)
       /* Mask out the First Segment (FS) value and get data length */            
       tgt_ptr->rx_frame.len &= IFSPI_DATA_LEN_MASK;
 
-      currP = (UINT32)MEM_Buffer_Dequeue(&MEM_Buffer_Freelist);
+      currP = (NET_BUFFER*)MEM_Buffer_Dequeue(&MEM_Buffer_Freelist);
 
       if ((currP != NULL) && 
           (tgt_ptr->rx_frame.len <= IF_SPI_BUF_SIZE))
@@ -1066,7 +1066,7 @@ static VOID IFSPI_Task_Entry(UNSIGNED argc, VOID *argv)
       /* Otherwise link buffers */
       else
       {
-        currP = (UINT32)MEM_Buffer_Dequeue(&MEM_Buffer_Freelist);
+        currP = (NET_BUFFER*)MEM_Buffer_Dequeue(&MEM_Buffer_Freelist);
 
         if ((currP != NULL) && 
             (tgt_ptr->rx_frame.len <= IF_SPI_BUF_SIZE))

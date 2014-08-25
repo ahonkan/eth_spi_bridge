@@ -133,7 +133,7 @@ static VOID Main_Task_Entry(UNSIGNED argc, VOID *argv)
     
     while(1)
     {
-      status = NU_Ping(dest_addr, 0);
+/*      status = NU_Ping(dest_addr, 0);*/
     	LED1_SET;
     	NU_Sleep(50);
     	LED1_CLEAR;

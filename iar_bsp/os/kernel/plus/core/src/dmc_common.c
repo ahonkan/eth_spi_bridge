@@ -168,6 +168,9 @@ STATUS NU_Create_Memory_Pool(NU_MEMORY_POOL *pool_ptr, CHAR *name,
         /* Fill in the dynamic memory pool name. */
         strncpy(pool -> dm_name, name, (NU_MAX_NAME - 1));
 
+        /* set memory to known value */
+        memset(start_address, 0xff, pool_size);
+
         /* Save the starting address and size parameters in the dynamic memory
            control block.  */
         pool -> dm_start_address =   start_address;
